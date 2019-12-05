@@ -1,0 +1,142 @@
+[
+  {
+    "id": "passthrough",
+    "description": "Basic sanity test",
+    "scenario": "BasicScenario",
+
+    "options" : {
+      "basic/wait" : 120
+    }
+  },
+
+
+  {
+    "id": "FoEptRb",
+    "description": "Failover EPT and rebalance the cluster",
+    "scenario": "FailoverScenario",
+    "options": {
+      "failover/ept": true,
+      "failover/count": 1,
+      "failover/next_action": "FO_REBALANCE",
+      "failover/next_delay": 30
+    }
+  },
+
+  {
+    "id": "FoEptEject",
+    "description": "Failover EPT, eject it, and don't rebalance",
+    "scenario": "FailoverScenario",
+    "options": {
+      "failover/ept": true,
+      "failover/count": 1,
+      "failover/next_action": "FO_EJECT",
+      "failover/next_delay": 30
+    }
+  },
+
+  {
+    "id": "Rb2In",
+    "description": "Add two nodes to the cluster and rebalance",
+    "scenario": "RebalanceScenario",
+    "options" :{
+      "rebalance/mode": "in",
+      "rebalance/count": 2
+    }
+  },
+
+  {
+    "id": "Rb2Out",
+    "description": "Remove two nodes from the cluster via rebalance",
+    "scenario": "RebalanceScenario",
+    "options": {
+      "rebalance/mode": "out",
+      "rebalance/count": 2
+    }
+  },
+
+  {
+    "id": "Rb2OutEpt",
+    "description": "Remove two nodes from the cluster via rebalance",
+    "scenario": "RebalanceScenario",
+    "options": {
+      "rebalance/mode": "out",
+      "rebalance/ept":true,
+      "rebalance/count": 2
+    }
+  },
+
+  {
+    "id": "Rb1Swap",
+    "description": "Perform a 'swap' rebalance, adding one node and removing one node",
+    "scenario": "RebalanceScenario",
+    "options": {
+      "rebalance/mode": "swap",
+      "rebalance/count": 1
+    }
+  },
+
+  {
+    "id": "SvcRestart",
+    "description": "Restart Couchbase service on 3 nodes",
+    "scenario": "ServiceFailureScenario",
+    "options": {
+      "service/name": "SYSV_SERVICE",
+      "service/action": "kill",
+      "service/count": 3,
+      "service/restore_delay": 5
+    }
+  },
+
+  {
+    "id": "SvcRestartAll",
+    "description": "Restart Couchbase service on all nodes",
+    "scenario": "ServiceFailureScenario",
+    "options": {
+      "service/name": "SYSV_SERVICE",
+      "service/action": "kill",
+      "service/count": 4,
+      "service/restore_delay": 5
+    }
+  },
+
+  {
+    "id": "RSTConnect",
+    "description": "Reset Connection between client and server",
+    "scenario": "ServiceFailureScenario",
+    "options": {
+      "service/name": "RST_CONNECT",
+      "service/count": 4,
+      "service/action": "kill",
+      "service/ept": true,
+      "service/restore_delay": 45
+    }
+  },
+
+  {
+    "id": "DROPConnect",
+    "description": "Reset Connection between client and server",
+    "scenario": "ServiceFailureScenario",
+    "options": {
+      "service/name": "DROP_CONNECT",
+      "service/count": 4,
+      "service/action": "kill",
+      "service/ept": true,
+      "service/restore_delay": 45
+    }
+  },
+
+  {
+    "id": "DROP_QUERY",
+    "description": "Fail indexing and querying service",
+    "scenario": "ServiceFailureScenario",
+    "options": {
+      "service/name": "DROP_QUERY",
+      "service/action": "kill",
+      "service/count": 1,
+      "service/ept": true,
+      "service/restore_delay": 10,
+      "service/query-port": 8093,
+      "service/enabled": false
+    }
+  }
+]

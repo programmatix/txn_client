@@ -1,0 +1,5 @@
+#!/bin/sh
+set -x
+exec java -ea \
+    -jar target/sdkdclient-1.0-SNAPSHOT.jar \
+    $@

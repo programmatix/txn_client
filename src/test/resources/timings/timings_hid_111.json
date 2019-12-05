@@ -1,0 +1,216 @@
+{
+    "Step" : 1,
+    "Base" : 1384366445, 
+    "Windows" : [
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 85
+        },
+        "Count" : 85,
+        "Avg" : 0
+    },
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 429
+        },
+        "Count" : 429,
+        "Avg" : 0
+    },
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 429
+        },
+        "Count" : 429,
+        "Avg" : 0
+    },
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 433
+        },
+        "Count" : 433,
+        "Avg" : 0
+    },
+    {
+        "Max" : 3,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 430
+        },
+        "Count" : 430,
+        "Avg" : 0
+    },
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 430
+        },
+        "Count" : 430,
+        "Avg" : 0
+    },
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 433
+        },
+        "Count" : 433,
+        "Avg" : 0
+    },
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 412
+        },
+        "Count" : 412,
+        "Avg" : 0
+    },
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 426
+        },
+        "Count" : 426,
+        "Avg" : 0
+    },
+    {
+        "Max" : 3,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 427
+        },
+        "Count" : 427,
+        "Avg" : 0
+    },
+    {
+        "Max" : 2,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 426
+        },
+        "Count" : 426,
+        "Avg" : 0
+    },
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 426
+        },
+        "Count" : 426,
+        "Avg" : 0
+    },
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 430
+        },
+        "Count" : 430,
+        "Avg" : 0
+    },
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 428
+        },
+        "Count" : 428,
+        "Avg" : 0
+    },
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 412
+        },
+        "Count" : 412,
+        "Avg" : 0
+    },
+    {
+        "Max" : 3,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 425
+        },
+        "Count" : 425,
+        "Avg" : 0
+    },
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 425
+        },
+        "Count" : 425,
+        "Avg" : 0
+    },
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 424
+        },
+        "Count" : 424,
+        "Avg" : 0
+    },
+    {
+        "Max" : 3,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 424
+        },
+        "Count" : 424,
+        "Avg" : 0
+    },
+    {
+        "Max" : 2,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 426
+        },
+        "Count" : 426,
+        "Avg" : 0
+    },
+    {
+        "Max" : 1,
+        "Min" : 0,
+        "Percentile" : 1,
+        "Errors" : {
+            "0" : 359
+        },
+        "Count" : 359,
+        "Avg" : 0
+    }
+    ]
+}

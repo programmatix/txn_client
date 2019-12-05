@@ -1,0 +1,76 @@
+#!/usr/bin/python
+import argparse
+import json
+import sys
+
+ap = argparse.ArgumentParser()
+ap.add_argument('--ksize', default = 12,
+                help = "Approximate minimum key size",
+                type = int)
+
+ap.add_argument('--vsize', default = 24,
+                help = "Approximate minimum value size",
+                type = int)
+
+ap.add_argument('--kseed', default = "~~Key~~",
+                help = "Base text for keys",
+                type = str)
+
+ap.add_argument('--vseed', default = "~~Value~~",
+                help = "Base text for values",
+                type = str)
+
+ap.add_argument("-c", "--count", default = 10,
+                help = "Number of key-value pairs to generate",
+                type = int)
+
+ap.add_argument("-r", "--repeat", default = "##FILLER",
+                help = "Filler/Repeat text. Will be appended to "
+                "keys and values to satisfy size requirements",
+                type = str)
+
+ap.add_argument("-i", "--input",
+                help = "Parse dataset specification from this file "
+                "(use '-' for standard input)")
+
+
+
+options = ap.parse_args()
+dataset = None
+
+if options.input:
+    ifp = None
+    if options.input == '-':
+        ifp = sys.stdin
+    else:
+        ifp = open("r", options.input)
+
+    dataset = json.load(ifp)
+
+if not dataset:
+    dataset = {
+        'KSize' : options.ksize,
+        'VSize' : options.vsize,
+        'KSeed' : options.kseed,
+        'VSeed' : options.vseed,
+        'Repeat' : options.repeat,
+        'Count' : options.count
+    }
+
+
+def gen_str(base, minsize, ix):
+    """
+    Generate a string given the base, desired minimum size,
+    and repeat text
+    """
+
+    s = base
+    while True:
+        s += "%s%d" % (dataset['Repeat'], ix)
+        if len(s) >= minsize:
+            return s
+
+for x in xrange(dataset['Count']):
+    k = gen_str(dataset['KSeed'], dataset['KSize'], x)
+    v = gen_str(dataset['VSeed'], dataset['VSize'], x)
+    print "%s : %s" % (k, v)

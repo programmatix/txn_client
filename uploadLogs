@@ -1,0 +1,6 @@
+#!/bin/sh
+# BUILD_ROOT=$(pwd)
+
+exec java -cp target/sdkdclient-1.0-SNAPSHOT.jar \
+    com.couchbase.sdkdclient.util.S3UploaderTest $@
+

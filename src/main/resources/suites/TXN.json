@@ -1,0 +1,39 @@
+[
+  {
+    "id": "testbasiccommit1",
+    "scenario": "BasicScenario",
+    "description": "Basic sanity test",
+    "options": {
+      "nodes_init": "2",
+      "replicas": "1",
+      "transaction_commit": "True",
+      "op_type": "create",
+      "group": "P0",
+      "os": "windows"
+    }
+  },
+  {
+    "id": "singletxn_multiclient",
+    "description": "Basic sanity test",
+    "scenario": "ServiceFailureScenario",
+    "options": {
+      "service/name": "SINGLETXN_MULTICLIENT",
+      "service/count": 4,
+      "service/action": "kill",
+      "service/ept": true,
+      "service/restore_delay": 45
+    }
+  },
+  {
+    "id": "RSTConnect",
+    "description": "Reset Connection between client and server",
+    "scenario": "ServiceFailureScenario",
+    "options": {
+      "service/name": "RST_CONNECT",
+      "service/count": 4,
+      "service/action": "kill",
+      "service/ept": true,
+      "service/restore_delay": 45
+    }
+  }
+]

@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+
+option java_package = "com.couchbase.grpc.protocol";
+
+
+
+
+service txn{
+    rpc create_txn(txn_req) returns (APIResponse);
+    rpc create_conn(conn_info) returns (APIResponse);
+    rpc execute_txn(txn_req) returns (APIResponse);
+}
+
+
+message conn_info{
+    string handle_bucket=3;
+    string payload=4;
+    string handle_hostname=5;
+    int32 handle_port=6;
+    string handle_password=7;
+    string handle_username=8;
+    bool handle_ssl=9;
+    int32 handle_autofailover_ms=10;
+    string handle_cert=11;
+}
+
+
+message txn_req{
+    int32 txn_timeout = 1;
+    int32 txn_durability = 2;
+    int32 numThreads = 3;
+    int32 numDocs = 4;
+    bool commit=5;
+    bool sync=6;
+    string command=7;
+}
+
+
+
+
+
+message APIResponse{
+    bool APISuccessStatus = 1;
+    string APIStatusInfo = 2;
+}
+
+
+message Empty{
+}
+
+
+

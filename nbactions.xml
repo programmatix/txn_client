@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>run</actionName>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
+            </goals>
+            <properties>
+                <exec.args>-classpath %classpath com.couchbase.sdkdclient.batch.BRun -I conf/cluster_run.ini  -I conf/sdkd-ssh.args  -S sfs -T passthrough --cl-noinit --wait 20 --s3auth S3Creds_tmp --variants HYBRID -d all:INFO</exec.args>
+                <exec.executable>java</exec.executable>
+                <exec.workingdir>/sources/sdkdclient</exec.workingdir>
+            </properties>
+        </action>
+        <action>
+            <actionName>debug</actionName>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.2:exec</goal>
+            </goals>
+            <properties>
+                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -classpath %classpath com.couchbase.sdkdclient.batch.BRun -I conf/cluster_run.ini  -I conf/sdkd-ssh.args  -S sfs -T passthrough --cl-noinit --wait 20 --s3auth S3Creds_tmp --variants HYBRID -d all:INFO</exec.args>
+                <exec.executable>java</exec.executable>
+                <exec.classpathScope>runtime</exec.classpathScope>
+                <jpda.listen>true</jpda.listen>
+                <exec.workingdir>/sources/sdkdclient</exec.workingdir>
+            </properties>
+        </action>
+        <action>
+            <actionName>profile</actionName>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.2:exec</goal>
+            </goals>
+            <properties>
+                <exec.args>${profiler.args} -classpath %classpath com.couchbase.sdkdclient.batch.BRun -I conf/cluster_run.ini  -I conf/sdkd-ssh.args  -S sfs -T passthrough --cl-noinit --wait 20 --s3auth S3Creds_tmp --variants HYBRID -d all:INFO</exec.args>
+                <exec.executable>${profiler.java}</exec.executable>
+                <profiler.action>profile</profiler.action>
+                <exec.workingdir>/sources/sdkdclient</exec.workingdir>
+            </properties>
+        </action>
+    </actions>
