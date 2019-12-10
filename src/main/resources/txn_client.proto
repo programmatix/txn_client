@@ -7,7 +7,7 @@ option java_package = "com.couchbase.grpc.protocol";
 
 
 service txn{
-    rpc create_txn(txn_req) returns (APIResponse);
+    rpc create_TxnFactory(txn_req) returns (APIResponse);
     rpc create_conn(conn_info) returns (APIResponse);
     rpc execute_txn(txn_req) returns (APIResponse);
 }
@@ -29,11 +29,11 @@ message conn_info{
 message txn_req{
     int32 txn_timeout = 1;
     int32 txn_durability = 2;
-    int32 numThreads = 3;
-    int32 numDocs = 4;
-    bool commit=5;
-    bool sync=6;
-    string command=7;
+    int32 numDocs = 3;
+    string command=4;
+    bool mock=5;
+    int32 docNum=6;
+    string mockOperation=7;
 }
 
 

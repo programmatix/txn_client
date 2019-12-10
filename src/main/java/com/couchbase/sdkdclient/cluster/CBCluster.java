@@ -255,15 +255,14 @@ public class CBCluster {
   @NetworkIO
   private String setupMainBucket(CouchbaseAdmin adm) throws RestApiException {
     BucketConfig ourBucket = bucketOptions.buildMainBucketOptions();
-    logger.info("Creating bucket {}", ourBucket.name);
+    ourBucket.bucketType = Bucket.BucketType.COUCHBASE;
+
     adm.createBucket(ourBucket);
-    logger.info("Bucket creation submitted");
     return ourBucket.name;
   }
 
   @NetworkIO
   private void setupSecondaryBucket(CouchbaseAdmin adm) throws RestApiException {
-    BucketConfig ourBucket = bucketOptions.buildMainBucketOptions();
     BucketConfig bConfig = new BucketConfig("bucket1");
     bConfig.bucketType = Bucket.BucketType.COUCHBASE;
     bConfig.ramQuotaMB = 100;
@@ -539,18 +538,14 @@ public class CBCluster {
     // Now, add the buckets.
     if (bucketOptions.shouldAddDefaultBucket() &&
             bucketOptions.getName().equals("default") == false) {
-
-      logger.info("Setting up default bucket");
       BucketConfig bConfig = new BucketConfig("default");
       bConfig.bucketType = Bucket.BucketType.COUCHBASE;
       bConfig.ramQuotaMB = 256;
       adm.createBucket(bConfig);
     }
-
     String bucketName = setupMainBucket(adm);
     setupSecondaryBucket(adm); // To cover MB-26144, since it happens when multiple buckets are created on Spock node
     waitForBucketReady();
-
 
     if (clusterOptions.getUseMaxConn()) {
       adm.setClusterMaxConn(clusterOptions.getMaxConn());
@@ -566,6 +561,8 @@ public class CBCluster {
     }
 
     if (bucketOptions.buildMainBucketOptions().bucketType != Bucket.BucketType.MEMCACHED) {
+
+
       logger.info("Creating n1ql index");
       // run twice to assure at least 2 index nodes have the n1ql index
       createN1QLIndex(bucketName, clusterOptions.getn1qlFieldsToIndex().split(","), null, true);

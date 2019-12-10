@@ -14,7 +14,7 @@ public class Bucket {
   public enum BucketType { COUCHBASE, MEMCACHED, EPHEMERAL }
   public enum AuthType {SASL, NONE }
   public enum EphemeralBucketEvictionPolicy {NOEVICTION, NRUEVICTION}
-
+  public enum CompressionMode {OFF, PASSIVE, ACTIVE}
   private final String name;
   private final JsonObject rawJson;
   private final int replicas;

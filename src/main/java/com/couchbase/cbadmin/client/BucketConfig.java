@@ -64,6 +64,8 @@ public class BucketConfig {
     if (bucketType != Bucket.BucketType.MEMCACHED)
       params.put("replicaNumber", "" + replicaCount);
 
+
+
     if (authType == Bucket.AuthType.SASL ||
             (password != null && password.isEmpty() == false)) {
       params.put("authType", "sasl");

@@ -28,35 +28,35 @@ public final class txnGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.couchbase.grpc.protocol.TxnClient.txn_req,
-      com.couchbase.grpc.protocol.TxnClient.APIResponse> getCreateTxnMethod;
+      com.couchbase.grpc.protocol.TxnClient.APIResponse> getCreateTxnFactoryMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "create_txn",
+      fullMethodName = SERVICE_NAME + '/' + "create_TxnFactory",
       requestType = com.couchbase.grpc.protocol.TxnClient.txn_req.class,
       responseType = com.couchbase.grpc.protocol.TxnClient.APIResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<com.couchbase.grpc.protocol.TxnClient.txn_req,
-      com.couchbase.grpc.protocol.TxnClient.APIResponse> getCreateTxnMethod() {
-    io.grpc.MethodDescriptor<com.couchbase.grpc.protocol.TxnClient.txn_req, com.couchbase.grpc.protocol.TxnClient.APIResponse> getCreateTxnMethod;
-    if ((getCreateTxnMethod = txnGrpc.getCreateTxnMethod) == null) {
+      com.couchbase.grpc.protocol.TxnClient.APIResponse> getCreateTxnFactoryMethod() {
+    io.grpc.MethodDescriptor<com.couchbase.grpc.protocol.TxnClient.txn_req, com.couchbase.grpc.protocol.TxnClient.APIResponse> getCreateTxnFactoryMethod;
+    if ((getCreateTxnFactoryMethod = txnGrpc.getCreateTxnFactoryMethod) == null) {
       synchronized (txnGrpc.class) {
-        if ((getCreateTxnMethod = txnGrpc.getCreateTxnMethod) == null) {
-          txnGrpc.getCreateTxnMethod = getCreateTxnMethod = 
+        if ((getCreateTxnFactoryMethod = txnGrpc.getCreateTxnFactoryMethod) == null) {
+          txnGrpc.getCreateTxnFactoryMethod = getCreateTxnFactoryMethod = 
               io.grpc.MethodDescriptor.<com.couchbase.grpc.protocol.TxnClient.txn_req, com.couchbase.grpc.protocol.TxnClient.APIResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "txn", "create_txn"))
+                  "txn", "create_TxnFactory"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.couchbase.grpc.protocol.TxnClient.txn_req.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.couchbase.grpc.protocol.TxnClient.APIResponse.getDefaultInstance()))
-                  .setSchemaDescriptor(new txnMethodDescriptorSupplier("create_txn"))
+                  .setSchemaDescriptor(new txnMethodDescriptorSupplier("create_TxnFactory"))
                   .build();
           }
         }
      }
-     return getCreateTxnMethod;
+     return getCreateTxnFactoryMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<com.couchbase.grpc.protocol.TxnClient.conn_info,
@@ -152,9 +152,9 @@ public final class txnGrpc {
 
     /**
      */
-    public void createTxn(com.couchbase.grpc.protocol.TxnClient.txn_req request,
+    public void createTxnFactory(com.couchbase.grpc.protocol.TxnClient.txn_req request,
         io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.APIResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(getCreateTxnMethod(), responseObserver);
+      asyncUnimplementedUnaryCall(getCreateTxnFactoryMethod(), responseObserver);
     }
 
     /**
@@ -174,12 +174,12 @@ public final class txnGrpc {
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
-            getCreateTxnMethod(),
+            getCreateTxnFactoryMethod(),
             asyncUnaryCall(
               new MethodHandlers<
                 com.couchbase.grpc.protocol.TxnClient.txn_req,
                 com.couchbase.grpc.protocol.TxnClient.APIResponse>(
-                  this, METHODID_CREATE_TXN)))
+                  this, METHODID_CREATE_TXN_FACTORY)))
           .addMethod(
             getCreateConnMethod(),
             asyncUnaryCall(
@@ -218,10 +218,10 @@ public final class txnGrpc {
 
     /**
      */
-    public void createTxn(com.couchbase.grpc.protocol.TxnClient.txn_req request,
+    public void createTxnFactory(com.couchbase.grpc.protocol.TxnClient.txn_req request,
         io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.APIResponse> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(getCreateTxnMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getCreateTxnFactoryMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -261,9 +261,9 @@ public final class txnGrpc {
 
     /**
      */
-    public com.couchbase.grpc.protocol.TxnClient.APIResponse createTxn(com.couchbase.grpc.protocol.TxnClient.txn_req request) {
+    public com.couchbase.grpc.protocol.TxnClient.APIResponse createTxnFactory(com.couchbase.grpc.protocol.TxnClient.txn_req request) {
       return blockingUnaryCall(
-          getChannel(), getCreateTxnMethod(), getCallOptions(), request);
+          getChannel(), getCreateTxnFactoryMethod(), getCallOptions(), request);
     }
 
     /**
@@ -301,10 +301,10 @@ public final class txnGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.couchbase.grpc.protocol.TxnClient.APIResponse> createTxn(
+    public com.google.common.util.concurrent.ListenableFuture<com.couchbase.grpc.protocol.TxnClient.APIResponse> createTxnFactory(
         com.couchbase.grpc.protocol.TxnClient.txn_req request) {
       return futureUnaryCall(
-          getChannel().newCall(getCreateTxnMethod(), getCallOptions()), request);
+          getChannel().newCall(getCreateTxnFactoryMethod(), getCallOptions()), request);
     }
 
     /**
@@ -324,7 +324,7 @@ public final class txnGrpc {
     }
   }
 
-  private static final int METHODID_CREATE_TXN = 0;
+  private static final int METHODID_CREATE_TXN_FACTORY = 0;
   private static final int METHODID_CREATE_CONN = 1;
   private static final int METHODID_EXECUTE_TXN = 2;
 
@@ -345,8 +345,8 @@ public final class txnGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_CREATE_TXN:
-          serviceImpl.createTxn((com.couchbase.grpc.protocol.TxnClient.txn_req) request,
+        case METHODID_CREATE_TXN_FACTORY:
+          serviceImpl.createTxnFactory((com.couchbase.grpc.protocol.TxnClient.txn_req) request,
               (io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.APIResponse>) responseObserver);
           break;
         case METHODID_CREATE_CONN:
@@ -418,7 +418,7 @@ public final class txnGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new txnFileDescriptorSupplier())
-              .addMethod(getCreateTxnMethod())
+              .addMethod(getCreateTxnFactoryMethod())
               .addMethod(getCreateConnMethod())
               .addMethod(getExecuteTxnMethod())
               .build();

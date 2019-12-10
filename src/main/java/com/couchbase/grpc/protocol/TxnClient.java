@@ -1454,34 +1454,39 @@ public final class TxnClient {
     int getTxnDurability();
 
     /**
-     * <code>int32 numThreads = 3;</code>
-     */
-    int getNumThreads();
-
-    /**
-     * <code>int32 numDocs = 4;</code>
+     * <code>int32 numDocs = 3;</code>
      */
     int getNumDocs();
 
     /**
-     * <code>bool commit = 5;</code>
-     */
-    boolean getCommit();
-
-    /**
-     * <code>bool sync = 6;</code>
-     */
-    boolean getSync();
-
-    /**
-     * <code>string command = 7;</code>
+     * <code>string command = 4;</code>
      */
     java.lang.String getCommand();
     /**
-     * <code>string command = 7;</code>
+     * <code>string command = 4;</code>
      */
     com.google.protobuf.ByteString
         getCommandBytes();
+
+    /**
+     * <code>bool mock = 5;</code>
+     */
+    boolean getMock();
+
+    /**
+     * <code>int32 docNum = 6;</code>
+     */
+    int getDocNum();
+
+    /**
+     * <code>string mockOperation = 7;</code>
+     */
+    java.lang.String getMockOperation();
+    /**
+     * <code>string mockOperation = 7;</code>
+     */
+    com.google.protobuf.ByteString
+        getMockOperationBytes();
   }
   /**
    * Protobuf type {@code txn_req}
@@ -1498,11 +1503,11 @@ public final class TxnClient {
     private txn_req() {
       txnTimeout_ = 0;
       txnDurability_ = 0;
-      numThreads_ = 0;
       numDocs_ = 0;
-      commit_ = false;
-      sync_ = false;
       command_ = "";
+      mock_ = false;
+      docNum_ = 0;
+      mockOperation_ = "";
     }
 
     @java.lang.Override
@@ -1541,28 +1546,29 @@ public final class TxnClient {
             }
             case 24: {
 
-              numThreads_ = input.readInt32();
+              numDocs_ = input.readInt32();
               break;
             }
-            case 32: {
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
 
-              numDocs_ = input.readInt32();
+              command_ = s;
               break;
             }
             case 40: {
 
-              commit_ = input.readBool();
+              mock_ = input.readBool();
               break;
             }
             case 48: {
 
-              sync_ = input.readBool();
+              docNum_ = input.readInt32();
               break;
             }
             case 58: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              command_ = s;
+              mockOperation_ = s;
               break;
             }
             default: {
@@ -1615,46 +1621,19 @@ public final class TxnClient {
       return txnDurability_;
     }
 
-    public static final int NUMTHREADS_FIELD_NUMBER = 3;
-    private int numThreads_;
-    /**
-     * <code>int32 numThreads = 3;</code>
-     */
-    public int getNumThreads() {
-      return numThreads_;
-    }
-
-    public static final int NUMDOCS_FIELD_NUMBER = 4;
+    public static final int NUMDOCS_FIELD_NUMBER = 3;
     private int numDocs_;
     /**
-     * <code>int32 numDocs = 4;</code>
+     * <code>int32 numDocs = 3;</code>
      */
     public int getNumDocs() {
       return numDocs_;
     }
 
-    public static final int COMMIT_FIELD_NUMBER = 5;
-    private boolean commit_;
-    /**
-     * <code>bool commit = 5;</code>
-     */
-    public boolean getCommit() {
-      return commit_;
-    }
-
-    public static final int SYNC_FIELD_NUMBER = 6;
-    private boolean sync_;
-    /**
-     * <code>bool sync = 6;</code>
-     */
-    public boolean getSync() {
-      return sync_;
-    }
-
-    public static final int COMMAND_FIELD_NUMBER = 7;
+    public static final int COMMAND_FIELD_NUMBER = 4;
     private volatile java.lang.Object command_;
     /**
-     * <code>string command = 7;</code>
+     * <code>string command = 4;</code>
      */
     public java.lang.String getCommand() {
       java.lang.Object ref = command_;
@@ -1669,7 +1648,7 @@ public final class TxnClient {
       }
     }
     /**
-     * <code>string command = 7;</code>
+     * <code>string command = 4;</code>
      */
     public com.google.protobuf.ByteString
         getCommandBytes() {
@@ -1679,6 +1658,58 @@ public final class TxnClient {
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         command_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int MOCK_FIELD_NUMBER = 5;
+    private boolean mock_;
+    /**
+     * <code>bool mock = 5;</code>
+     */
+    public boolean getMock() {
+      return mock_;
+    }
+
+    public static final int DOCNUM_FIELD_NUMBER = 6;
+    private int docNum_;
+    /**
+     * <code>int32 docNum = 6;</code>
+     */
+    public int getDocNum() {
+      return docNum_;
+    }
+
+    public static final int MOCKOPERATION_FIELD_NUMBER = 7;
+    private volatile java.lang.Object mockOperation_;
+    /**
+     * <code>string mockOperation = 7;</code>
+     */
+    public java.lang.String getMockOperation() {
+      java.lang.Object ref = mockOperation_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        mockOperation_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string mockOperation = 7;</code>
+     */
+    public com.google.protobuf.ByteString
+        getMockOperationBytes() {
+      java.lang.Object ref = mockOperation_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        mockOperation_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -1705,20 +1736,20 @@ public final class TxnClient {
       if (txnDurability_ != 0) {
         output.writeInt32(2, txnDurability_);
       }
-      if (numThreads_ != 0) {
-        output.writeInt32(3, numThreads_);
-      }
       if (numDocs_ != 0) {
-        output.writeInt32(4, numDocs_);
-      }
-      if (commit_ != false) {
-        output.writeBool(5, commit_);
-      }
-      if (sync_ != false) {
-        output.writeBool(6, sync_);
+        output.writeInt32(3, numDocs_);
       }
       if (!getCommandBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, command_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, command_);
+      }
+      if (mock_ != false) {
+        output.writeBool(5, mock_);
+      }
+      if (docNum_ != 0) {
+        output.writeInt32(6, docNum_);
+      }
+      if (!getMockOperationBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, mockOperation_);
       }
       unknownFields.writeTo(output);
     }
@@ -1737,24 +1768,23 @@ public final class TxnClient {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, txnDurability_);
       }
-      if (numThreads_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, numThreads_);
-      }
       if (numDocs_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, numDocs_);
-      }
-      if (commit_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(5, commit_);
-      }
-      if (sync_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(6, sync_);
+          .computeInt32Size(3, numDocs_);
       }
       if (!getCommandBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, command_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, command_);
+      }
+      if (mock_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(5, mock_);
+      }
+      if (docNum_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, docNum_);
+      }
+      if (!getMockOperationBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, mockOperation_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1776,16 +1806,16 @@ public final class TxnClient {
           == other.getTxnTimeout());
       result = result && (getTxnDurability()
           == other.getTxnDurability());
-      result = result && (getNumThreads()
-          == other.getNumThreads());
       result = result && (getNumDocs()
           == other.getNumDocs());
-      result = result && (getCommit()
-          == other.getCommit());
-      result = result && (getSync()
-          == other.getSync());
       result = result && getCommand()
           .equals(other.getCommand());
+      result = result && (getMock()
+          == other.getMock());
+      result = result && (getDocNum()
+          == other.getDocNum());
+      result = result && getMockOperation()
+          .equals(other.getMockOperation());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -1801,18 +1831,17 @@ public final class TxnClient {
       hash = (53 * hash) + getTxnTimeout();
       hash = (37 * hash) + TXN_DURABILITY_FIELD_NUMBER;
       hash = (53 * hash) + getTxnDurability();
-      hash = (37 * hash) + NUMTHREADS_FIELD_NUMBER;
-      hash = (53 * hash) + getNumThreads();
       hash = (37 * hash) + NUMDOCS_FIELD_NUMBER;
       hash = (53 * hash) + getNumDocs();
-      hash = (37 * hash) + COMMIT_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getCommit());
-      hash = (37 * hash) + SYNC_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getSync());
       hash = (37 * hash) + COMMAND_FIELD_NUMBER;
       hash = (53 * hash) + getCommand().hashCode();
+      hash = (37 * hash) + MOCK_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getMock());
+      hash = (37 * hash) + DOCNUM_FIELD_NUMBER;
+      hash = (53 * hash) + getDocNum();
+      hash = (37 * hash) + MOCKOPERATION_FIELD_NUMBER;
+      hash = (53 * hash) + getMockOperation().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1950,15 +1979,15 @@ public final class TxnClient {
 
         txnDurability_ = 0;
 
-        numThreads_ = 0;
-
         numDocs_ = 0;
 
-        commit_ = false;
-
-        sync_ = false;
-
         command_ = "";
+
+        mock_ = false;
+
+        docNum_ = 0;
+
+        mockOperation_ = "";
 
         return this;
       }
@@ -1988,11 +2017,11 @@ public final class TxnClient {
         com.couchbase.grpc.protocol.TxnClient.txn_req result = new com.couchbase.grpc.protocol.TxnClient.txn_req(this);
         result.txnTimeout_ = txnTimeout_;
         result.txnDurability_ = txnDurability_;
-        result.numThreads_ = numThreads_;
         result.numDocs_ = numDocs_;
-        result.commit_ = commit_;
-        result.sync_ = sync_;
         result.command_ = command_;
+        result.mock_ = mock_;
+        result.docNum_ = docNum_;
+        result.mockOperation_ = mockOperation_;
         onBuilt();
         return result;
       }
@@ -2047,20 +2076,21 @@ public final class TxnClient {
         if (other.getTxnDurability() != 0) {
           setTxnDurability(other.getTxnDurability());
         }
-        if (other.getNumThreads() != 0) {
-          setNumThreads(other.getNumThreads());
-        }
         if (other.getNumDocs() != 0) {
           setNumDocs(other.getNumDocs());
         }
-        if (other.getCommit() != false) {
-          setCommit(other.getCommit());
-        }
-        if (other.getSync() != false) {
-          setSync(other.getSync());
-        }
         if (!other.getCommand().isEmpty()) {
           command_ = other.command_;
+          onChanged();
+        }
+        if (other.getMock() != false) {
+          setMock(other.getMock());
+        }
+        if (other.getDocNum() != 0) {
+          setDocNum(other.getDocNum());
+        }
+        if (!other.getMockOperation().isEmpty()) {
+          mockOperation_ = other.mockOperation_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -2144,41 +2174,15 @@ public final class TxnClient {
         return this;
       }
 
-      private int numThreads_ ;
-      /**
-       * <code>int32 numThreads = 3;</code>
-       */
-      public int getNumThreads() {
-        return numThreads_;
-      }
-      /**
-       * <code>int32 numThreads = 3;</code>
-       */
-      public Builder setNumThreads(int value) {
-        
-        numThreads_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 numThreads = 3;</code>
-       */
-      public Builder clearNumThreads() {
-        
-        numThreads_ = 0;
-        onChanged();
-        return this;
-      }
-
       private int numDocs_ ;
       /**
-       * <code>int32 numDocs = 4;</code>
+       * <code>int32 numDocs = 3;</code>
        */
       public int getNumDocs() {
         return numDocs_;
       }
       /**
-       * <code>int32 numDocs = 4;</code>
+       * <code>int32 numDocs = 3;</code>
        */
       public Builder setNumDocs(int value) {
         
@@ -2187,7 +2191,7 @@ public final class TxnClient {
         return this;
       }
       /**
-       * <code>int32 numDocs = 4;</code>
+       * <code>int32 numDocs = 3;</code>
        */
       public Builder clearNumDocs() {
         
@@ -2196,61 +2200,9 @@ public final class TxnClient {
         return this;
       }
 
-      private boolean commit_ ;
-      /**
-       * <code>bool commit = 5;</code>
-       */
-      public boolean getCommit() {
-        return commit_;
-      }
-      /**
-       * <code>bool commit = 5;</code>
-       */
-      public Builder setCommit(boolean value) {
-        
-        commit_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool commit = 5;</code>
-       */
-      public Builder clearCommit() {
-        
-        commit_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean sync_ ;
-      /**
-       * <code>bool sync = 6;</code>
-       */
-      public boolean getSync() {
-        return sync_;
-      }
-      /**
-       * <code>bool sync = 6;</code>
-       */
-      public Builder setSync(boolean value) {
-        
-        sync_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool sync = 6;</code>
-       */
-      public Builder clearSync() {
-        
-        sync_ = false;
-        onChanged();
-        return this;
-      }
-
       private java.lang.Object command_ = "";
       /**
-       * <code>string command = 7;</code>
+       * <code>string command = 4;</code>
        */
       public java.lang.String getCommand() {
         java.lang.Object ref = command_;
@@ -2265,7 +2217,7 @@ public final class TxnClient {
         }
       }
       /**
-       * <code>string command = 7;</code>
+       * <code>string command = 4;</code>
        */
       public com.google.protobuf.ByteString
           getCommandBytes() {
@@ -2281,7 +2233,7 @@ public final class TxnClient {
         }
       }
       /**
-       * <code>string command = 7;</code>
+       * <code>string command = 4;</code>
        */
       public Builder setCommand(
           java.lang.String value) {
@@ -2294,7 +2246,7 @@ public final class TxnClient {
         return this;
       }
       /**
-       * <code>string command = 7;</code>
+       * <code>string command = 4;</code>
        */
       public Builder clearCommand() {
         
@@ -2303,7 +2255,7 @@ public final class TxnClient {
         return this;
       }
       /**
-       * <code>string command = 7;</code>
+       * <code>string command = 4;</code>
        */
       public Builder setCommandBytes(
           com.google.protobuf.ByteString value) {
@@ -2313,6 +2265,127 @@ public final class TxnClient {
   checkByteStringIsUtf8(value);
         
         command_ = value;
+        onChanged();
+        return this;
+      }
+
+      private boolean mock_ ;
+      /**
+       * <code>bool mock = 5;</code>
+       */
+      public boolean getMock() {
+        return mock_;
+      }
+      /**
+       * <code>bool mock = 5;</code>
+       */
+      public Builder setMock(boolean value) {
+        
+        mock_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool mock = 5;</code>
+       */
+      public Builder clearMock() {
+        
+        mock_ = false;
+        onChanged();
+        return this;
+      }
+
+      private int docNum_ ;
+      /**
+       * <code>int32 docNum = 6;</code>
+       */
+      public int getDocNum() {
+        return docNum_;
+      }
+      /**
+       * <code>int32 docNum = 6;</code>
+       */
+      public Builder setDocNum(int value) {
+        
+        docNum_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 docNum = 6;</code>
+       */
+      public Builder clearDocNum() {
+        
+        docNum_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object mockOperation_ = "";
+      /**
+       * <code>string mockOperation = 7;</code>
+       */
+      public java.lang.String getMockOperation() {
+        java.lang.Object ref = mockOperation_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          mockOperation_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string mockOperation = 7;</code>
+       */
+      public com.google.protobuf.ByteString
+          getMockOperationBytes() {
+        java.lang.Object ref = mockOperation_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          mockOperation_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string mockOperation = 7;</code>
+       */
+      public Builder setMockOperation(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        mockOperation_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string mockOperation = 7;</code>
+       */
+      public Builder clearMockOperation() {
+        
+        mockOperation_ = getDefaultInstance().getMockOperation();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string mockOperation = 7;</code>
+       */
+      public Builder setMockOperationBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        mockOperation_ = value;
         onChanged();
         return this;
       }
@@ -3430,16 +3503,16 @@ public final class TxnClient {
       "\n\017handle_password\030\007 \001(\t\022\027\n\017handle_userna" +
       "me\030\010 \001(\t\022\022\n\nhandle_ssl\030\t \001(\010\022\036\n\026handle_a" +
       "utofailover_ms\030\n \001(\005\022\023\n\013handle_cert\030\013 \001(" +
-      "\t\"\212\001\n\007txn_req\022\023\n\013txn_timeout\030\001 \001(\005\022\026\n\016tx" +
-      "n_durability\030\002 \001(\005\022\022\n\nnumThreads\030\003 \001(\005\022\017" +
-      "\n\007numDocs\030\004 \001(\005\022\016\n\006commit\030\005 \001(\010\022\014\n\004sync\030" +
-      "\006 \001(\010\022\017\n\007command\030\007 \001(\t\">\n\013APIResponse\022\030\n" +
-      "\020APISuccessStatus\030\001 \001(\010\022\025\n\rAPIStatusInfo" +
-      "\030\002 \001(\t\"\007\n\005Empty2{\n\003txn\022$\n\ncreate_txn\022\010.t" +
-      "xn_req\032\014.APIResponse\022\'\n\013create_conn\022\n.co" +
-      "nn_info\032\014.APIResponse\022%\n\013execute_txn\022\010.t" +
-      "xn_req\032\014.APIResponseB\035\n\033com.couchbase.gr" +
-      "pc.protocolb\006proto3"
+      "\t\"\215\001\n\007txn_req\022\023\n\013txn_timeout\030\001 \001(\005\022\026\n\016tx" +
+      "n_durability\030\002 \001(\005\022\017\n\007numDocs\030\003 \001(\005\022\017\n\007c" +
+      "ommand\030\004 \001(\t\022\014\n\004mock\030\005 \001(\010\022\016\n\006docNum\030\006 \001" +
+      "(\005\022\025\n\rmockOperation\030\007 \001(\t\">\n\013APIResponse" +
+      "\022\030\n\020APISuccessStatus\030\001 \001(\010\022\025\n\rAPIStatusI" +
+      "nfo\030\002 \001(\t\"\007\n\005Empty2\202\001\n\003txn\022+\n\021create_Txn" +
+      "Factory\022\010.txn_req\032\014.APIResponse\022\'\n\013creat" +
+      "e_conn\022\n.conn_info\032\014.APIResponse\022%\n\013exec" +
+      "ute_txn\022\010.txn_req\032\014.APIResponseB\035\n\033com.c" +
+      "ouchbase.grpc.protocolb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3464,7 +3537,7 @@ public final class TxnClient {
     internal_static_txn_req_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_txn_req_descriptor,
-        new java.lang.String[] { "TxnTimeout", "TxnDurability", "NumThreads", "NumDocs", "Commit", "Sync", "Command", });
+        new java.lang.String[] { "TxnTimeout", "TxnDurability", "NumDocs", "Command", "Mock", "DocNum", "MockOperation", });
     internal_static_APIResponse_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_APIResponse_fieldAccessorTable = new

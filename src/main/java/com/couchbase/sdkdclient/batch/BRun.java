@@ -369,6 +369,7 @@ public class BRun {
   public static void main(String[] argv) throws Exception {
     try {
       BRun batchRunner = new BRun(argv);
+      logger.info("Hello praneeth");
       batchRunner.run();
       System.exit(0);
     } catch (Exception ex) {

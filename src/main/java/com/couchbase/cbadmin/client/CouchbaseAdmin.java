@@ -258,6 +258,7 @@ public class CouchbaseAdmin implements ICouchbaseAdmin {
     try {
       url = new URL(entryPoint, path);
       req.setURI(url.toURI());
+      System.out.println("req.toString():"+req.toString());
     } catch (MalformedURLException ex) {
       throw new IOException(ex);
     } catch (URISyntaxException ex) {

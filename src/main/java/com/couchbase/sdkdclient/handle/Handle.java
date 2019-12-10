@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package com.couchbase.sdkdclient.handle;
+import com.couchbase.client.java.Cluster;
 import com.couchbase.sdkdclient.logging.LogUtil;
 import org.slf4j.Logger;
 import java.io.BufferedReader;
