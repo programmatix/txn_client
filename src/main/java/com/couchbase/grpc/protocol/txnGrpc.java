@@ -24,7 +24,7 @@ public final class txnGrpc {
 
   private txnGrpc() {}
 
-  public static final String SERVICE_NAME = "txn";
+  public static final String SERVICE_NAME = "txnService.txn";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.couchbase.grpc.protocol.TxnClient.txn_req,
@@ -45,7 +45,7 @@ public final class txnGrpc {
               io.grpc.MethodDescriptor.<com.couchbase.grpc.protocol.TxnClient.txn_req, com.couchbase.grpc.protocol.TxnClient.APIResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "txn", "create_TxnFactory"))
+                  "txnService.txn", "create_TxnFactory"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.couchbase.grpc.protocol.TxnClient.txn_req.getDefaultInstance()))
@@ -77,7 +77,7 @@ public final class txnGrpc {
               io.grpc.MethodDescriptor.<com.couchbase.grpc.protocol.TxnClient.conn_info, com.couchbase.grpc.protocol.TxnClient.APIResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "txn", "create_conn"))
+                  "txnService.txn", "create_conn"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.couchbase.grpc.protocol.TxnClient.conn_info.getDefaultInstance()))
@@ -109,7 +109,7 @@ public final class txnGrpc {
               io.grpc.MethodDescriptor.<com.couchbase.grpc.protocol.TxnClient.txn_req, com.couchbase.grpc.protocol.TxnClient.APIResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "txn", "execute_txn"))
+                  "txnService.txn", "execute_txn"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.couchbase.grpc.protocol.TxnClient.txn_req.getDefaultInstance()))

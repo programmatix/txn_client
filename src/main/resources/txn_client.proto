@@ -1,9 +1,6 @@
 syntax = "proto3";
-
-
 option java_package = "com.couchbase.grpc.protocol";
-
-
+package txnService;
 
 
 service txn{
@@ -11,7 +8,6 @@ service txn{
     rpc create_conn(conn_info) returns (APIResponse);
     rpc execute_txn(txn_req) returns (APIResponse);
 }
-
 
 message conn_info{
     string handle_bucket=3;
@@ -25,7 +21,6 @@ message conn_info{
     string handle_cert=11;
 }
 
-
 message txn_req{
     int32 txn_timeout = 1;
     int32 txn_durability = 2;
@@ -36,15 +31,10 @@ message txn_req{
     string mockOperation=7;
 }
 
-
-
-
-
 message APIResponse{
     bool APISuccessStatus = 1;
     string APIStatusInfo = 2;
 }
-
 
 message Empty{
 }

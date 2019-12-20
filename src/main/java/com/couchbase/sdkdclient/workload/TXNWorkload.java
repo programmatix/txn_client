@@ -56,24 +56,12 @@ public class TXNWorkload extends Workload implements OptionConsumer {
         TxnClient.APIResponse response = txnstub.createConn(conn_create_req);
         System.out.println("Did txn_framework server establish connection with Couchbase Server: "+response.getAPISuccessStatus());
 
-
-
-        try{
-            transactionTests sanity_tests = new sanityTests(conn_create_req,txnstub,ept.getHost());
-            assertTrue(sanity_tests.execute());
-        }catch(Exception e){
-            System.out.println("Basic Test failed. hence not proceeding further");
-            System.exit(-1);
+        try {
+            transactionTests txn_tests = new transactionTests(conn_create_req,txnstub,ept.getHost(),"");
+            txn_tests.execute();
+        } catch(Exception e) {
+            System.out.println("Few tests have failed Test failed");
         }
-
-
-        try{
-            transactionTests continuousFailOnSecondInsertMidCommit = new continuousFailOnSecondInsertMidCommit(conn_create_req,txnstub,ept.getHost());
-            assertTrue(continuousFailOnSecondInsertMidCommit.execute());
-        }catch(Exception e){
-            System.out.println("continuousFailOnSecondInsertMidCommit Test failed");
-        }
-
 
         channel.shutdown();
         System.exit(-1);

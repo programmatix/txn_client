@@ -21,33 +21,47 @@ public class continuousFailOnSecondInsertMidCommit  extends transactionTests {
     private static List<String> txnKeys = new LinkedList<>();
     private static JsonObject docContent;
 
-    public continuousFailOnSecondInsertMidCommit(TxnClient.conn_info  conn_info, txnGrpc.txnBlockingStub   txnstub,String hostname  ){
-        super(conn_info,txnstub,hostname);
+    public continuousFailOnSecondInsertMidCommit(TxnClient.conn_info  conn_info, txnGrpc.txnBlockingStub   txnstub,String hostname ,String testname ){
+        super(conn_info,txnstub,hostname,testname);
 
     }
 
     public void initializeTest(){
         for (int i = 0; i < 3; i++) {
-            txnKeys.add("Test" + i);
+            txnKeys.add(Strings.DEFAULT_KEY+i);
         }
-        docContent =  JsonObject.create().put("val", "TXN");
+        docContent = JsonObject.create().put(Strings.CONTENT_NAME, Strings.DEFAULT_CONTENT_VALUE);
     }
 
-    public boolean execute(){
+    public void execute(){
         initializeTest();
         System.out.println("Executing continuousFailOnSecondInsertMidCommit");
         try{
-            TxnClient.txn_req txn_create_req = TxnClient.txn_req.newBuilder().setTxnTimeout(10).setTxnDurability(1).setCommand("TXN_CREATE").setMock(true).setDocNum(3).setMockOperation("afterDocCommitted").build();
+            TxnClient.txn_req txn_create_req = TxnClient.txn_req.newBuilder()
+                                                .setTxnTimeout(10)
+                                                .setTxnDurability(1).setCommand("TXN_CREATE")
+                                                .setMock(true)
+                                                .setDocNum(3)
+                                                .setMockOperation("beforeDocCommitted")
+                                                .build();
             assertTrue(txnstub.createTxnFactory(txn_create_req).getAPISuccessStatus());
         }catch(Exception e){
             System.out.println(response.getAPIStatusInfo());
+            failed_tests.add(this.testname);
         }
 
         try{
-            TxnClient.txn_req txn_create_req = TxnClient.txn_req.newBuilder().setTxnTimeout(10).setTxnDurability(1).setNumDocs(3).setCommand("TXN_DATA_LOAD").build();
-            assertTrue(txnstub.createTxnFactory(txn_create_req).getAPISuccessStatus());
-            verifyDocuments(txnKeys,docContent,true,hostname);
+            TxnClient.txn_req txn_create_req = TxnClient.txn_req.newBuilder()
+                                                .setTxnTimeout(10)
+                                                .setTxnDurability(1)
+                                                .setNumDocs(3)
+                                                .setCommand("TXN_DATA_INSERT")
+                                                .build();
+            assertTrue(txnstub.executeTxn(txn_create_req).getAPISuccessStatus());
+            verifyDocuments(txnKeys,hostname);
+
         }catch(Exception e){
+            failed_tests.add(this.testname);
             System.out.println(response.getAPIStatusInfo());
         }
 
@@ -57,25 +71,18 @@ public class continuousFailOnSecondInsertMidCommit  extends transactionTests {
             txnUtils.verifyDocuments(txnKeys,docContent,true,hostname);
         }catch(Exception e){
             System.out.println(response.getAPIStatusInfo());
+            failed_tests.add(this.testname);
         }
-
-        return true;
     }
 
 
 
-    public  boolean verifyDocuments(List<String> keys, JsonObject docContent, boolean docExists,String hostname) {
+    public  boolean verifyDocuments(List<String> keys,String hostname) {
         Cluster cluster = Cluster.connect(hostname, Strings.ADMIN_USER, Strings.PASSWORD);
         Collection defaultCollection= cluster.bucket("default").defaultCollection();
-        assertEquals("TXN", defaultCollection.get(keys.get(0)).contentAs(JsonObject.class).getString("val"));
-        System.out.println("docId1 assert success");
-
-        assertEquals("TXN", defaultCollection.get(keys.get(1)).contentAs(JsonObject.class).getString("val"));
-        System.out.println("docId2 assert success");
-
-        assertEquals(0, defaultCollection.get(keys.get(2)).contentAs(JsonObject.class).getNames().size());
-        System.out.println("docId3 assert success");
-
+        assertEquals(Strings.DEFAULT_CONTENT_VALUE, defaultCollection.get(keys.get(0)).contentAs(JsonObject.class).getString(Strings.CONTENT_NAME));
+        assertEquals(Strings.DEFAULT_CONTENT_VALUE, defaultCollection.get(keys.get(1)).contentAs(JsonObject.class).getString(Strings.CONTENT_NAME));
+        assertEquals(Strings.DEFAULT_CONTENT_VALUE, defaultCollection.get(keys.get(1)).contentAs(JsonObject.class).getString(Strings.CONTENT_NAME));
         return true;
     }
 }

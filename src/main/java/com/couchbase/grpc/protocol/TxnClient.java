@@ -15,7 +15,7 @@ public final class TxnClient {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface conn_infoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:conn_info)
+      // @@protoc_insertion_point(interface_extends:txnService.conn_info)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -94,11 +94,11 @@ public final class TxnClient {
         getHandleCertBytes();
   }
   /**
-   * Protobuf type {@code conn_info}
+   * Protobuf type {@code txnService.conn_info}
    */
   public  static final class conn_info extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:conn_info)
+      // @@protoc_insertion_point(message_implements:txnService.conn_info)
       conn_infoOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use conn_info.newBuilder() to construct.
@@ -213,13 +213,13 @@ public final class TxnClient {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.couchbase.grpc.protocol.TxnClient.internal_static_conn_info_descriptor;
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_conn_info_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.couchbase.grpc.protocol.TxnClient.internal_static_conn_info_fieldAccessorTable
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_conn_info_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.couchbase.grpc.protocol.TxnClient.conn_info.class, com.couchbase.grpc.protocol.TxnClient.conn_info.Builder.class);
     }
@@ -695,21 +695,21 @@ public final class TxnClient {
       return builder;
     }
     /**
-     * Protobuf type {@code conn_info}
+     * Protobuf type {@code txnService.conn_info}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:conn_info)
+        // @@protoc_insertion_point(builder_implements:txnService.conn_info)
         com.couchbase.grpc.protocol.TxnClient.conn_infoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_conn_info_descriptor;
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_conn_info_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_conn_info_fieldAccessorTable
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_conn_info_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.couchbase.grpc.protocol.TxnClient.conn_info.class, com.couchbase.grpc.protocol.TxnClient.conn_info.Builder.class);
       }
@@ -756,7 +756,7 @@ public final class TxnClient {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_conn_info_descriptor;
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_conn_info_descriptor;
       }
 
       @java.lang.Override
@@ -1399,10 +1399,10 @@ public final class TxnClient {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:conn_info)
+      // @@protoc_insertion_point(builder_scope:txnService.conn_info)
     }
 
-    // @@protoc_insertion_point(class_scope:conn_info)
+    // @@protoc_insertion_point(class_scope:txnService.conn_info)
     private static final com.couchbase.grpc.protocol.TxnClient.conn_info DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.couchbase.grpc.protocol.TxnClient.conn_info();
@@ -1440,7 +1440,7 @@ public final class TxnClient {
   }
 
   public interface txn_reqOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:txn_req)
+      // @@protoc_insertion_point(interface_extends:txnService.txn_req)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -1489,11 +1489,11 @@ public final class TxnClient {
         getMockOperationBytes();
   }
   /**
-   * Protobuf type {@code txn_req}
+   * Protobuf type {@code txnService.txn_req}
    */
   public  static final class txn_req extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:txn_req)
+      // @@protoc_insertion_point(message_implements:txnService.txn_req)
       txn_reqOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use txn_req.newBuilder() to construct.
@@ -1592,13 +1592,13 @@ public final class TxnClient {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.couchbase.grpc.protocol.TxnClient.internal_static_txn_req_descriptor;
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_txn_req_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.couchbase.grpc.protocol.TxnClient.internal_static_txn_req_fieldAccessorTable
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_txn_req_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.couchbase.grpc.protocol.TxnClient.txn_req.class, com.couchbase.grpc.protocol.TxnClient.txn_req.Builder.class);
     }
@@ -1938,21 +1938,21 @@ public final class TxnClient {
       return builder;
     }
     /**
-     * Protobuf type {@code txn_req}
+     * Protobuf type {@code txnService.txn_req}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:txn_req)
+        // @@protoc_insertion_point(builder_implements:txnService.txn_req)
         com.couchbase.grpc.protocol.TxnClient.txn_reqOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_txn_req_descriptor;
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_txn_req_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_txn_req_fieldAccessorTable
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_txn_req_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.couchbase.grpc.protocol.TxnClient.txn_req.class, com.couchbase.grpc.protocol.TxnClient.txn_req.Builder.class);
       }
@@ -1995,7 +1995,7 @@ public final class TxnClient {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_txn_req_descriptor;
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_txn_req_descriptor;
       }
 
       @java.lang.Override
@@ -2402,10 +2402,10 @@ public final class TxnClient {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:txn_req)
+      // @@protoc_insertion_point(builder_scope:txnService.txn_req)
     }
 
-    // @@protoc_insertion_point(class_scope:txn_req)
+    // @@protoc_insertion_point(class_scope:txnService.txn_req)
     private static final com.couchbase.grpc.protocol.TxnClient.txn_req DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.couchbase.grpc.protocol.TxnClient.txn_req();
@@ -2443,7 +2443,7 @@ public final class TxnClient {
   }
 
   public interface APIResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:APIResponse)
+      // @@protoc_insertion_point(interface_extends:txnService.APIResponse)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -2462,11 +2462,11 @@ public final class TxnClient {
         getAPIStatusInfoBytes();
   }
   /**
-   * Protobuf type {@code APIResponse}
+   * Protobuf type {@code txnService.APIResponse}
    */
   public  static final class APIResponse extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:APIResponse)
+      // @@protoc_insertion_point(message_implements:txnService.APIResponse)
       APIResponseOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use APIResponse.newBuilder() to construct.
@@ -2534,13 +2534,13 @@ public final class TxnClient {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.couchbase.grpc.protocol.TxnClient.internal_static_APIResponse_descriptor;
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_APIResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.couchbase.grpc.protocol.TxnClient.internal_static_APIResponse_fieldAccessorTable
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_APIResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.couchbase.grpc.protocol.TxnClient.APIResponse.class, com.couchbase.grpc.protocol.TxnClient.APIResponse.Builder.class);
     }
@@ -2756,21 +2756,21 @@ public final class TxnClient {
       return builder;
     }
     /**
-     * Protobuf type {@code APIResponse}
+     * Protobuf type {@code txnService.APIResponse}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:APIResponse)
+        // @@protoc_insertion_point(builder_implements:txnService.APIResponse)
         com.couchbase.grpc.protocol.TxnClient.APIResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_APIResponse_descriptor;
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_APIResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_APIResponse_fieldAccessorTable
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_APIResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.couchbase.grpc.protocol.TxnClient.APIResponse.class, com.couchbase.grpc.protocol.TxnClient.APIResponse.Builder.class);
       }
@@ -2803,7 +2803,7 @@ public final class TxnClient {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_APIResponse_descriptor;
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_APIResponse_descriptor;
       }
 
       @java.lang.Override
@@ -3016,10 +3016,10 @@ public final class TxnClient {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:APIResponse)
+      // @@protoc_insertion_point(builder_scope:txnService.APIResponse)
     }
 
-    // @@protoc_insertion_point(class_scope:APIResponse)
+    // @@protoc_insertion_point(class_scope:txnService.APIResponse)
     private static final com.couchbase.grpc.protocol.TxnClient.APIResponse DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.couchbase.grpc.protocol.TxnClient.APIResponse();
@@ -3057,15 +3057,15 @@ public final class TxnClient {
   }
 
   public interface EmptyOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:Empty)
+      // @@protoc_insertion_point(interface_extends:txnService.Empty)
       com.google.protobuf.MessageOrBuilder {
   }
   /**
-   * Protobuf type {@code Empty}
+   * Protobuf type {@code txnService.Empty}
    */
   public  static final class Empty extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:Empty)
+      // @@protoc_insertion_point(message_implements:txnService.Empty)
       EmptyOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use Empty.newBuilder() to construct.
@@ -3119,13 +3119,13 @@ public final class TxnClient {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.couchbase.grpc.protocol.TxnClient.internal_static_Empty_descriptor;
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_Empty_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.couchbase.grpc.protocol.TxnClient.internal_static_Empty_fieldAccessorTable
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_Empty_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.couchbase.grpc.protocol.TxnClient.Empty.class, com.couchbase.grpc.protocol.TxnClient.Empty.Builder.class);
     }
@@ -3276,21 +3276,21 @@ public final class TxnClient {
       return builder;
     }
     /**
-     * Protobuf type {@code Empty}
+     * Protobuf type {@code txnService.Empty}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:Empty)
+        // @@protoc_insertion_point(builder_implements:txnService.Empty)
         com.couchbase.grpc.protocol.TxnClient.EmptyOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_Empty_descriptor;
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_Empty_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_Empty_fieldAccessorTable
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_Empty_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.couchbase.grpc.protocol.TxnClient.Empty.class, com.couchbase.grpc.protocol.TxnClient.Empty.Builder.class);
       }
@@ -3319,7 +3319,7 @@ public final class TxnClient {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_Empty_descriptor;
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_Empty_descriptor;
       }
 
       @java.lang.Override
@@ -3428,10 +3428,10 @@ public final class TxnClient {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:Empty)
+      // @@protoc_insertion_point(builder_scope:txnService.Empty)
     }
 
-    // @@protoc_insertion_point(class_scope:Empty)
+    // @@protoc_insertion_point(class_scope:txnService.Empty)
     private static final com.couchbase.grpc.protocol.TxnClient.Empty DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.couchbase.grpc.protocol.TxnClient.Empty();
@@ -3469,25 +3469,25 @@ public final class TxnClient {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_conn_info_descriptor;
+    internal_static_txnService_conn_info_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_conn_info_fieldAccessorTable;
+      internal_static_txnService_conn_info_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_txn_req_descriptor;
+    internal_static_txnService_txn_req_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_txn_req_fieldAccessorTable;
+      internal_static_txnService_txn_req_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_APIResponse_descriptor;
+    internal_static_txnService_APIResponse_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_APIResponse_fieldAccessorTable;
+      internal_static_txnService_APIResponse_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_Empty_descriptor;
+    internal_static_txnService_Empty_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_Empty_fieldAccessorTable;
+      internal_static_txnService_Empty_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3497,22 +3497,24 @@ public final class TxnClient {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\020txn_client.proto\"\334\001\n\tconn_info\022\025\n\rhand" +
-      "le_bucket\030\003 \001(\t\022\017\n\007payload\030\004 \001(\t\022\027\n\017hand" +
-      "le_hostname\030\005 \001(\t\022\023\n\013handle_port\030\006 \001(\005\022\027" +
-      "\n\017handle_password\030\007 \001(\t\022\027\n\017handle_userna" +
-      "me\030\010 \001(\t\022\022\n\nhandle_ssl\030\t \001(\010\022\036\n\026handle_a" +
-      "utofailover_ms\030\n \001(\005\022\023\n\013handle_cert\030\013 \001(" +
-      "\t\"\215\001\n\007txn_req\022\023\n\013txn_timeout\030\001 \001(\005\022\026\n\016tx" +
-      "n_durability\030\002 \001(\005\022\017\n\007numDocs\030\003 \001(\005\022\017\n\007c" +
-      "ommand\030\004 \001(\t\022\014\n\004mock\030\005 \001(\010\022\016\n\006docNum\030\006 \001" +
-      "(\005\022\025\n\rmockOperation\030\007 \001(\t\">\n\013APIResponse" +
-      "\022\030\n\020APISuccessStatus\030\001 \001(\010\022\025\n\rAPIStatusI" +
-      "nfo\030\002 \001(\t\"\007\n\005Empty2\202\001\n\003txn\022+\n\021create_Txn" +
-      "Factory\022\010.txn_req\032\014.APIResponse\022\'\n\013creat" +
-      "e_conn\022\n.conn_info\032\014.APIResponse\022%\n\013exec" +
-      "ute_txn\022\010.txn_req\032\014.APIResponseB\035\n\033com.c" +
-      "ouchbase.grpc.protocolb\006proto3"
+      "\n\020txn_client.proto\022\ntxnService\"\334\001\n\tconn_" +
+      "info\022\025\n\rhandle_bucket\030\003 \001(\t\022\017\n\007payload\030\004" +
+      " \001(\t\022\027\n\017handle_hostname\030\005 \001(\t\022\023\n\013handle_" +
+      "port\030\006 \001(\005\022\027\n\017handle_password\030\007 \001(\t\022\027\n\017h" +
+      "andle_username\030\010 \001(\t\022\022\n\nhandle_ssl\030\t \001(\010" +
+      "\022\036\n\026handle_autofailover_ms\030\n \001(\005\022\023\n\013hand" +
+      "le_cert\030\013 \001(\t\"\215\001\n\007txn_req\022\023\n\013txn_timeout" +
+      "\030\001 \001(\005\022\026\n\016txn_durability\030\002 \001(\005\022\017\n\007numDoc" +
+      "s\030\003 \001(\005\022\017\n\007command\030\004 \001(\t\022\014\n\004mock\030\005 \001(\010\022\016" +
+      "\n\006docNum\030\006 \001(\005\022\025\n\rmockOperation\030\007 \001(\t\">\n" +
+      "\013APIResponse\022\030\n\020APISuccessStatus\030\001 \001(\010\022\025" +
+      "\n\rAPIStatusInfo\030\002 \001(\t\"\007\n\005Empty2\304\001\n\003txn\022A" +
+      "\n\021create_TxnFactory\022\023.txnService.txn_req" +
+      "\032\027.txnService.APIResponse\022=\n\013create_conn" +
+      "\022\025.txnService.conn_info\032\027.txnService.API" +
+      "Response\022;\n\013execute_txn\022\023.txnService.txn" +
+      "_req\032\027.txnService.APIResponseB\035\n\033com.cou" +
+      "chbase.grpc.protocolb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3526,29 +3528,29 @@ public final class TxnClient {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_conn_info_descriptor =
+    internal_static_txnService_conn_info_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_conn_info_fieldAccessorTable = new
+    internal_static_txnService_conn_info_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_conn_info_descriptor,
+        internal_static_txnService_conn_info_descriptor,
         new java.lang.String[] { "HandleBucket", "Payload", "HandleHostname", "HandlePort", "HandlePassword", "HandleUsername", "HandleSsl", "HandleAutofailoverMs", "HandleCert", });
-    internal_static_txn_req_descriptor =
+    internal_static_txnService_txn_req_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_txn_req_fieldAccessorTable = new
+    internal_static_txnService_txn_req_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_txn_req_descriptor,
+        internal_static_txnService_txn_req_descriptor,
         new java.lang.String[] { "TxnTimeout", "TxnDurability", "NumDocs", "Command", "Mock", "DocNum", "MockOperation", });
-    internal_static_APIResponse_descriptor =
+    internal_static_txnService_APIResponse_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_APIResponse_fieldAccessorTable = new
+    internal_static_txnService_APIResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_APIResponse_descriptor,
+        internal_static_txnService_APIResponse_descriptor,
         new java.lang.String[] { "APISuccessStatus", "APIStatusInfo", });
-    internal_static_Empty_descriptor =
+    internal_static_txnService_Empty_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_Empty_fieldAccessorTable = new
+    internal_static_txnService_Empty_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_Empty_descriptor,
+        internal_static_txnService_Empty_descriptor,
         new java.lang.String[] { });
   }
 
