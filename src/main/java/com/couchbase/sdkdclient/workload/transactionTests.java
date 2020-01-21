@@ -37,7 +37,7 @@ import java.util.List;
      void execute(){
          configureTests();
         for(transactionTests test : txn_tests){
-           // test.execute();
+            test.execute();
             System.out.println("Completed test:"+test.testname);
         }
     }

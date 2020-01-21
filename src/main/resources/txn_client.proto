@@ -1,9 +1,14 @@
+// TODO share this between client and server
 syntax = "proto3";
 option java_package = "com.couchbase.grpc.protocol";
 package txnService;
 
 
 service txn{
+    rpc transactionCreate(TransactionCreateRequest) returns (TransactionCreateResponse);
+    rpc transactionInsert(TransactionInsertRequest) returns (TransactionGenericResponse);
+    rpc transactionCommit(TransactionGenericRequest) returns (TransactionGenericResponse);
+
     rpc create_TxnFactory(txn_req) returns (APIResponse);
     rpc create_conn(conn_info) returns (APIResponse);
     rpc execute_txn(txn_req) returns (APIResponse);
@@ -37,6 +42,29 @@ message APIResponse{
 }
 
 message Empty{
+}
+
+message TransactionCreateRequest {
+    // TODO: durability, timeout
+}
+
+message TransactionGenericRequest {
+    string transactionRef = 1;
+}
+
+message TransactionInsertRequest {
+    string transactionRef = 1;
+    string docId = 2;
+    string contentJson = 3;
+}
+
+message TransactionCreateResponse {
+    bool success = 1;
+    string transactionRef = 2;
+}
+
+message TransactionGenericResponse {
+    bool success = 1;
 }
 
 

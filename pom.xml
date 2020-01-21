@@ -13,6 +13,7 @@
     <project.dist.directory>${project.build.directory}/dist</project.dist.directory>
     <project.basePackage>com.couchbase.sdkdclient</project.basePackage>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <junit.version>5.5.2</junit.version>
   </properties>
 
   <dependencies>
@@ -93,9 +94,9 @@
       <version>4.47</version>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -137,7 +138,7 @@
    <dependency>
        <groupId>com.couchbase.client</groupId>
        <artifactId>java-client</artifactId>
-       <version>LATEST</version>
+       <version>3.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.googlecode.json-simple</groupId>

@@ -3468,6 +3468,2891 @@ public final class TxnClient {
 
   }
 
+  public interface TransactionCreateRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:txnService.TransactionCreateRequest)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * <pre>
+   * TODO: durability, timeout
+   * </pre>
+   *
+   * Protobuf type {@code txnService.TransactionCreateRequest}
+   */
+  public  static final class TransactionCreateRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:txnService.TransactionCreateRequest)
+      TransactionCreateRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use TransactionCreateRequest.newBuilder() to construct.
+    private TransactionCreateRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private TransactionCreateRequest() {
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private TransactionCreateRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionCreateRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionCreateRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest.class, com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest)) {
+        return super.equals(obj);
+      }
+      com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest other = (com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest) obj;
+
+      boolean result = true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * TODO: durability, timeout
+     * </pre>
+     *
+     * Protobuf type {@code txnService.TransactionCreateRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:txnService.TransactionCreateRequest)
+        com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionCreateRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionCreateRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest.class, com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest.Builder.class);
+      }
+
+      // Construct using com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionCreateRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest getDefaultInstanceForType() {
+        return com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest build() {
+        com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest buildPartial() {
+        com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest result = new com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest) {
+          return mergeFrom((com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest other) {
+        if (other == com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:txnService.TransactionCreateRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:txnService.TransactionCreateRequest)
+    private static final com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest();
+    }
+
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<TransactionCreateRequest>
+        PARSER = new com.google.protobuf.AbstractParser<TransactionCreateRequest>() {
+      @java.lang.Override
+      public TransactionCreateRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TransactionCreateRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<TransactionCreateRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TransactionCreateRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface TransactionGenericRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:txnService.TransactionGenericRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string transactionRef = 1;</code>
+     */
+    java.lang.String getTransactionRef();
+    /**
+     * <code>string transactionRef = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getTransactionRefBytes();
+  }
+  /**
+   * Protobuf type {@code txnService.TransactionGenericRequest}
+   */
+  public  static final class TransactionGenericRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:txnService.TransactionGenericRequest)
+      TransactionGenericRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use TransactionGenericRequest.newBuilder() to construct.
+    private TransactionGenericRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private TransactionGenericRequest() {
+      transactionRef_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private TransactionGenericRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              transactionRef_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionGenericRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionGenericRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest.class, com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest.Builder.class);
+    }
+
+    public static final int TRANSACTIONREF_FIELD_NUMBER = 1;
+    private volatile java.lang.Object transactionRef_;
+    /**
+     * <code>string transactionRef = 1;</code>
+     */
+    public java.lang.String getTransactionRef() {
+      java.lang.Object ref = transactionRef_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        transactionRef_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string transactionRef = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTransactionRefBytes() {
+      java.lang.Object ref = transactionRef_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        transactionRef_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getTransactionRefBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, transactionRef_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getTransactionRefBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, transactionRef_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest)) {
+        return super.equals(obj);
+      }
+      com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest other = (com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest) obj;
+
+      boolean result = true;
+      result = result && getTransactionRef()
+          .equals(other.getTransactionRef());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TRANSACTIONREF_FIELD_NUMBER;
+      hash = (53 * hash) + getTransactionRef().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code txnService.TransactionGenericRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:txnService.TransactionGenericRequest)
+        com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionGenericRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionGenericRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest.class, com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest.Builder.class);
+      }
+
+      // Construct using com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        transactionRef_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionGenericRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest getDefaultInstanceForType() {
+        return com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest build() {
+        com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest buildPartial() {
+        com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest result = new com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest(this);
+        result.transactionRef_ = transactionRef_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest) {
+          return mergeFrom((com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest other) {
+        if (other == com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest.getDefaultInstance()) return this;
+        if (!other.getTransactionRef().isEmpty()) {
+          transactionRef_ = other.transactionRef_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object transactionRef_ = "";
+      /**
+       * <code>string transactionRef = 1;</code>
+       */
+      public java.lang.String getTransactionRef() {
+        java.lang.Object ref = transactionRef_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          transactionRef_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string transactionRef = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTransactionRefBytes() {
+        java.lang.Object ref = transactionRef_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          transactionRef_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string transactionRef = 1;</code>
+       */
+      public Builder setTransactionRef(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        transactionRef_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string transactionRef = 1;</code>
+       */
+      public Builder clearTransactionRef() {
+        
+        transactionRef_ = getDefaultInstance().getTransactionRef();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string transactionRef = 1;</code>
+       */
+      public Builder setTransactionRefBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        transactionRef_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:txnService.TransactionGenericRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:txnService.TransactionGenericRequest)
+    private static final com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest();
+    }
+
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<TransactionGenericRequest>
+        PARSER = new com.google.protobuf.AbstractParser<TransactionGenericRequest>() {
+      @java.lang.Override
+      public TransactionGenericRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TransactionGenericRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<TransactionGenericRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TransactionGenericRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface TransactionInsertRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:txnService.TransactionInsertRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string transactionRef = 1;</code>
+     */
+    java.lang.String getTransactionRef();
+    /**
+     * <code>string transactionRef = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getTransactionRefBytes();
+
+    /**
+     * <code>string docId = 2;</code>
+     */
+    java.lang.String getDocId();
+    /**
+     * <code>string docId = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getDocIdBytes();
+
+    /**
+     * <code>string contentJson = 3;</code>
+     */
+    java.lang.String getContentJson();
+    /**
+     * <code>string contentJson = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getContentJsonBytes();
+  }
+  /**
+   * Protobuf type {@code txnService.TransactionInsertRequest}
+   */
+  public  static final class TransactionInsertRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:txnService.TransactionInsertRequest)
+      TransactionInsertRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use TransactionInsertRequest.newBuilder() to construct.
+    private TransactionInsertRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private TransactionInsertRequest() {
+      transactionRef_ = "";
+      docId_ = "";
+      contentJson_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private TransactionInsertRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              transactionRef_ = s;
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              docId_ = s;
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              contentJson_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionInsertRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionInsertRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest.class, com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest.Builder.class);
+    }
+
+    public static final int TRANSACTIONREF_FIELD_NUMBER = 1;
+    private volatile java.lang.Object transactionRef_;
+    /**
+     * <code>string transactionRef = 1;</code>
+     */
+    public java.lang.String getTransactionRef() {
+      java.lang.Object ref = transactionRef_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        transactionRef_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string transactionRef = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTransactionRefBytes() {
+      java.lang.Object ref = transactionRef_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        transactionRef_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int DOCID_FIELD_NUMBER = 2;
+    private volatile java.lang.Object docId_;
+    /**
+     * <code>string docId = 2;</code>
+     */
+    public java.lang.String getDocId() {
+      java.lang.Object ref = docId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        docId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string docId = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getDocIdBytes() {
+      java.lang.Object ref = docId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        docId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CONTENTJSON_FIELD_NUMBER = 3;
+    private volatile java.lang.Object contentJson_;
+    /**
+     * <code>string contentJson = 3;</code>
+     */
+    public java.lang.String getContentJson() {
+      java.lang.Object ref = contentJson_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        contentJson_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string contentJson = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getContentJsonBytes() {
+      java.lang.Object ref = contentJson_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        contentJson_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getTransactionRefBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, transactionRef_);
+      }
+      if (!getDocIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, docId_);
+      }
+      if (!getContentJsonBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, contentJson_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getTransactionRefBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, transactionRef_);
+      }
+      if (!getDocIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, docId_);
+      }
+      if (!getContentJsonBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, contentJson_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest)) {
+        return super.equals(obj);
+      }
+      com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest other = (com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest) obj;
+
+      boolean result = true;
+      result = result && getTransactionRef()
+          .equals(other.getTransactionRef());
+      result = result && getDocId()
+          .equals(other.getDocId());
+      result = result && getContentJson()
+          .equals(other.getContentJson());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TRANSACTIONREF_FIELD_NUMBER;
+      hash = (53 * hash) + getTransactionRef().hashCode();
+      hash = (37 * hash) + DOCID_FIELD_NUMBER;
+      hash = (53 * hash) + getDocId().hashCode();
+      hash = (37 * hash) + CONTENTJSON_FIELD_NUMBER;
+      hash = (53 * hash) + getContentJson().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code txnService.TransactionInsertRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:txnService.TransactionInsertRequest)
+        com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionInsertRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionInsertRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest.class, com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest.Builder.class);
+      }
+
+      // Construct using com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        transactionRef_ = "";
+
+        docId_ = "";
+
+        contentJson_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionInsertRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest getDefaultInstanceForType() {
+        return com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest build() {
+        com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest buildPartial() {
+        com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest result = new com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest(this);
+        result.transactionRef_ = transactionRef_;
+        result.docId_ = docId_;
+        result.contentJson_ = contentJson_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest) {
+          return mergeFrom((com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest other) {
+        if (other == com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest.getDefaultInstance()) return this;
+        if (!other.getTransactionRef().isEmpty()) {
+          transactionRef_ = other.transactionRef_;
+          onChanged();
+        }
+        if (!other.getDocId().isEmpty()) {
+          docId_ = other.docId_;
+          onChanged();
+        }
+        if (!other.getContentJson().isEmpty()) {
+          contentJson_ = other.contentJson_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object transactionRef_ = "";
+      /**
+       * <code>string transactionRef = 1;</code>
+       */
+      public java.lang.String getTransactionRef() {
+        java.lang.Object ref = transactionRef_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          transactionRef_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string transactionRef = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTransactionRefBytes() {
+        java.lang.Object ref = transactionRef_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          transactionRef_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string transactionRef = 1;</code>
+       */
+      public Builder setTransactionRef(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        transactionRef_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string transactionRef = 1;</code>
+       */
+      public Builder clearTransactionRef() {
+        
+        transactionRef_ = getDefaultInstance().getTransactionRef();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string transactionRef = 1;</code>
+       */
+      public Builder setTransactionRefBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        transactionRef_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object docId_ = "";
+      /**
+       * <code>string docId = 2;</code>
+       */
+      public java.lang.String getDocId() {
+        java.lang.Object ref = docId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          docId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string docId = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getDocIdBytes() {
+        java.lang.Object ref = docId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          docId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string docId = 2;</code>
+       */
+      public Builder setDocId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        docId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string docId = 2;</code>
+       */
+      public Builder clearDocId() {
+        
+        docId_ = getDefaultInstance().getDocId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string docId = 2;</code>
+       */
+      public Builder setDocIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        docId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object contentJson_ = "";
+      /**
+       * <code>string contentJson = 3;</code>
+       */
+      public java.lang.String getContentJson() {
+        java.lang.Object ref = contentJson_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          contentJson_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string contentJson = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getContentJsonBytes() {
+        java.lang.Object ref = contentJson_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          contentJson_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string contentJson = 3;</code>
+       */
+      public Builder setContentJson(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        contentJson_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string contentJson = 3;</code>
+       */
+      public Builder clearContentJson() {
+        
+        contentJson_ = getDefaultInstance().getContentJson();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string contentJson = 3;</code>
+       */
+      public Builder setContentJsonBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        contentJson_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:txnService.TransactionInsertRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:txnService.TransactionInsertRequest)
+    private static final com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest();
+    }
+
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<TransactionInsertRequest>
+        PARSER = new com.google.protobuf.AbstractParser<TransactionInsertRequest>() {
+      @java.lang.Override
+      public TransactionInsertRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TransactionInsertRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<TransactionInsertRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TransactionInsertRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface TransactionCreateResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:txnService.TransactionCreateResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>bool success = 1;</code>
+     */
+    boolean getSuccess();
+
+    /**
+     * <code>string transactionRef = 2;</code>
+     */
+    java.lang.String getTransactionRef();
+    /**
+     * <code>string transactionRef = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getTransactionRefBytes();
+  }
+  /**
+   * Protobuf type {@code txnService.TransactionCreateResponse}
+   */
+  public  static final class TransactionCreateResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:txnService.TransactionCreateResponse)
+      TransactionCreateResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use TransactionCreateResponse.newBuilder() to construct.
+    private TransactionCreateResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private TransactionCreateResponse() {
+      success_ = false;
+      transactionRef_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private TransactionCreateResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              success_ = input.readBool();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              transactionRef_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionCreateResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionCreateResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse.class, com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse.Builder.class);
+    }
+
+    public static final int SUCCESS_FIELD_NUMBER = 1;
+    private boolean success_;
+    /**
+     * <code>bool success = 1;</code>
+     */
+    public boolean getSuccess() {
+      return success_;
+    }
+
+    public static final int TRANSACTIONREF_FIELD_NUMBER = 2;
+    private volatile java.lang.Object transactionRef_;
+    /**
+     * <code>string transactionRef = 2;</code>
+     */
+    public java.lang.String getTransactionRef() {
+      java.lang.Object ref = transactionRef_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        transactionRef_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string transactionRef = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTransactionRefBytes() {
+      java.lang.Object ref = transactionRef_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        transactionRef_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (success_ != false) {
+        output.writeBool(1, success_);
+      }
+      if (!getTransactionRefBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, transactionRef_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (success_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, success_);
+      }
+      if (!getTransactionRefBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, transactionRef_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse)) {
+        return super.equals(obj);
+      }
+      com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse other = (com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse) obj;
+
+      boolean result = true;
+      result = result && (getSuccess()
+          == other.getSuccess());
+      result = result && getTransactionRef()
+          .equals(other.getTransactionRef());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + SUCCESS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getSuccess());
+      hash = (37 * hash) + TRANSACTIONREF_FIELD_NUMBER;
+      hash = (53 * hash) + getTransactionRef().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code txnService.TransactionCreateResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:txnService.TransactionCreateResponse)
+        com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionCreateResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionCreateResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse.class, com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse.Builder.class);
+      }
+
+      // Construct using com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        success_ = false;
+
+        transactionRef_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionCreateResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse getDefaultInstanceForType() {
+        return com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse build() {
+        com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse buildPartial() {
+        com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse result = new com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse(this);
+        result.success_ = success_;
+        result.transactionRef_ = transactionRef_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse) {
+          return mergeFrom((com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse other) {
+        if (other == com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse.getDefaultInstance()) return this;
+        if (other.getSuccess() != false) {
+          setSuccess(other.getSuccess());
+        }
+        if (!other.getTransactionRef().isEmpty()) {
+          transactionRef_ = other.transactionRef_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private boolean success_ ;
+      /**
+       * <code>bool success = 1;</code>
+       */
+      public boolean getSuccess() {
+        return success_;
+      }
+      /**
+       * <code>bool success = 1;</code>
+       */
+      public Builder setSuccess(boolean value) {
+        
+        success_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool success = 1;</code>
+       */
+      public Builder clearSuccess() {
+        
+        success_ = false;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object transactionRef_ = "";
+      /**
+       * <code>string transactionRef = 2;</code>
+       */
+      public java.lang.String getTransactionRef() {
+        java.lang.Object ref = transactionRef_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          transactionRef_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string transactionRef = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTransactionRefBytes() {
+        java.lang.Object ref = transactionRef_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          transactionRef_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string transactionRef = 2;</code>
+       */
+      public Builder setTransactionRef(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        transactionRef_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string transactionRef = 2;</code>
+       */
+      public Builder clearTransactionRef() {
+        
+        transactionRef_ = getDefaultInstance().getTransactionRef();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string transactionRef = 2;</code>
+       */
+      public Builder setTransactionRefBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        transactionRef_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:txnService.TransactionCreateResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:txnService.TransactionCreateResponse)
+    private static final com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse();
+    }
+
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<TransactionCreateResponse>
+        PARSER = new com.google.protobuf.AbstractParser<TransactionCreateResponse>() {
+      @java.lang.Override
+      public TransactionCreateResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TransactionCreateResponse(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<TransactionCreateResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TransactionCreateResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface TransactionGenericResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:txnService.TransactionGenericResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>bool success = 1;</code>
+     */
+    boolean getSuccess();
+  }
+  /**
+   * Protobuf type {@code txnService.TransactionGenericResponse}
+   */
+  public  static final class TransactionGenericResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:txnService.TransactionGenericResponse)
+      TransactionGenericResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use TransactionGenericResponse.newBuilder() to construct.
+    private TransactionGenericResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private TransactionGenericResponse() {
+      success_ = false;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private TransactionGenericResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              success_ = input.readBool();
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionGenericResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionGenericResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse.class, com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse.Builder.class);
+    }
+
+    public static final int SUCCESS_FIELD_NUMBER = 1;
+    private boolean success_;
+    /**
+     * <code>bool success = 1;</code>
+     */
+    public boolean getSuccess() {
+      return success_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (success_ != false) {
+        output.writeBool(1, success_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (success_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, success_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse)) {
+        return super.equals(obj);
+      }
+      com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse other = (com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse) obj;
+
+      boolean result = true;
+      result = result && (getSuccess()
+          == other.getSuccess());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + SUCCESS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getSuccess());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code txnService.TransactionGenericResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:txnService.TransactionGenericResponse)
+        com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionGenericResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionGenericResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse.class, com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse.Builder.class);
+      }
+
+      // Construct using com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        success_ = false;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionGenericResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse getDefaultInstanceForType() {
+        return com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse build() {
+        com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse buildPartial() {
+        com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse result = new com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse(this);
+        result.success_ = success_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse) {
+          return mergeFrom((com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse other) {
+        if (other == com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse.getDefaultInstance()) return this;
+        if (other.getSuccess() != false) {
+          setSuccess(other.getSuccess());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private boolean success_ ;
+      /**
+       * <code>bool success = 1;</code>
+       */
+      public boolean getSuccess() {
+        return success_;
+      }
+      /**
+       * <code>bool success = 1;</code>
+       */
+      public Builder setSuccess(boolean value) {
+        
+        success_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool success = 1;</code>
+       */
+      public Builder clearSuccess() {
+        
+        success_ = false;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:txnService.TransactionGenericResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:txnService.TransactionGenericResponse)
+    private static final com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse();
+    }
+
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<TransactionGenericResponse>
+        PARSER = new com.google.protobuf.AbstractParser<TransactionGenericResponse>() {
+      @java.lang.Override
+      public TransactionGenericResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TransactionGenericResponse(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<TransactionGenericResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TransactionGenericResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_txnService_conn_info_descriptor;
   private static final 
@@ -3488,6 +6373,31 @@ public final class TxnClient {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_txnService_Empty_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_txnService_TransactionCreateRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_txnService_TransactionCreateRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_txnService_TransactionGenericRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_txnService_TransactionGenericRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_txnService_TransactionInsertRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_txnService_TransactionInsertRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_txnService_TransactionCreateResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_txnService_TransactionCreateResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_txnService_TransactionGenericResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_txnService_TransactionGenericResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3508,13 +6418,28 @@ public final class TxnClient {
       "s\030\003 \001(\005\022\017\n\007command\030\004 \001(\t\022\014\n\004mock\030\005 \001(\010\022\016" +
       "\n\006docNum\030\006 \001(\005\022\025\n\rmockOperation\030\007 \001(\t\">\n" +
       "\013APIResponse\022\030\n\020APISuccessStatus\030\001 \001(\010\022\025" +
-      "\n\rAPIStatusInfo\030\002 \001(\t\"\007\n\005Empty2\304\001\n\003txn\022A" +
-      "\n\021create_TxnFactory\022\023.txnService.txn_req" +
-      "\032\027.txnService.APIResponse\022=\n\013create_conn" +
-      "\022\025.txnService.conn_info\032\027.txnService.API" +
-      "Response\022;\n\013execute_txn\022\023.txnService.txn" +
-      "_req\032\027.txnService.APIResponseB\035\n\033com.cou" +
-      "chbase.grpc.protocolb\006proto3"
+      "\n\rAPIStatusInfo\030\002 \001(\t\"\007\n\005Empty\"\032\n\030Transa" +
+      "ctionCreateRequest\"3\n\031TransactionGeneric" +
+      "Request\022\026\n\016transactionRef\030\001 \001(\t\"V\n\030Trans" +
+      "actionInsertRequest\022\026\n\016transactionRef\030\001 " +
+      "\001(\t\022\r\n\005docId\030\002 \001(\t\022\023\n\013contentJson\030\003 \001(\t\"" +
+      "D\n\031TransactionCreateResponse\022\017\n\007success\030" +
+      "\001 \001(\010\022\026\n\016transactionRef\030\002 \001(\t\"-\n\032Transac" +
+      "tionGenericResponse\022\017\n\007success\030\001 \001(\0102\355\003\n" +
+      "\003txn\022`\n\021transactionCreate\022$.txnService.T" +
+      "ransactionCreateRequest\032%.txnService.Tra" +
+      "nsactionCreateResponse\022a\n\021transactionIns" +
+      "ert\022$.txnService.TransactionInsertReques" +
+      "t\032&.txnService.TransactionGenericRespons" +
+      "e\022b\n\021transactionCommit\022%.txnService.Tran" +
+      "sactionGenericRequest\032&.txnService.Trans" +
+      "actionGenericResponse\022A\n\021create_TxnFacto" +
+      "ry\022\023.txnService.txn_req\032\027.txnService.API" +
+      "Response\022=\n\013create_conn\022\025.txnService.con" +
+      "n_info\032\027.txnService.APIResponse\022;\n\013execu" +
+      "te_txn\022\023.txnService.txn_req\032\027.txnService" +
+      ".APIResponseB\035\n\033com.couchbase.grpc.proto" +
+      "colb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3552,6 +6477,36 @@ public final class TxnClient {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_txnService_Empty_descriptor,
         new java.lang.String[] { });
+    internal_static_txnService_TransactionCreateRequest_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_txnService_TransactionCreateRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_txnService_TransactionCreateRequest_descriptor,
+        new java.lang.String[] { });
+    internal_static_txnService_TransactionGenericRequest_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_txnService_TransactionGenericRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_txnService_TransactionGenericRequest_descriptor,
+        new java.lang.String[] { "TransactionRef", });
+    internal_static_txnService_TransactionInsertRequest_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_txnService_TransactionInsertRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_txnService_TransactionInsertRequest_descriptor,
+        new java.lang.String[] { "TransactionRef", "DocId", "ContentJson", });
+    internal_static_txnService_TransactionCreateResponse_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_txnService_TransactionCreateResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_txnService_TransactionCreateResponse_descriptor,
+        new java.lang.String[] { "Success", "TransactionRef", });
+    internal_static_txnService_TransactionGenericResponse_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_txnService_TransactionGenericResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_txnService_TransactionGenericResponse_descriptor,
+        new java.lang.String[] { "Success", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

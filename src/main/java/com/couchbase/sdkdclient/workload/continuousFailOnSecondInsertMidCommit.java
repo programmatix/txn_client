@@ -17,6 +17,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@Deprecated
 public class continuousFailOnSecondInsertMidCommit  extends transactionTests {
     private static List<String> txnKeys = new LinkedList<>();
     private static JsonObject docContent;
