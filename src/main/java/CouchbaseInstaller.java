@@ -1,7 +1,13 @@
+import com.couchbase.cbadmin.client.RestApiException;
+import com.couchbase.sdkdclient.cluster.CBCluster;
+import com.couchbase.sdkdclient.cluster.NodeHost;
 import com.couchbase.sdkdclient.cluster.RemoteCommands;
+import com.couchbase.sdkdclient.context.HarnessError;
+import com.couchbase.sdkdclient.context.HarnessException;
 import com.couchbase.sdkdclient.logging.LogUtil;
 import com.couchbase.sdkdclient.ssh.SSHConnection;
 import com.couchbase.sdkdclient.ssh.SSHLoggingCommand;
+import com.couchbase.sdkdclient.util.Retryer;
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -48,6 +54,24 @@ public class ClusterInstaller {
 
     }
 
+    static public abstract class RestRetryer extends Retryer<RestApiException> {
+        RestRetryer(int seconds) {
+            super(seconds * 1000, 500, RestApiException.class);
+        }
+
+        @Override
+        protected void handleError(RestApiException caught) throws RestApiException {
+            if (caught.getStatusLine().getStatusCode() >= 500) {
+                call();
+            } else if (caught.getStatusLine().getStatusCode() == 409) {
+                logger.error("N1QL Index was not deleted from previous run");
+                return;
+            } else {
+                throw HarnessException.create(HarnessError.CLUSTER, caught);
+            }
+        }
+    }
+
 
     public static VersionTuple parse(String vString) throws Exception {
         String[] parts = vString.split("\\.");
@@ -56,66 +80,81 @@ public class ClusterInstaller {
     }
 
 
-    public void installCluster() throws ExecutionException {
-        if (configParams.getinstallCluster()) {
-            configure();
-            install(configParams.getClusterNodes());
-        }
-    }
 
-    public void configure() {
-        try {
-            vTuple =parse(configParams.getclusterVersion());
-        } catch (Exception ex) {
-            logger.error("Unable to parse version string {}" + ex.getStackTrace());
-        }
-    }
 
-    public void install(Collection<Configuration.Host> nodes) throws ExecutionException {
-        install(nodes, configParams.getupgrade(), "");
-    }
-
-    public void install(Collection<Configuration.Host> nodes, final boolean upgrade, final String upgradeVersion) throws ExecutionException {
-        ExecutorService svc = Executors.newFixedThreadPool(nodes.size());
-        List<Future> futures = new ArrayList<Future>();
-
-        for (final Configuration.Host node : nodes) {
-            Future f = svc.submit(new Callable<Object>() {
-                @Override
-                public Object call() throws Exception {
-                    runNode(node, upgrade, upgradeVersion);
-                    return null;
+    public void initializecluster(){
+        if (!configParams.getinstallcouchbase()) {
+            {
+                if(!configParams.getinitializecluster()){
+                    logger.warn("noinit specified. Not setting up cluster or creating buckets");
+                    return;
                 }
-            });
-            futures.add(f);
-        }
-
-        svc.shutdown();
-        for (Future f : futures) {
-            try {
-                f.get();
-            } catch (InterruptedException ex) {
-                throw new ExecutionException(ex);
             }
         }
+
+        // Ensure we can connect to the REST port
+        try {
+            new RestRetryer(defaults.RestTimeout) {
+                @Override
+                protected boolean tryOnce() throws RestApiException {
+                    for (NodeHost nn : nodelist.getAll()) {
+                        nn.getAdmin().getInfo();
+                    }
+                    return true;
+                }
+            }.call();
+        } catch (RestApiException ex) {
+            throw HarnessException.create(HarnessError.CLUSTER, ex);
+        }
     }
 
-    public void runNode(Configuration.Host node, final boolean upgrade, final String upgradeVersion) throws IOException {
+    public void installcouchbase() throws ExecutionException {
+        if (configParams.getinstallcouchbase()) {
+            Collection<Configuration.Host> nodes= configParams.getClusterNodes();
+            ExecutorService svc = Executors.newFixedThreadPool(nodes.size());
+            List<Future> futures = new ArrayList<Future>();
+
+            for (final Configuration.Host node : nodes) {
+                Future f = svc.submit(new Callable<Object>() {
+                    @Override
+                    public Object call() throws Exception {
+                        runNode(node);
+                        return null;
+                    }
+                });
+                futures.add(f);
+            }
+
+            svc.shutdown();
+            for (Future f : futures) {
+                try {
+                    f.get();
+                } catch (InterruptedException ex) {
+                    throw new ExecutionException(ex);
+                }
+            }
+        }
+
+    }
+
+    public void runNode(Configuration.Host node) throws IOException {
         /**
          * Now to get system information.. we need SSH
          */
          SSHConnection sshConn;
         sshConn = new SSHConnection(configParams.getsshusername(),
-                configParams.getsshpassword(),
-                node.ip);
+                                    configParams.getsshpassword(),
+                                    node.ip);
         sshConn.connect();
         logger.info("SSH Initialized for {}", this);
 
         RemoteCommands.OSInfo osInfo = RemoteCommands.getSystemInfo(sshConn);
 
         try{
-            if (upgrade) {
+            if (configParams.getupgrade()) {
                 vTuple = parse(configParams.getUpgradeVersion());
+            }else{
+                vTuple =parse(configParams.getclusterVersion());
             }
         } catch (Exception ex) {
             throw new IOException("Unable to parse version " + ex.getStackTrace());
