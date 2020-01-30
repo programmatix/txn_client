@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.couchbase</groupId>
   <artifactId>sdkdclient</artifactId>
@@ -13,6 +13,7 @@
     <project.dist.directory>${project.build.directory}/dist</project.dist.directory>
     <project.basePackage>com.couchbase.sdkdclient</project.basePackage>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <junit.version>5.5.2</junit.version>
   </properties>
 
   <dependencies>
@@ -93,9 +94,9 @@
       <version>4.47</version>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -129,33 +130,27 @@
       <artifactId>core</artifactId>
       <version>1.47.1</version>
     </dependency>
-   <dependency>
-     <groupId>com.google.api-client</groupId>
-     <artifactId>google-api-client</artifactId>
-     <version>1.19.1</version>
-   </dependency>
-   <dependency>
-       <groupId>com.couchbase.client</groupId>
-       <artifactId>java-client</artifactId>
-       <version>LATEST</version>
+    <dependency>
+      <groupId>com.google.api-client</groupId>
+      <artifactId>google-api-client</artifactId>
+      <version>1.19.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.couchbase.client</groupId>
+      <artifactId>java-client</artifactId>
+      <version>3.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.googlecode.json-simple</groupId>
       <artifactId>json-simple</artifactId>
       <version>1.1.1</version>
     </dependency>
-      <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.12</version>
-          <scope>compile</scope>
-      </dependency>
-      <dependency>
-          <groupId>org.testng</groupId>
-          <artifactId>testng</artifactId>
-          <version>RELEASE</version>
-          <scope>compile</scope>
-      </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 
   <reporting>

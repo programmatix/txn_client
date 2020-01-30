@@ -16,6 +16,9 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
 /**
+ * <pre>
+ * Everything below is used for TAF
+ * </pre>
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.15.0)",
@@ -147,6 +150,9 @@ public final class txnGrpc {
   }
 
   /**
+   * <pre>
+   * Everything below is used for TAF
+   * </pre>
    */
   public static abstract class txnImplBase implements io.grpc.BindableService {
 
@@ -199,6 +205,9 @@ public final class txnGrpc {
   }
 
   /**
+   * <pre>
+   * Everything below is used for TAF
+   * </pre>
    */
   public static final class txnStub extends io.grpc.stub.AbstractStub<txnStub> {
     private txnStub(io.grpc.Channel channel) {
@@ -242,6 +251,9 @@ public final class txnGrpc {
   }
 
   /**
+   * <pre>
+   * Everything below is used for TAF
+   * </pre>
    */
   public static final class txnBlockingStub extends io.grpc.stub.AbstractStub<txnBlockingStub> {
     private txnBlockingStub(io.grpc.Channel channel) {
@@ -282,6 +294,9 @@ public final class txnGrpc {
   }
 
   /**
+   * <pre>
+   * Everything below is used for TAF
+   * </pre>
    */
   public static final class txnFutureStub extends io.grpc.stub.AbstractStub<txnFutureStub> {
     private txnFutureStub(io.grpc.Channel channel) {

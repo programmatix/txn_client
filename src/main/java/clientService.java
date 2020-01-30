@@ -3,6 +3,7 @@ import com.couchbase.Couchbase.Cluster.ClusterConfigure;
 import com.couchbase.Couchbase.Couchbase.CouchbaseInstaller;
 import com.couchbase.InputParameters.inputParameters;
 import com.couchbase.Tests.Transactions.transactionTests;
+import com.couchbase.grpc.protocol.ResumableTransactionServiceGrpc;
 import com.couchbase.grpc.protocol.TxnClient;
 import com.couchbase.grpc.protocol.txnGrpc;
 import io.grpc.ManagedChannel;
@@ -13,6 +14,8 @@ import java.util.concurrent.ExecutionException;
 
 
 public class clientService {
+    private static ResumableTransactionServiceGrpc.ResumableTransactionServiceBlockingStub txnstub = null;
+
     public static void main(String args[]) throws IOException, ParseException, ExecutionException {
         setup(args);
     }
@@ -33,7 +36,7 @@ public class clientService {
 
         System.out.println("Connecting to GRPC Server");
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost",8050).usePlaintext().build();
-        txnGrpc.txnBlockingStub   txnstub = txnGrpc.newBlockingStub(channel);
+        txnstub = ResumableTransactionServiceGrpc.newBlockingStub(channel);
         System.out.println("Created connection between txn_framework client and server");
 
         TxnClient.conn_info  conn_create_req =
@@ -46,6 +49,7 @@ public class clientService {
                         .setHandleAutofailoverMs(inputParameters.getAutoFailoverTimeout())
                         .build();
         TxnClient.APIResponse response = txnstub.createConn(conn_create_req);
+
         System.out.println("Did txn_framework server establish connection with Couchbase Server: "+response.getAPISuccessStatus());
 
         try {

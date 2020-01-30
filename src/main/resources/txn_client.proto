@@ -1,15 +1,109 @@
+// TODO share this between client and server
 syntax = "proto3";
 option java_package = "com.couchbase.grpc.protocol";
 package txnService;
 
+// Used to create resumable transactions and perform operations in them
+service ResumableTransactionService {
+    // Creates a connection from txn_server to cb server
+    rpc create_conn (conn_info) returns (APIResponse);
 
-service txn{
-    rpc create_TxnFactory(txn_req) returns (APIResponse);
-    rpc create_conn(conn_info) returns (APIResponse);
-    rpc execute_txn(txn_req) returns (APIResponse);
+    // Create a Transactions (e.g. a transactions factory), returning a transactionsFactoryRef
+    rpc transactionsFactoryCreate (TransactionsFactoryCreateRequest) returns (TransactionsFactoryCreateResponse);
+
+    rpc transactionsFactoryClose (TransactionsFactoryCloseRequest) returns (TransactionGenericResponse);
+
+    // Creates a transaction, using a transactionsFactoryRef to a previously created Transactions.  Returns a transactionRef
+    rpc transactionCreate (TransactionCreateRequest) returns (TransactionCreateResponse);
+
+    // Perform individual operations on a previously created transaction
+    rpc transactionInsert (TransactionInsertRequest) returns (TransactionGenericResponse);
+    rpc transactionCommit (TransactionGenericRequest) returns (TransactionGenericResponse);
 }
 
-message conn_info{
+enum Hook {
+    BEFORE_ATR_COMMIT = 0;
+}
+
+enum HookCondition {
+    ALWAYS = 0;
+    ON_ATTEMPT = 1;
+    ON_ATTEMPT_LT_OR_EQ = 2;
+}
+
+enum HookErrorToRaise {
+    // Fail the transaction immediately, make no attempt to roll it back, app gets TransactionFailed exception
+    // Txn will be left in PENDING or COMMIT state, wherever it reached
+    FAIL_NO_ROLLBACK = 0;
+
+    // Fail the transaction, attempt to roll it back first, app gets TransactionFailed exception
+    // Txn should end up in state ABORTED
+    FAIL_ROLLBACK = 1;
+
+    // Fail this attempt of the transaction. The transaction will roll back this attempt and try again.
+    FAIL_RETRY = 2;
+}
+
+enum Durability {
+    NONE = 0;
+    MAJORITY = 1;
+    MAJORITY_AND_PERSIST_TO_ACTIVE = 2;
+    PERSIST_TO_MAJORITY = 3;
+}
+
+// Creates a Transactions object, e.g. a transactions factory
+message TransactionsFactoryCreateRequest {
+
+    Durability durability = 1;
+    int32 expirationSeconds = 2;
+
+    // Hooks
+    repeated Hook hook = 3;
+    repeated HookCondition hookCondition = 4;
+    repeated int32 hookConditionParam = 5;
+    repeated HookErrorToRaise hookErrorToRaise = 6;
+
+    bool cleanupLostAttempts = 7;
+    bool cleanupClientAttempts = 8;
+}
+
+// Shuts down a previously created Transactions (factory)
+message TransactionsFactoryCloseRequest {
+    string transactionsFactoryRef = 1;
+}
+
+// Creates a new transaction from a previously created Transactions (factory)
+message TransactionCreateRequest {
+    string transactionsFactoryRef = 1;
+}
+
+message TransactionGenericRequest {
+    string transactionRef = 1;
+}
+
+message TransactionInsertRequest {
+    string transactionRef = 1;
+    string docId = 2;
+    string contentJson = 3;
+}
+
+message TransactionsFactoryCreateResponse {
+    bool success = 1;
+    string transactionsFactoryRef = 2;
+}
+
+message TransactionCreateResponse {
+    bool success = 1;
+    string transactionRef = 2;
+}
+
+message TransactionGenericResponse {
+    bool success = 1;
+}
+
+
+
+message conn_info {
     string handle_bucket=3;
     string payload=4;
     string handle_hostname=5;
@@ -38,6 +132,3 @@ message APIResponse{
 
 message Empty{
 }
-
-
-
