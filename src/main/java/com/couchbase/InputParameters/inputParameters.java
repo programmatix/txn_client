@@ -368,6 +368,7 @@ public class inputParameters{
     public LinkedList<Host> getClusterNodes(){
         return hosts;
     }
+
     public String getclusterVersion(){
         return clusterVersion;
     }
