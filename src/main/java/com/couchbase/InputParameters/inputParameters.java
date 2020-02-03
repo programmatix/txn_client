@@ -4,9 +4,24 @@ import com.couchbase.Constants.defaults;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class inputParameters{
@@ -46,6 +61,7 @@ public class inputParameters{
     private int bucketRamSize;
     private String bucketSaslpassword;
     private int clusterPort;
+    private String loggerLevel;
 
 
 
@@ -70,9 +86,13 @@ public class inputParameters{
         }
     }
 
-    public void readandStoreParams() throws IOException, ParseException {
+
+
+
+    public void readandStoreParams() throws IOException, ParseException, ParserConfigurationException, SAXException {
         Object obj = new JSONParser().parse(new FileReader(ParamsFile));
         JSONObject jo = (JSONObject) obj;
+
         try{
             setStorageMode = (boolean)jo.get("setStorageMode");
         }catch(NullPointerException e){

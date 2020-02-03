@@ -1,0 +1,24 @@
+<configuration debug="false">
+  <conversionRule conversionWord="seconds" converterClass="com.couchbase.Logging.SecondsConverter"/>
+  <conversionRule conversionWord="myhighlight" converterClass="com.couchbase.Logging.Highlighter"/>
+
+  <appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
+    <filter class="com.couchbase.Logging.DedupeFilter">
+      <SuppressionTime>2000</SuppressionTime>
+      <MaxRepeat>1</MaxRepeat>
+    </filter>
+
+    <filter class="com.couchbase.Logging.AppenderLevelFilter">
+      <DefaultLevel>INFO</DefaultLevel>
+      <Name>STDOUT_FILTER</Name>
+    </filter>
+    <target>System.err</target>
+    <withJansi>true</withJansi>
+    <encoder>
+      <pattern>[%seconds %-2level] \(%logger{0} %method:%line\) %myhighlight(%message) %n</pattern>
+    </encoder>
+  </appender>
+  <root level="TRACE">
+    <appender-ref ref="STDOUT"/>
+  </root>
+</configuration>

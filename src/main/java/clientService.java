@@ -9,35 +9,46 @@ import com.couchbase.grpc.protocol.txnGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 
+
 public class clientService {
     private static ResumableTransactionServiceGrpc.ResumableTransactionServiceBlockingStub txnstub = null;
+    static Logger logger;
 
-    public static void main(String args[]) throws IOException, ParseException, ExecutionException {
+
+    public static void main(String args[]) throws IOException, ParseException, ExecutionException, ParserConfigurationException, SAXException {
         setup(args);
     }
 
-    public static void setup(String[] params) throws IOException, ParseException, ExecutionException {
+    public static void setup(String[] params) throws IOException, ParseException, ExecutionException, ParserConfigurationException, SAXException {
+
         inputParameters inputParameters  =  new inputParameters(params[0]);
         inputParameters.readandStoreParams();
-       // configParams.printConfiguration();
+
+        logger =  LoggerFactory.getLogger(clientService.class);
+        logger.info("Starting the framework");
 
         CouchbaseInstaller couchbaseInstaller = new CouchbaseInstaller(inputParameters);
         couchbaseInstaller.installcouchbase();
-        System.out.println("Completed Couchbase installation on individual nodes. Proceeding with Cluster Creation");
+        logger.info("Completed Couchbase installation on individual nodes. Proceeding with Cluster Creation");
 
         ClusterConfigure clusterConfigure = new ClusterConfigure(inputParameters);
         String clusterHost = clusterConfigure.initializecluster(true);
-        System.out.println("Completed Cluster Creation. Proceeding with Test Execution");
+        logger.info("Completed Cluster Creation. Proceeding with Test Execution");
 
 
-        System.out.println("Connecting to GRPC Server");
+        logger.info("Connecting to GRPC Server");
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost",8050).usePlaintext().build();
         txnstub = ResumableTransactionServiceGrpc.newBlockingStub(channel);
-        System.out.println("Created connection between txn_framework client and server");
+        logger.info("Created connection between txn_framework client and server");
 
         TxnClient.conn_info  conn_create_req =
                 TxnClient.conn_info.newBuilder()
@@ -50,13 +61,13 @@ public class clientService {
                         .build();
         TxnClient.APIResponse response = txnstub.createConn(conn_create_req);
 
-        System.out.println("Did txn_framework server establish connection with Couchbase Server: "+response.getAPISuccessStatus());
-
+        logger.info("Did txn_framework server establish connection with Couchbase Server: "+response.getAPISuccessStatus());
+        System.exit(-1);
         try {
             transactionTests txn_tests = new transactionTests(conn_create_req,txnstub,clusterHost,"",clusterConfigure);
             txn_tests.execute();
         } catch(Exception e) {
-            System.out.println("Few tests have failed Test failed: "+e);
+            logger.error("Few tests have failed Test failed: "+e);
         }
 
         channel.shutdown();
