@@ -63,7 +63,7 @@ public class failsbeforeCommit extends transactionTests {
                         .setContentJson(docContent.toString())
                         .build());
 
-        txnUtils.verifyDocuments(docKeys,docContent,true,hostname);
+        txnUtils.verifyDocuments(docKeys,null,true,hostname);
 
         TxnClient.TransactionGenericResponse commit =
                 txnstub.transactionCommit(TxnClient.TransactionGenericRequest.newBuilder()
@@ -71,7 +71,7 @@ public class failsbeforeCommit extends transactionTests {
                         .build());
 
         assertFalse(commit.getSuccess());
-        txnUtils.verifyDocuments(docKeys,docContent,true,hostname);
+        txnUtils.verifyDocuments(docKeys,null,true,hostname);
 
 
         assertTrue(txnstub.transactionsFactoryClose(TxnClient.TransactionsFactoryCloseRequest.newBuilder()

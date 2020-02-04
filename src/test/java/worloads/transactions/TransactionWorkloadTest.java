@@ -1,14 +1,12 @@
-package workloads.transactions;
+package worloads.transactions;
 
 import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.Collection;
 import com.couchbase.client.java.json.JsonObject;
 import com.couchbase.client.java.kv.GetResult;
-
 import com.couchbase.grpc.protocol.ResumableTransactionServiceGrpc;
 import com.couchbase.grpc.protocol.TxnClient;
-import com.couchbase.sdkdclient.protocol.Strings;
-import com.couchbase.sdkdclient.stester.STester;
+import com.couchbase.Constants.Strings;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.junit.jupiter.api.BeforeAll;
@@ -32,9 +30,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 // TODO: Get these tests running from CLI
 
 public class TransactionWorkloadTest {
-    private static String HOSTNAME = "localhost";
+    private static String TXN_SERVER_HOSTNAME = "localhost";
+    private static String CLUSTER_HOSTNAME = "172.23.105.65";
+
     private static int PORT = 8050;
-    private static STester stester = null;
     private static ResumableTransactionServiceGrpc.ResumableTransactionServiceBlockingStub stub = null;
     private static Cluster cluster;
     private static Collection defaultCollection;
@@ -49,10 +48,10 @@ public class TransactionWorkloadTest {
         //        stester.run();
 
         // GRPC is used to connect to the server(s)
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(HOSTNAME, PORT).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(TXN_SERVER_HOSTNAME, PORT).usePlaintext().build();
         stub = ResumableTransactionServiceGrpc.newBlockingStub(channel);
 
-        cluster = Cluster.connect(HOSTNAME, Strings.ADMIN_USER, Strings.PASSWORD);
+        cluster = Cluster.connect(CLUSTER_HOSTNAME, Strings.ADMIN_USER, Strings.PASSWORD);
         defaultCollection = cluster.bucket("default").defaultCollection();
     }
 

@@ -8,6 +8,7 @@ import com.couchbase.client.java.json.JsonObject;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class txnUtils {
 
@@ -20,7 +21,13 @@ public class txnUtils {
             for (String key : keys) {
                 if (docExists) {
                     JsonObject body = defaultCollection.get(key).contentAs(JsonObject.class);
-                    assertEquals(docContent, body);
+                   if(docContent==null){
+                       assertEquals(0, body.size());
+                   }else{
+                       assertEquals(docContent, body);
+                   }
+
+
                 } else {
                     doc_Exists = defaultCollection.exists(key).exists();
                     System.out.println("Checking  delete for Key: "+key+ " Does key exist: "+doc_Exists);

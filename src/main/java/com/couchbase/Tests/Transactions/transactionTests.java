@@ -42,7 +42,7 @@ import java.util.List;
         configureTests();
        for(transactionTests test : txn_tests){
            test.runTests();
-           System.out.println("Completed test:"+test.testname);
+           System.out.println("Success for Completed test:"+test.testname);
        }
    }
 

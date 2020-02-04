@@ -57,7 +57,7 @@ public class simpleInsert extends transactionTests {
                         .setContentJson(docContent.toString())
                         .build());
 
-        txnUtils.verifyDocuments(docKeys,docContent,true,hostname);
+        txnUtils.verifyDocuments(docKeys,null,true,hostname);
 
         TxnClient.TransactionGenericResponse commit =
                 txnstub.transactionCommit(TxnClient.TransactionGenericRequest.newBuilder()

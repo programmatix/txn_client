@@ -62,7 +62,6 @@ public class clientService {
         TxnClient.APIResponse response = txnstub.createConn(conn_create_req);
 
         logger.info("Did txn_framework server establish connection with Couchbase Server: "+response.getAPISuccessStatus());
-        System.exit(-1);
         try {
             transactionTests txn_tests = new transactionTests(conn_create_req,txnstub,clusterHost,"",clusterConfigure);
             txn_tests.execute();
