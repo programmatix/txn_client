@@ -144,7 +144,7 @@ public class RemoteCommands {
       internalIP = internalIP.replaceAll("\\s+","");
       internalIP = internalIP.replace("127.0.0.1", "");
     }
-    System.out.println("\n\ninternal IP : " + internalIP);
+    logger.debug("\n\ninternal IP : " + internalIP);
     return internalIP;
   }
 

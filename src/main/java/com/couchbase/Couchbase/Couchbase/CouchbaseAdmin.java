@@ -175,9 +175,9 @@ public class CouchbaseAdmin implements ICouchbaseAdmin {
     }
     if (res.getStatusLine().getStatusCode() != expectCode) {
       if (ret.toString().contains("index exist")) {
-        logger.warn("surpress index recreation error:{}", ret.toString());
+        logger.warn("supress index recreation error:{}", ret.toString());
       } else if (ret.toString().contains("unsupported key storageMode")) {
-        logger.warn("surpress storageMode error:{}", ret.toString());
+        logger.warn("supress storageMode error:{}", ret.toString());
       } else {
         logger.warn("error:req:{},res:{}", req.toString(), ret.toString());
           throw new RestApiException(ret, res.getStatusLine(), req);
@@ -239,7 +239,7 @@ public class CouchbaseAdmin implements ICouchbaseAdmin {
     try {
       url = new URL(entryPoint, path);
       req.setURI(url.toURI());
-      System.out.println("req.toString():"+req.toString());
+      logger.debug("req.toString():"+req.toString());
     } catch (MalformedURLException ex) {
       throw new IOException(ex);
     } catch (URISyntaxException ex) {

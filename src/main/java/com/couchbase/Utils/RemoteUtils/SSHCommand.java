@@ -71,7 +71,7 @@ public abstract class SSHCommand implements Closeable {
   public void execute() throws IOException {
     execChannel = conn.wireCommand(this);
     execChannel.setCommand(cmdline);
-    logger.debug("Running {} on {}", cmdline, conn.getHostname());
+    logger.info("Running {} on {}", cmdline, conn.getHostname());
     InputStream stdout = execChannel.getInputStream();
     InputStream stderr = execChannel.getErrStream();
     OutputStream stdin = execChannel.getOutputStream();

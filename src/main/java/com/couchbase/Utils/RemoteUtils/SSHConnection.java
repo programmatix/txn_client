@@ -72,7 +72,7 @@ public class SSHConnection {
         jsch.addIdentity(child.getAbsolutePath());
         logger.debug("Loaded indentity {}", child.getAbsoluteFile());
       } catch (JSchException ex) {
-        logger.warn("Bad private key", ex);
+        logger.warn("Bad private key", ex.getMessage());
       }
     }
   }
@@ -82,7 +82,7 @@ public class SSHConnection {
     password = pass;
     hostname = host;
     this.port = port;
-    initUserKeys();
+   // initUserKeys();
   }
 
   public SSHConnection(String user, String pass, String host) {

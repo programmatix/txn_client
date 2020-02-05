@@ -80,7 +80,7 @@ public class CouchbaseInstaller {
     }
 
     public void installcouchbase() throws ExecutionException {
-        if (inputParameters.getinstallcouchbase()) {
+            logger.info("Installing couchbase now");
             Collection<inputParameters.Host> nodes= inputParameters.getClusterNodes();
             ExecutorService svc = Executors.newFixedThreadPool(nodes.size());
             List<Future> futures = new ArrayList<Future>();
@@ -104,8 +104,6 @@ public class CouchbaseInstaller {
                     throw new ExecutionException(ex);
                 }
             }
-        }
-
     }
 
     public void runNode(inputParameters.Host node) throws IOException {
@@ -117,7 +115,7 @@ public class CouchbaseInstaller {
                                     inputParameters.getsshpassword(),
                                     node.ip);
         sshConn.connect();
-        logger.info("SSH Initialized for {}", this);
+        logger.debug("SSH Initialized for {}", this);
 
         RemoteCommands.OSInfo osInfo = RemoteCommands.getSystemInfo(sshConn);
 
@@ -148,7 +146,11 @@ public class CouchbaseInstaller {
         try {
             cmd.execute();
             cmd.waitForExit(Integer.MAX_VALUE);
-        } finally {
+        }catch(Exception e){
+            logger.error("Unable to install CB due to error: "+ e);
+            System.exit(-1);
+        }
+        finally {
             cmd.close();
         }
     }

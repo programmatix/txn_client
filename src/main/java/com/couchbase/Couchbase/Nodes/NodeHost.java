@@ -164,7 +164,7 @@ public class NodeHost implements Comparable<NodeHost> {
                                 sshLogin.getPassword(),
                                 restUri.getHost());
     sshConn.connect();
-    logger.info("SSH Initialized for {}", this);
+    logger.debug("SSH Initialized for {}", this);
     return sshConn;
   }
 

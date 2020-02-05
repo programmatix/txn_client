@@ -73,7 +73,6 @@ public class AppenderLevelFilter extends Filter<ILoggingEvent> {
    * @param ll The minimum level to use.
    */
   public final void setLevel(String name, Level ll) {
-//    System.err.printf("Setting level for '%s'%n", name);
     rwLock.writeLock().lock();
     try {
       levelCache.clear();

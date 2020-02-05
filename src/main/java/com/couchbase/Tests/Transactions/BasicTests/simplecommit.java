@@ -1,8 +1,9 @@
-package com.couchbase.Tests.Transactions;
+package com.couchbase.Tests.Transactions.BasicTests;
 
 import com.couchbase.Constants.Strings;
 import com.couchbase.Couchbase.Cluster.ClusterConfigure;
 import com.couchbase.Tests.Transactions.Utils.txnUtils;
+import com.couchbase.Tests.Transactions.transactionTests;
 import com.couchbase.client.java.json.JsonObject;
 import com.couchbase.grpc.protocol.ResumableTransactionServiceGrpc;
 import com.couchbase.grpc.protocol.TxnClient;
@@ -15,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 public class simplecommit extends transactionTests {
     public simplecommit(TxnClient.conn_info  conn_info, ResumableTransactionServiceGrpc.ResumableTransactionServiceBlockingStub   txnstub, String hostname, String testname, ClusterConfigure clusterConfigure){
-        super(conn_info,txnstub,hostname,testname,clusterConfigure);
+        super(conn_info,txnstub,hostname,null,testname,clusterConfigure);
     }
 
     public void configureTests(){

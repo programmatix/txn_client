@@ -14,22 +14,6 @@ import java.util.Map;
  * Class to manage logging contexts and levels
  */
 public class LogUtil {
-  // Common prefixes for loggers
-  public final static String PKG = "com.couchbase.sdkdclient";
-  public final static String SYS_SDKD = PKG + "." + "SDKD";
-  public final static String SYS_OPTIONS = PKG + "." + "options";
-  public final static String SYS_CLUSTER = PKG + "." + "cluster";
-  public final static String SYS_CBADMIN = "com.couchbase.cbadmin";
-  public final static String SYS_SSH = PKG + "." + "ssh";
-  public final static String SYS_HANDLE = PKG + "." + "handle";
-  public final static String SYS_DRIVER = PKG + "." + "driver";
-  public final static String SYS_ORM = "com.j256.ormlite";
-  public final static String SYS_DB = PKG + "." + "rundb";
-  public final static String SYS_TIMINGS = PKG + ".protocol.opresults.Timings";
-  public final static String SYS_ANALYSIS = PKG + ".analysis";
-  private final static Logger logger = LoggerFactory.getLogger(LogUtil.class);
-
-
   static public class LogProducer {
     private final String alias;
     private final String description;
@@ -57,36 +41,24 @@ public class LogUtil {
   public static final Map<String,LogProducer> logProducers =
           new HashMap<String, LogProducer>();
 
+  // Common prefixes for loggers
+  public final static String PKG = "com.couchbase";
+  public final static String CONSTANTS = PKG + "." + "Constants";
+  public final static String COUCHBASE = PKG + "." + "Couchbase";
+  public final static String EXCEPTIONS = PKG + "." + "Exceptions";
+  public final static String INPUTPARAMETERS = PKG + "." + "InputParameters";
+  public final static String TESTS = PKG + "." + "Tests";
+  public final static String UTILS = PKG + "." + "Utils";
+  private final static Logger logger = LoggerFactory.getLogger(LogUtil.class);
 
   static {
     LoggingOptions.init();
-
-    logProducers.put("options", new LogProducer("options", "Option Parsing", SYS_OPTIONS));
-    logProducers.put("cbadmin", new LogProducer("cbadmin", "REST API", SYS_CBADMIN));
-    logProducers.put("driver", new LogProducer("driver", "SDKD Connections", SYS_DRIVER));
-
-    LogProducer lpProto = new LogProducer("handle", "SDKD Protocol (driver; handle)", SYS_HANDLE);
-    logProducers.put("handle", lpProto);
-    logProducers.put("protocol", lpProto);
-
-    logProducers.put("cluster", new LogProducer("cluster", "Cluster Manipulation", SYS_CLUSTER));
-    logProducers.put("orm", new LogProducer("orm", "ORM Logging", SYS_ORM));
-    logProducers.put("db", new LogProducer("db", "DB Manipulation", SYS_DB));
-    logProducers.put("tmcalc", new LogProducer("tmcalc", "Timing calculations", SYS_TIMINGS));
-    logProducers.put("analysis", new LogProducer("analysis", "Analysis Routines", SYS_ANALYSIS));
-    logProducers.put("sdkd", new LogProducer("sdkd", "SDKD Output", SYS_SDKD));
-
-    // Don't spam the DB with SQL Statements
-    LoggingOptions.setLoggerLevel(SYS_ORM, LoggingOptions.LVL_WARN);
-
-    // Don't spam with analysis statements
-    LoggingOptions.setOutputLevel(SYS_ANALYSIS, LoggingOptions.LVL_INFO);
-
-    // Don't spam the DB with timings statements
-    LoggingOptions.setLoggerLevel(SYS_TIMINGS, LoggingOptions.LVL_WARN);
-    LoggingOptions.setOutputLevel(SYS_DB, LoggingOptions.LVL_INFO);
-    LoggingOptions.setOutputLevel(SYS_OPTIONS, LoggingOptions.LVL_INFO);
-
+    logProducers.put("CONSTANTS", new LogProducer("CONSTANTS", "CONSTANTS", CONSTANTS));
+    logProducers.put("COUCHBASE", new LogProducer("COUCHBASE", "Install and config CB", COUCHBASE));
+    logProducers.put("EXCEPTIONS", new LogProducer("EXCEPTIONS", "EXCEPTIONS", EXCEPTIONS));
+    logProducers.put("INPUTPARAMETERS", new LogProducer("INPUTPARAMETERS", "INPUTPARAMETERS", INPUTPARAMETERS));
+    logProducers.put("TESTS", new LogProducer("TESTS", "TESTS Logging", TESTS));
+    logProducers.put("UTILS", new LogProducer("UTILS", "UTILS", UTILS));
   }
 
 
@@ -145,10 +117,11 @@ public class LogUtil {
     String name = kv[0];
     String level = kv[1];
 
-    if (name.equals("all")) {
-      LoggingOptions.setOutputLevel(PKG, level);
-      LoggingOptions.setOutputLevel(SYS_CBADMIN, level);
 
+    if (name.equals("all")) {
+
+      logger.debug("Setting name to all");
+      LoggingOptions.setOutputLevel(PKG, level);
     } else if (name.equals("spam")) {
       for (LogProducer lp : logProducers.values()) {
         LoggingOptions.setOutputLevel(lp.getLoggerName(), level);
@@ -161,6 +134,7 @@ public class LogUtil {
       logger.warn("No alias for {}. Assuming classname", name);
       LoggingOptions.setOutputLevel(name, level);
     }
+   // System.exit(-1);
   }
 
   public static String getLoggersHelp() {

@@ -9,7 +9,7 @@
     </filter>
 
     <filter class="com.couchbase.Logging.AppenderLevelFilter">
-      <DefaultLevel>WARN</DefaultLevel>
+      <DefaultLevel>INFO</DefaultLevel>
       <Name>STDOUT_FILTER</Name>
     </filter>
     <target>System.err</target>

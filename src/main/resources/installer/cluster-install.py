@@ -109,7 +109,7 @@ sys.stdout.flush()
 
 out = subprocess.check_call(instcmd)
 if out != 0:
-    print "Installation failed!",
+    print "Installation failed!"
     sys.exit(1)
 
 # due to bug on systemctl
@@ -118,11 +118,12 @@ sys.stdout.flush()
 po = Popen(rexeccmd, stdout=PIPE, stderr=PIPE)
 out, err = po.communicate()
 
-startcmd = ('service', 'couchbase-server', 'start')
 print "Starting server"
+startcmd = ('service', 'couchbase-server', 'start')
 sys.stdout.flush()
 po = Popen(startcmd, stdout=PIPE, stderr=PIPE)
-out, err = po.communicate()
+out = po.communicate()
+print "po.returncode: ",po.returncode
 if po.returncode != 0:
-    print "Unable to start server!",
+    print "Unable to start server!"
     sys.exit(1)

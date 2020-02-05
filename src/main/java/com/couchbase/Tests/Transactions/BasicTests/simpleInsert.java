@@ -1,8 +1,9 @@
-package com.couchbase.Tests.Transactions;
+package com.couchbase.Tests.Transactions.BasicTests;
 
 import com.couchbase.Constants.Strings;
 import com.couchbase.Couchbase.Cluster.ClusterConfigure;
 import com.couchbase.Tests.Transactions.Utils.txnUtils;
+import com.couchbase.Tests.Transactions.transactionTests;
 import com.couchbase.client.java.json.JsonObject;
 import com.couchbase.grpc.protocol.ResumableTransactionServiceGrpc;
 import com.couchbase.grpc.protocol.TxnClient;
@@ -18,7 +19,7 @@ public class simpleInsert extends transactionTests {
     List<String> docKeys = new ArrayList<>();
 
     public simpleInsert(TxnClient.conn_info  conn_info, ResumableTransactionServiceGrpc.ResumableTransactionServiceBlockingStub txnstub, String hostname, String testname, ClusterConfigure clusterConfigure){
-        super(conn_info,txnstub,hostname,testname,clusterConfigure);
+        super(conn_info,txnstub,hostname,null,testname,clusterConfigure);
     }
 
     public void configureTests(){
@@ -35,6 +36,8 @@ public class simpleInsert extends transactionTests {
     }
 
     public void executeTests(){
+
+
         TxnClient.TransactionsFactoryCreateResponse factory =
                 txnstub.transactionsFactoryCreate(createDefaultTransactionsFactory()
                         .build());

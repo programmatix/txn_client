@@ -1,6 +1,8 @@
 package com.couchbase.InputParameters;
 
 import com.couchbase.Constants.defaults;
+import com.couchbase.Logging.LogUtil;
+import com.couchbase.Tests.Transactions.transactionTests;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -36,8 +38,6 @@ public class inputParameters{
     private  String clusterVersion;
     private  String ramp;
     private  String rebound;
-    private  String testsuite;
-    private  String test;
     private  boolean upgrade;
     private  String upgradeVersion;
     private  String downloadurl;
@@ -61,7 +61,10 @@ public class inputParameters{
     private int bucketRamSize;
     private String bucketSaslpassword;
     private int clusterPort;
-    private String loggerLevel;
+    private String testtype;
+    private String testsuite;
+    private String testname;
+
 
 
 
@@ -208,17 +211,6 @@ public class inputParameters{
             rebound = defaults.rebound;
         }
 
-        try{
-            testsuite = (String) jo.get("testsuite");
-        }catch(NullPointerException e){
-            testsuite = defaults.testsuite;
-        }
-
-        try{
-            test = (String) jo.get("test");
-        }catch(NullPointerException e){
-            test = defaults.test;
-        }
 
         try{
             upgrade = (boolean) jo.get("upgrade");
@@ -305,9 +297,42 @@ public class inputParameters{
             clusterPort = defaults.clusterPort;
         }
 
+        try{
+            String logoptions =  (String) jo.get("loggerLevel");
+            LogUtil.setLevelFromSpec(logoptions);
+        }catch(NullPointerException e){
+            LogUtil.setLevelFromSpec("all:INFO");
+        }
 
+        try{
+            testtype =  (String) jo.get("testtype");
+            if(testtype.equals("txn") || testtype.equals("")) {
+                testtype = "txn";
+            }
+        }catch(NullPointerException e){
+            testtype = "txn";
+        }
+
+        try{
+            testsuite =  (String) jo.get("testsuite");
+            if(testsuite.equals("")){
+                testsuite= "basic";
+            }
+        }catch(NullPointerException e){
+            testtype = "basic";
+        }
+
+        try{
+            testname =  (String) jo.get("testname");
+            if(testname.equals("")){
+                testname= "all";
+            }
+        }catch(NullPointerException e){
+            testname = "simplecommit";
+        }
 
         extractnodeConfig(jo);
+        validatetestparams();
     }
 
     private void extractnodeConfig(JSONObject jo) {
@@ -322,6 +347,15 @@ public class inputParameters{
         }
     }
 
+    private void validatetestparams(){
+
+
+
+
+
+    }
+
+
     public void printConfiguration(){
         System.out.println("ParamsFile: " + ParamsFile);
         System.out.println("setStorageMode: " + setStorageMode);
@@ -335,7 +369,6 @@ public class inputParameters{
         System.out.println("ramp: " + ramp);
         System.out.println("rebound: " + rebound);
         System.out.println("testsuite: " + testsuite);
-        System.out.println("test: " + test);
         System.out.println("upgrade: " + upgrade);
         System.out.println("upgradeVersion: " + upgradeVersion);
         System.out.println("downloadurl: " + downloadurl);
@@ -383,14 +416,6 @@ public class inputParameters{
 
     public String getrebound(){
         return rebound;
-    }
-
-    public String gettestsuite(){
-        return testsuite;
-    }
-
-    public String gettest(){
-        return test;
     }
 
     public boolean getupgrade(){
@@ -459,6 +484,11 @@ public class inputParameters{
 
     public int getclusterPort(){return clusterPort;}
 
+    public String gettesttype(){return testtype;}
+
+    public String gettestsuite(){return testsuite;}
+
+    public String gettestname(){return testname;}
 
 
 

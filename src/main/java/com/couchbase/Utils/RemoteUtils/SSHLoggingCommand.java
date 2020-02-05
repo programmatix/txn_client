@@ -31,7 +31,7 @@ public class SSHLoggingCommand extends SSHCommand {
 
   @Override
   public void handleStdout(InputStream sout) throws IOException {
-    gobbleStdout = new LoggingLineGobbler(sout, logger, LogEntry.Level.INFO);
+    gobbleStdout = new LoggingLineGobbler(sout, logger, LogEntry.Level.DEBUG);
     setupCommon(gobbleStdout);
   }
   

@@ -98,7 +98,7 @@ public class ClusterConfigure {
                 e.printStackTrace();
             }
         }else{
-            System.out.println("ConfigureCluster is not asked not to perform. Hence returning empty");
+            logger.info("ConfigureCluster is not asked not to perform. Hence returning empty");
         }
         return seedNode;
     }
@@ -120,7 +120,8 @@ public class ClusterConfigure {
             this.nodelist= nlb.build();
 
         }catch(Exception e){
-            System.out.println("Exception during configuring cluster: "+e);
+            logger.error("Exception during configuring cluster: "+e);
+            System.exit(-1);
         }
 
         return nodelist.getMaster().host;
@@ -133,7 +134,7 @@ public class ClusterConfigure {
                 protected boolean tryOnce() throws RestApiException {
                     for (NodeHost nn : nodelist.getAll()) {
                         nn.getAdmin().getInfo();
-                        System.out.println(" nn.getAdmin().getInfo();: "+ nn.getAdmin().getInfo());
+                        logger.debug(" nn.getAdmin().getInfo(): "+ nn.getAdmin().getInfo());
                     }
                     return true;
                 }
@@ -182,7 +183,7 @@ public class ClusterConfigure {
      */
     public ClusterConfigure node(NodeHost nn) {
         if (nodes.contains(nn)) {
-            logger.warn("Node {} already exists. Replacing", nn);
+            logger.debug("Node {} already exists. Replacing", nn);
             nodes.remove(nn);
         }
         nodes.add(nn);

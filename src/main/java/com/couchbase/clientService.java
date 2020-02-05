@@ -1,16 +1,17 @@
+package com.couchbase;
+
 import com.couchbase.Constants.Strings;
 import com.couchbase.Couchbase.Cluster.ClusterConfigure;
 import com.couchbase.Couchbase.Couchbase.CouchbaseInstaller;
 import com.couchbase.InputParameters.inputParameters;
+import com.couchbase.Logging.LogUtil;
 import com.couchbase.Tests.Transactions.transactionTests;
 import com.couchbase.grpc.protocol.ResumableTransactionServiceGrpc;
 import com.couchbase.grpc.protocol.TxnClient;
-import com.couchbase.grpc.protocol.txnGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -33,12 +34,17 @@ public class clientService {
         inputParameters inputParameters  =  new inputParameters(params[0]);
         inputParameters.readandStoreParams();
 
-        logger =  LoggerFactory.getLogger(clientService.class);
+        logger =  LogUtil.getLogger(clientService.class);
         logger.info("Starting the framework");
 
         CouchbaseInstaller couchbaseInstaller = new CouchbaseInstaller(inputParameters);
-        couchbaseInstaller.installcouchbase();
-        logger.info("Completed Couchbase installation on individual nodes. Proceeding with Cluster Creation");
+        if (inputParameters.getinstallcouchbase()) {
+            couchbaseInstaller.installcouchbase();
+            logger.info("Completed Couchbase installation on individual nodes. Proceeding with Cluster Creation");
+        }else{
+            logger.info("Not Installing couchbase Since the user input for installcouchbase is set to : "+inputParameters.getinstallcouchbase());
+        }
+
 
         ClusterConfigure clusterConfigure = new ClusterConfigure(inputParameters);
         String clusterHost = clusterConfigure.initializecluster(true);
@@ -48,7 +54,6 @@ public class clientService {
         logger.info("Connecting to GRPC Server");
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost",8050).usePlaintext().build();
         txnstub = ResumableTransactionServiceGrpc.newBlockingStub(channel);
-        logger.info("Created connection between txn_framework client and server");
 
         TxnClient.conn_info  conn_create_req =
                 TxnClient.conn_info.newBuilder()
@@ -61,10 +66,18 @@ public class clientService {
                         .build();
         TxnClient.APIResponse response = txnstub.createConn(conn_create_req);
 
-        logger.info("Did txn_framework server establish connection with Couchbase Server: "+response.getAPISuccessStatus());
+        logger.info("Test server established connection with Couchbase Server: "+response.getAPISuccessStatus());
         try {
-            transactionTests txn_tests = new transactionTests(conn_create_req,txnstub,clusterHost,"",clusterConfigure);
-            txn_tests.execute();
+
+            logger.info("Type of tests being run are  \"{}\" and the test suite for those tests are  \"{}\". We will execute  \"{}\" tests for this testsuite ",inputParameters.gettesttype(),inputParameters.gettestsuite(),inputParameters.gettestname() );
+            if(inputParameters.gettesttype().equals("txn") || inputParameters.gettesttype().equals("")){
+                transactionTests txn_tests = new transactionTests(conn_create_req,txnstub,clusterHost,inputParameters.gettestsuite(),inputParameters.gettestname() ,clusterConfigure);
+                txn_tests.execute();
+            }
+            else {
+                logger.error("Invalid testtype selected");
+            }
+
         } catch(Exception e) {
             logger.error("Few tests have failed Test failed: "+e);
         }
