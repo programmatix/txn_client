@@ -12,9 +12,6 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
@@ -23,33 +20,13 @@ import java.util.concurrent.ExecutionException;
 public class clientService {
     private static ResumableTransactionServiceGrpc.ResumableTransactionServiceBlockingStub txnstub = null;
     static Logger logger;
+    static CouchbaseInstaller couchbaseInstaller;
+    static ClusterConfigure clusterConfigure;
+    static String clusterHost;
+    static inputParameters inputParameters;
 
-
-    public static void main(String args[]) throws IOException, ParseException, ExecutionException, ParserConfigurationException, SAXException {
+    public static void main(String args[]) throws IOException, ParseException, ExecutionException {
         setup(args);
-    }
-
-    public static void setup(String[] params) throws IOException, ParseException, ExecutionException, ParserConfigurationException, SAXException {
-
-        inputParameters inputParameters  =  new inputParameters(params[0]);
-        inputParameters.readandStoreParams();
-
-        logger =  LogUtil.getLogger(clientService.class);
-        logger.info("Starting the framework");
-
-        CouchbaseInstaller couchbaseInstaller = new CouchbaseInstaller(inputParameters);
-        if (inputParameters.getinstallcouchbase()) {
-            couchbaseInstaller.installcouchbase();
-            logger.info("Completed Couchbase installation on individual nodes. Proceeding with Cluster Creation");
-        }else{
-            logger.info("Not Installing couchbase Since the user input for installcouchbase is set to : "+inputParameters.getinstallcouchbase());
-        }
-
-
-        ClusterConfigure clusterConfigure = new ClusterConfigure(inputParameters);
-        String clusterHost = clusterConfigure.initializecluster(true);
-        logger.info("Completed Cluster Creation. Proceeding with Test Execution");
-
 
         logger.info("Connecting to GRPC Server");
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost",8050).usePlaintext().build();
@@ -68,7 +45,6 @@ public class clientService {
 
         logger.info("Test server established connection with Couchbase Server: "+response.getAPISuccessStatus());
         try {
-
             logger.info("Type of tests being run are  \"{}\" and the test suite for those tests are  \"{}\". We will execute  \"{}\" tests for this testsuite ",inputParameters.gettesttype(),inputParameters.gettestsuite(),inputParameters.gettestname() );
             if(inputParameters.gettesttype().equals("txn") || inputParameters.gettesttype().equals("")){
                 transactionTests txn_tests = new transactionTests(conn_create_req,txnstub,clusterHost,inputParameters.gettestsuite(),inputParameters.gettestname() ,clusterConfigure);
@@ -77,11 +53,33 @@ public class clientService {
             else {
                 logger.error("Invalid testtype selected");
             }
-
         } catch(Exception e) {
-            logger.error("Few tests have failed Test failed: "+e);
+            logger.error("Few tests have failed : "+e.getStackTrace());
         }
-
         channel.shutdown();
     }
+
+    public static void setup(String[] params) throws IOException, ParseException, ExecutionException{
+
+        inputParameters = new inputParameters(params[0]);
+        inputParameters.readandStoreParams();
+
+        logger = LogUtil.getLogger(clientService.class);
+        logger.info("Starting the framework");
+
+        couchbaseInstaller = new CouchbaseInstaller(inputParameters);
+        if (inputParameters.getinstallcouchbase()) {
+            couchbaseInstaller.installcouchbase();
+            logger.info("Completed Couchbase installation on individual nodes. Proceeding with Cluster Creation");
+        } else {
+            logger.info("Not Installing couchbase Since the user input for installcouchbase is set to : " + inputParameters.getinstallcouchbase());
+        }
+
+
+        clusterConfigure = new ClusterConfigure(inputParameters);
+         clusterHost = clusterConfigure.initializecluster(true);
+        logger.info("Completed Cluster Creation. Proceeding with Test Execution");
+
+    }
+
 }

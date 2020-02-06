@@ -53,6 +53,17 @@ public class TransactionWorkloadTest {
 
         cluster = Cluster.connect(CLUSTER_HOSTNAME, Strings.ADMIN_USER, Strings.PASSWORD);
         defaultCollection = cluster.bucket("default").defaultCollection();
+        TxnClient.conn_info  conn_create_req =
+                TxnClient.conn_info.newBuilder()
+                        .setHandleHostname(CLUSTER_HOSTNAME)
+                        .setHandleBucket("default")
+                        .setHandlePort(8091)
+                        .setHandleUsername(Strings.ADMIN_USER)
+                        .setHandlePassword(Strings.PASSWORD)
+                        .setHandleAutofailoverMs(5)
+                        .build();
+        TxnClient.APIResponse response = stub.createConn(conn_create_req);
+
     }
 
     @Test

@@ -14,41 +14,41 @@ import org.slf4j.Logger;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class txnUtils {
+    static Logger logger = LogUtil.getLogger(txnUtils.class);
 
-
-    public static boolean verifyDocuments(List<String> keys, JsonObject docContent, boolean docExists,String hostname) {
-        Logger logger = LogUtil.getLogger(transactionTests.class);
-
-        boolean doc_Exists;
+    public static void verifyDocuments(List<String> keys, JsonObject docContent,boolean docExists,String hostname) {
         try{
             Cluster cluster = Cluster.connect(hostname, Strings.ADMIN_USER, Strings.PASSWORD);
             Collection defaultCollection= cluster.bucket("default").defaultCollection();
             for (String key : keys) {
-                if (docExists) {
-                    JsonObject body = defaultCollection.get(key).contentAs(JsonObject.class);
-                   if(docContent==null){
-                       assertEquals(0, body.size());
-                   }else{
-                       assertEquals(docContent, body);
-                   }
-                } else {
-                    doc_Exists = defaultCollection.exists(key).exists();
-                    logger.debug("Checking  delete for Key: "+key+ " Does key exist: "+doc_Exists);
-                    logger.debug("Content: "+defaultCollection.get(key).toString());
-                    assertEquals(docExists, doc_Exists);
+                JsonObject body=null;
+                try{
+                    body = defaultCollection.get(key).contentAs(JsonObject.class);
+                }catch(Exception e){
+                    if(!docExists){
+                        logger.info("Inside docExists false");
+                        assertTrue(e.getClass().getName().contains("DocumentNotFoundException"));
+                    }
+                }
+
+                if(docExists){
+                    logger.info("Inside docExists true");
+                    if(docContent==null){
+                        assertEquals(0, body.size());
+                    }else{
+                        assertEquals(docContent, body);
+                    }
+                }else{
+                    assertNull(body);
                 }
             }
-            return true;
         }catch(Exception e){
             logger.error("Exception during verification: "+e);
-            return false;
         }
     }
-
 
 
 }

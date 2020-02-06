@@ -18,6 +18,8 @@ service ResumableTransactionService {
 
     // Perform individual operations on a previously created transaction
     rpc transactionInsert (TransactionInsertRequest) returns (TransactionGenericResponse);
+    rpc transactionUpdate (TransactionUpdateRequest) returns (TransactionGenericResponse);
+    rpc transactionDelete (TransactionDeleteRequest) returns (TransactionGenericResponse);
     rpc transactionCommit (TransactionGenericRequest) returns (TransactionGenericResponse);
 }
 
@@ -85,6 +87,18 @@ message TransactionInsertRequest {
     string transactionRef = 1;
     string docId = 2;
     string contentJson = 3;
+}
+
+
+message TransactionUpdateRequest {
+    string transactionRef = 1;
+    string docId = 2;
+    string contentJson = 3;
+}
+
+message TransactionDeleteRequest {
+    string transactionRef = 1;
+    string docId = 2;
 }
 
 message TransactionsFactoryCreateResponse {

@@ -92,7 +92,7 @@ public class inputParameters{
 
 
 
-    public void readandStoreParams() throws IOException, ParseException, ParserConfigurationException, SAXException {
+    public void readandStoreParams() throws IOException, ParseException{
         Object obj = new JSONParser().parse(new FileReader(ParamsFile));
         JSONObject jo = (JSONObject) obj;
 

@@ -13,12 +13,13 @@ import java.util.*;
 
 import static org.junit.Assert.assertTrue;
 
-public class simpleInsert extends transactionTests {
+public class simpleDelete extends transactionTests {
     String docId ;
     JsonObject docContent = null;
+    JsonObject updateContent = null;
     List<String> docKeys;
 
-    public simpleInsert(TxnClient.conn_info  conn_info, ResumableTransactionServiceGrpc.ResumableTransactionServiceBlockingStub txnstub, String hostname, String testname, ClusterConfigure clusterConfigure){
+    public simpleDelete(TxnClient.conn_info  conn_info, ResumableTransactionServiceGrpc.ResumableTransactionServiceBlockingStub txnstub, String hostname, String testname, ClusterConfigure clusterConfigure){
         super(conn_info,txnstub,hostname,null,testname,clusterConfigure);
     }
 
@@ -27,10 +28,13 @@ public class simpleInsert extends transactionTests {
         docKeys = new ArrayList<>();
         docKeys.add(docId);
         docContent = JsonObject.create().put(Strings.CONTENT_NAME, Strings.DEFAULT_CONTENT_VALUE);
+        updateContent = JsonObject.create().put(Strings.CONTENT_NAME, Strings.UPDATED_CONTENT_VALUE);
+
     }
 
 
     public void runTests(){
+
         clusterConfigure.initializecluster(true);
         for(int i =0;i<txncommit.length;i++){
             executeTests(txncommit[i]);
@@ -39,6 +43,8 @@ public class simpleInsert extends transactionTests {
     }
 
     public void executeTests(boolean txncommit){
+        logger.info("Running SimpleDelete with commit : "+txncommit);
+
         createData();
 
         TxnClient.TransactionsFactoryCreateResponse factory =
@@ -61,19 +67,43 @@ public class simpleInsert extends transactionTests {
                         .build());
         txnUtils.verifyDocuments(docKeys,null,true,hostname);
 
+        TxnClient.TransactionGenericResponse commit =
+                txnstub.transactionCommit(TxnClient.TransactionGenericRequest.newBuilder()
+                        .setTransactionRef(transactionRef)
+                        .build());
+        assertTrue(commit.getSuccess());
+        txnUtils.verifyDocuments(docKeys,docContent,true,hostname);
+
+        TxnClient.TransactionCreateResponse createnew =
+                txnstub.transactionCreate(TxnClient.TransactionCreateRequest.newBuilder()
+                        .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
+                        .build());
+        assertTrue(create.getSuccess());
+        String newtransactionRef = createnew.getTransactionRef();
+
+
+        TxnClient.TransactionGenericResponse delete =
+                txnstub.transactionDelete(TxnClient.TransactionDeleteRequest.newBuilder()
+                        .setTransactionRef(newtransactionRef)
+                        .setDocId(docId)
+                        .build());
+        assertTrue(delete.getSuccess());
+        txnUtils.verifyDocuments(docKeys,docContent,true,hostname);
+
+
         if(txncommit){
-            TxnClient.TransactionGenericResponse commit =
+            TxnClient.TransactionGenericResponse deletecommit =
                     txnstub.transactionCommit(TxnClient.TransactionGenericRequest.newBuilder()
-                            .setTransactionRef(transactionRef)
+                            .setTransactionRef(newtransactionRef)
                             .build());
-            assertTrue(commit.getSuccess());
-            txnUtils.verifyDocuments(docKeys,docContent,true,hostname);
+            assertTrue(deletecommit.getSuccess());
+            txnUtils.verifyDocuments(docKeys,null,false,hostname);
         }
 
         assertTrue(txnstub.transactionsFactoryClose(TxnClient.TransactionsFactoryCloseRequest.newBuilder()
                 .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
                 .build()).getSuccess());
-        logger.info("Completed Simple Insert with commit : "+txncommit);
+        logger.info("Completed Simple Delete with commit : "+txncommit);
     }
 }
 
