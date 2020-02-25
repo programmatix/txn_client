@@ -7,7 +7,6 @@ import com.couchbase.Tests.Transactions.transactionTests;
 import com.couchbase.client.java.json.JsonObject;
 import com.couchbase.grpc.protocol.ResumableTransactionServiceGrpc;
 import com.couchbase.grpc.protocol.TxnClient;
-import com.couchbase.grpc.protocol.txnGrpc;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class simplecommit extends transactionTests {
 
     public void executeTests(){
         TxnClient.TransactionsFactoryCreateResponse factory =
-                txnstub.transactionsFactoryCreate(createDefaultTransactionsFactory()
+                txnstub.transactionsFactoryCreate(createDefaultTransactionsFactory("MAJORITY")
                         .build());
 
         assertTrue(factory.getSuccess());

@@ -1,4 +1,3 @@
-// TODO share this between client and server
 syntax = "proto3";
 option java_package = "com.couchbase.grpc.protocol";
 package txnService;
@@ -17,10 +16,12 @@ service ResumableTransactionService {
     rpc transactionCreate (TransactionCreateRequest) returns (TransactionCreateResponse);
 
     // Perform individual operations on a previously created transaction
+    rpc transactionEmpty (TransactionGenericRequest) returns (TransactionGenericResponse);
     rpc transactionInsert (TransactionInsertRequest) returns (TransactionGenericResponse);
     rpc transactionUpdate (TransactionUpdateRequest) returns (TransactionGenericResponse);
     rpc transactionDelete (TransactionDeleteRequest) returns (TransactionGenericResponse);
     rpc transactionCommit (TransactionGenericRequest) returns (TransactionGenericResponse);
+    rpc transactionRollback (TransactionGenericRequest) returns (TransactionGenericResponse);
 }
 
 enum Hook {
@@ -44,6 +45,15 @@ enum HookErrorToRaise {
 
     // Fail this attempt of the transaction. The transaction will roll back this attempt and try again.
     FAIL_RETRY = 2;
+}
+
+enum AttemptStates {
+    NOT_STARTED=0;
+    PENDING=1;
+    ABORTED=2;
+    COMMITTED=3;
+    COMPLETED=4;
+    ROLLED_BACK=5;
 }
 
 enum Durability {
@@ -81,6 +91,8 @@ message TransactionCreateRequest {
 
 message TransactionGenericRequest {
     string transactionRef = 1;
+    bool isEmpty=2;
+    bool isFinished=3;
 }
 
 message TransactionInsertRequest {
@@ -113,9 +125,10 @@ message TransactionCreateResponse {
 
 message TransactionGenericResponse {
     bool success = 1;
+    bool atrCollectionPresent=2;
+    bool atrIdPresent=3;
+    string attemptStates =4;
 }
-
-
 
 message conn_info {
     string handle_bucket=3;

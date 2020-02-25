@@ -346,6 +346,140 @@ public final class TxnClient {
   }
 
   /**
+   * Protobuf enum {@code txnService.AttemptStates}
+   */
+  public enum AttemptStates
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <code>NOT_STARTED = 0;</code>
+     */
+    NOT_STARTED(0),
+    /**
+     * <code>PENDING = 1;</code>
+     */
+    PENDING(1),
+    /**
+     * <code>ABORTED = 2;</code>
+     */
+    ABORTED(2),
+    /**
+     * <code>COMMITTED = 3;</code>
+     */
+    COMMITTED(3),
+    /**
+     * <code>COMPLETED = 4;</code>
+     */
+    COMPLETED(4),
+    /**
+     * <code>ROLLED_BACK = 5;</code>
+     */
+    ROLLED_BACK(5),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <code>NOT_STARTED = 0;</code>
+     */
+    public static final int NOT_STARTED_VALUE = 0;
+    /**
+     * <code>PENDING = 1;</code>
+     */
+    public static final int PENDING_VALUE = 1;
+    /**
+     * <code>ABORTED = 2;</code>
+     */
+    public static final int ABORTED_VALUE = 2;
+    /**
+     * <code>COMMITTED = 3;</code>
+     */
+    public static final int COMMITTED_VALUE = 3;
+    /**
+     * <code>COMPLETED = 4;</code>
+     */
+    public static final int COMPLETED_VALUE = 4;
+    /**
+     * <code>ROLLED_BACK = 5;</code>
+     */
+    public static final int ROLLED_BACK_VALUE = 5;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static AttemptStates valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static AttemptStates forNumber(int value) {
+      switch (value) {
+        case 0: return NOT_STARTED;
+        case 1: return PENDING;
+        case 2: return ABORTED;
+        case 3: return COMMITTED;
+        case 4: return COMPLETED;
+        case 5: return ROLLED_BACK;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<AttemptStates>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        AttemptStates> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<AttemptStates>() {
+            public AttemptStates findValueByNumber(int number) {
+              return AttemptStates.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return com.couchbase.grpc.protocol.TxnClient.getDescriptor().getEnumTypes().get(3);
+    }
+
+    private static final AttemptStates[] VALUES = values();
+
+    public static AttemptStates valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private AttemptStates(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:txnService.AttemptStates)
+  }
+
+  /**
    * Protobuf enum {@code txnService.Durability}
    */
   public enum Durability
@@ -435,7 +569,7 @@ public final class TxnClient {
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.couchbase.grpc.protocol.TxnClient.getDescriptor().getEnumTypes().get(3);
+      return com.couchbase.grpc.protocol.TxnClient.getDescriptor().getEnumTypes().get(4);
     }
 
     private static final Durability[] VALUES = values();
@@ -3323,6 +3457,16 @@ public final class TxnClient {
      */
     com.google.protobuf.ByteString
         getTransactionRefBytes();
+
+    /**
+     * <code>bool isEmpty = 2;</code>
+     */
+    boolean getIsEmpty();
+
+    /**
+     * <code>bool isFinished = 3;</code>
+     */
+    boolean getIsFinished();
   }
   /**
    * Protobuf type {@code txnService.TransactionGenericRequest}
@@ -3338,6 +3482,8 @@ public final class TxnClient {
     }
     private TransactionGenericRequest() {
       transactionRef_ = "";
+      isEmpty_ = false;
+      isFinished_ = false;
     }
 
     @java.lang.Override
@@ -3368,6 +3514,16 @@ public final class TxnClient {
               java.lang.String s = input.readStringRequireUtf8();
 
               transactionRef_ = s;
+              break;
+            }
+            case 16: {
+
+              isEmpty_ = input.readBool();
+              break;
+            }
+            case 24: {
+
+              isFinished_ = input.readBool();
               break;
             }
             default: {
@@ -3436,6 +3592,24 @@ public final class TxnClient {
       }
     }
 
+    public static final int ISEMPTY_FIELD_NUMBER = 2;
+    private boolean isEmpty_;
+    /**
+     * <code>bool isEmpty = 2;</code>
+     */
+    public boolean getIsEmpty() {
+      return isEmpty_;
+    }
+
+    public static final int ISFINISHED_FIELD_NUMBER = 3;
+    private boolean isFinished_;
+    /**
+     * <code>bool isFinished = 3;</code>
+     */
+    public boolean getIsFinished() {
+      return isFinished_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -3453,6 +3627,12 @@ public final class TxnClient {
       if (!getTransactionRefBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, transactionRef_);
       }
+      if (isEmpty_ != false) {
+        output.writeBool(2, isEmpty_);
+      }
+      if (isFinished_ != false) {
+        output.writeBool(3, isFinished_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -3464,6 +3644,14 @@ public final class TxnClient {
       size = 0;
       if (!getTransactionRefBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, transactionRef_);
+      }
+      if (isEmpty_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, isEmpty_);
+      }
+      if (isFinished_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, isFinished_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -3483,6 +3671,10 @@ public final class TxnClient {
       boolean result = true;
       result = result && getTransactionRef()
           .equals(other.getTransactionRef());
+      result = result && (getIsEmpty()
+          == other.getIsEmpty());
+      result = result && (getIsFinished()
+          == other.getIsFinished());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -3496,6 +3688,12 @@ public final class TxnClient {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TRANSACTIONREF_FIELD_NUMBER;
       hash = (53 * hash) + getTransactionRef().hashCode();
+      hash = (37 * hash) + ISEMPTY_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIsEmpty());
+      hash = (37 * hash) + ISFINISHED_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIsFinished());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3631,6 +3829,10 @@ public final class TxnClient {
         super.clear();
         transactionRef_ = "";
 
+        isEmpty_ = false;
+
+        isFinished_ = false;
+
         return this;
       }
 
@@ -3658,6 +3860,8 @@ public final class TxnClient {
       public com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest buildPartial() {
         com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest result = new com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest(this);
         result.transactionRef_ = transactionRef_;
+        result.isEmpty_ = isEmpty_;
+        result.isFinished_ = isFinished_;
         onBuilt();
         return result;
       }
@@ -3709,6 +3913,12 @@ public final class TxnClient {
         if (!other.getTransactionRef().isEmpty()) {
           transactionRef_ = other.transactionRef_;
           onChanged();
+        }
+        if (other.getIsEmpty() != false) {
+          setIsEmpty(other.getIsEmpty());
+        }
+        if (other.getIsFinished() != false) {
+          setIsFinished(other.getIsFinished());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -3804,6 +4014,58 @@ public final class TxnClient {
   checkByteStringIsUtf8(value);
         
         transactionRef_ = value;
+        onChanged();
+        return this;
+      }
+
+      private boolean isEmpty_ ;
+      /**
+       * <code>bool isEmpty = 2;</code>
+       */
+      public boolean getIsEmpty() {
+        return isEmpty_;
+      }
+      /**
+       * <code>bool isEmpty = 2;</code>
+       */
+      public Builder setIsEmpty(boolean value) {
+        
+        isEmpty_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool isEmpty = 2;</code>
+       */
+      public Builder clearIsEmpty() {
+        
+        isEmpty_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean isFinished_ ;
+      /**
+       * <code>bool isFinished = 3;</code>
+       */
+      public boolean getIsFinished() {
+        return isFinished_;
+      }
+      /**
+       * <code>bool isFinished = 3;</code>
+       */
+      public Builder setIsFinished(boolean value) {
+        
+        isFinished_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool isFinished = 3;</code>
+       */
+      public Builder clearIsFinished() {
+        
+        isFinished_ = false;
         onChanged();
         return this;
       }
@@ -7431,6 +7693,26 @@ public final class TxnClient {
      * <code>bool success = 1;</code>
      */
     boolean getSuccess();
+
+    /**
+     * <code>bool atrCollectionPresent = 2;</code>
+     */
+    boolean getAtrCollectionPresent();
+
+    /**
+     * <code>bool atrIdPresent = 3;</code>
+     */
+    boolean getAtrIdPresent();
+
+    /**
+     * <code>string attemptStates = 4;</code>
+     */
+    java.lang.String getAttemptStates();
+    /**
+     * <code>string attemptStates = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getAttemptStatesBytes();
   }
   /**
    * Protobuf type {@code txnService.TransactionGenericResponse}
@@ -7446,6 +7728,9 @@ public final class TxnClient {
     }
     private TransactionGenericResponse() {
       success_ = false;
+      atrCollectionPresent_ = false;
+      atrIdPresent_ = false;
+      attemptStates_ = "";
     }
 
     @java.lang.Override
@@ -7475,6 +7760,22 @@ public final class TxnClient {
             case 8: {
 
               success_ = input.readBool();
+              break;
+            }
+            case 16: {
+
+              atrCollectionPresent_ = input.readBool();
+              break;
+            }
+            case 24: {
+
+              atrIdPresent_ = input.readBool();
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              attemptStates_ = s;
               break;
             }
             default: {
@@ -7518,6 +7819,58 @@ public final class TxnClient {
       return success_;
     }
 
+    public static final int ATRCOLLECTIONPRESENT_FIELD_NUMBER = 2;
+    private boolean atrCollectionPresent_;
+    /**
+     * <code>bool atrCollectionPresent = 2;</code>
+     */
+    public boolean getAtrCollectionPresent() {
+      return atrCollectionPresent_;
+    }
+
+    public static final int ATRIDPRESENT_FIELD_NUMBER = 3;
+    private boolean atrIdPresent_;
+    /**
+     * <code>bool atrIdPresent = 3;</code>
+     */
+    public boolean getAtrIdPresent() {
+      return atrIdPresent_;
+    }
+
+    public static final int ATTEMPTSTATES_FIELD_NUMBER = 4;
+    private volatile java.lang.Object attemptStates_;
+    /**
+     * <code>string attemptStates = 4;</code>
+     */
+    public java.lang.String getAttemptStates() {
+      java.lang.Object ref = attemptStates_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        attemptStates_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string attemptStates = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAttemptStatesBytes() {
+      java.lang.Object ref = attemptStates_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        attemptStates_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -7535,6 +7888,15 @@ public final class TxnClient {
       if (success_ != false) {
         output.writeBool(1, success_);
       }
+      if (atrCollectionPresent_ != false) {
+        output.writeBool(2, atrCollectionPresent_);
+      }
+      if (atrIdPresent_ != false) {
+        output.writeBool(3, atrIdPresent_);
+      }
+      if (!getAttemptStatesBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, attemptStates_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -7547,6 +7909,17 @@ public final class TxnClient {
       if (success_ != false) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(1, success_);
+      }
+      if (atrCollectionPresent_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, atrCollectionPresent_);
+      }
+      if (atrIdPresent_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, atrIdPresent_);
+      }
+      if (!getAttemptStatesBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, attemptStates_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -7566,6 +7939,12 @@ public final class TxnClient {
       boolean result = true;
       result = result && (getSuccess()
           == other.getSuccess());
+      result = result && (getAtrCollectionPresent()
+          == other.getAtrCollectionPresent());
+      result = result && (getAtrIdPresent()
+          == other.getAtrIdPresent());
+      result = result && getAttemptStates()
+          .equals(other.getAttemptStates());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -7580,6 +7959,14 @@ public final class TxnClient {
       hash = (37 * hash) + SUCCESS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getSuccess());
+      hash = (37 * hash) + ATRCOLLECTIONPRESENT_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getAtrCollectionPresent());
+      hash = (37 * hash) + ATRIDPRESENT_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getAtrIdPresent());
+      hash = (37 * hash) + ATTEMPTSTATES_FIELD_NUMBER;
+      hash = (53 * hash) + getAttemptStates().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -7715,6 +8102,12 @@ public final class TxnClient {
         super.clear();
         success_ = false;
 
+        atrCollectionPresent_ = false;
+
+        atrIdPresent_ = false;
+
+        attemptStates_ = "";
+
         return this;
       }
 
@@ -7742,6 +8135,9 @@ public final class TxnClient {
       public com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse buildPartial() {
         com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse result = new com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse(this);
         result.success_ = success_;
+        result.atrCollectionPresent_ = atrCollectionPresent_;
+        result.atrIdPresent_ = atrIdPresent_;
+        result.attemptStates_ = attemptStates_;
         onBuilt();
         return result;
       }
@@ -7792,6 +8188,16 @@ public final class TxnClient {
         if (other == com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse.getDefaultInstance()) return this;
         if (other.getSuccess() != false) {
           setSuccess(other.getSuccess());
+        }
+        if (other.getAtrCollectionPresent() != false) {
+          setAtrCollectionPresent(other.getAtrCollectionPresent());
+        }
+        if (other.getAtrIdPresent() != false) {
+          setAtrIdPresent(other.getAtrIdPresent());
+        }
+        if (!other.getAttemptStates().isEmpty()) {
+          attemptStates_ = other.attemptStates_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -7844,6 +8250,127 @@ public final class TxnClient {
       public Builder clearSuccess() {
         
         success_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean atrCollectionPresent_ ;
+      /**
+       * <code>bool atrCollectionPresent = 2;</code>
+       */
+      public boolean getAtrCollectionPresent() {
+        return atrCollectionPresent_;
+      }
+      /**
+       * <code>bool atrCollectionPresent = 2;</code>
+       */
+      public Builder setAtrCollectionPresent(boolean value) {
+        
+        atrCollectionPresent_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool atrCollectionPresent = 2;</code>
+       */
+      public Builder clearAtrCollectionPresent() {
+        
+        atrCollectionPresent_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean atrIdPresent_ ;
+      /**
+       * <code>bool atrIdPresent = 3;</code>
+       */
+      public boolean getAtrIdPresent() {
+        return atrIdPresent_;
+      }
+      /**
+       * <code>bool atrIdPresent = 3;</code>
+       */
+      public Builder setAtrIdPresent(boolean value) {
+        
+        atrIdPresent_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool atrIdPresent = 3;</code>
+       */
+      public Builder clearAtrIdPresent() {
+        
+        atrIdPresent_ = false;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object attemptStates_ = "";
+      /**
+       * <code>string attemptStates = 4;</code>
+       */
+      public java.lang.String getAttemptStates() {
+        java.lang.Object ref = attemptStates_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          attemptStates_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string attemptStates = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getAttemptStatesBytes() {
+        java.lang.Object ref = attemptStates_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          attemptStates_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string attemptStates = 4;</code>
+       */
+      public Builder setAttemptStates(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        attemptStates_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string attemptStates = 4;</code>
+       */
+      public Builder clearAttemptStates() {
+        
+        attemptStates_ = getDefaultInstance().getAttemptStates();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string attemptStates = 4;</code>
+       */
+      public Builder setAttemptStatesBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        attemptStates_ = value;
         onChanged();
         return this;
       }
@@ -11445,59 +11972,69 @@ public final class TxnClient {
       " \001(\010\"A\n\037TransactionsFactoryCloseRequest\022" +
       "\036\n\026transactionsFactoryRef\030\001 \001(\t\":\n\030Trans" +
       "actionCreateRequest\022\036\n\026transactionsFacto" +
-      "ryRef\030\001 \001(\t\"3\n\031TransactionGenericRequest" +
-      "\022\026\n\016transactionRef\030\001 \001(\t\"V\n\030TransactionI" +
-      "nsertRequest\022\026\n\016transactionRef\030\001 \001(\t\022\r\n\005" +
-      "docId\030\002 \001(\t\022\023\n\013contentJson\030\003 \001(\t\"V\n\030Tran" +
-      "sactionUpdateRequest\022\026\n\016transactionRef\030\001" +
-      " \001(\t\022\r\n\005docId\030\002 \001(\t\022\023\n\013contentJson\030\003 \001(\t" +
-      "\"A\n\030TransactionDeleteRequest\022\026\n\016transact" +
-      "ionRef\030\001 \001(\t\022\r\n\005docId\030\002 \001(\t\"T\n!Transacti" +
-      "onsFactoryCreateResponse\022\017\n\007success\030\001 \001(" +
-      "\010\022\036\n\026transactionsFactoryRef\030\002 \001(\t\"D\n\031Tra" +
-      "nsactionCreateResponse\022\017\n\007success\030\001 \001(\010\022" +
-      "\026\n\016transactionRef\030\002 \001(\t\"-\n\032TransactionGe" +
-      "nericResponse\022\017\n\007success\030\001 \001(\010\"\334\001\n\tconn_" +
-      "info\022\025\n\rhandle_bucket\030\003 \001(\t\022\017\n\007payload\030\004" +
-      " \001(\t\022\027\n\017handle_hostname\030\005 \001(\t\022\023\n\013handle_" +
-      "port\030\006 \001(\005\022\027\n\017handle_password\030\007 \001(\t\022\027\n\017h" +
-      "andle_username\030\010 \001(\t\022\022\n\nhandle_ssl\030\t \001(\010" +
-      "\022\036\n\026handle_autofailover_ms\030\n \001(\005\022\023\n\013hand" +
-      "le_cert\030\013 \001(\t\"\215\001\n\007txn_req\022\023\n\013txn_timeout" +
-      "\030\001 \001(\005\022\026\n\016txn_durability\030\002 \001(\005\022\017\n\007numDoc" +
-      "s\030\003 \001(\005\022\017\n\007command\030\004 \001(\t\022\014\n\004mock\030\005 \001(\010\022\016" +
-      "\n\006docNum\030\006 \001(\005\022\025\n\rmockOperation\030\007 \001(\t\">\n" +
-      "\013APIResponse\022\030\n\020APISuccessStatus\030\001 \001(\010\022\025" +
-      "\n\rAPIStatusInfo\030\002 \001(\t\"\007\n\005Empty*\035\n\004Hook\022\025" +
-      "\n\021BEFORE_ATR_COMMIT\020\000*D\n\rHookCondition\022\n" +
-      "\n\006ALWAYS\020\000\022\016\n\nON_ATTEMPT\020\001\022\027\n\023ON_ATTEMPT" +
-      "_LT_OR_EQ\020\002*K\n\020HookErrorToRaise\022\024\n\020FAIL_" +
-      "NO_ROLLBACK\020\000\022\021\n\rFAIL_ROLLBACK\020\001\022\016\n\nFAIL" +
-      "_RETRY\020\002*a\n\nDurability\022\010\n\004NONE\020\000\022\014\n\010MAJO" +
-      "RITY\020\001\022\"\n\036MAJORITY_AND_PERSIST_TO_ACTIVE" +
-      "\020\002\022\027\n\023PERSIST_TO_MAJORITY\020\0032\266\006\n\033Resumabl" +
-      "eTransactionService\022=\n\013create_conn\022\025.txn" +
-      "Service.conn_info\032\027.txnService.APIRespon" +
-      "se\022x\n\031transactionsFactoryCreate\022,.txnSer" +
-      "vice.TransactionsFactoryCreateRequest\032-." +
-      "txnService.TransactionsFactoryCreateResp" +
-      "onse\022o\n\030transactionsFactoryClose\022+.txnSe" +
-      "rvice.TransactionsFactoryCloseRequest\032&." +
-      "txnService.TransactionGenericResponse\022`\n" +
-      "\021transactionCreate\022$.txnService.Transact" +
-      "ionCreateRequest\032%.txnService.Transactio" +
-      "nCreateResponse\022a\n\021transactionInsert\022$.t" +
-      "xnService.TransactionInsertRequest\032&.txn" +
-      "Service.TransactionGenericResponse\022a\n\021tr" +
-      "ansactionUpdate\022$.txnService.Transaction" +
-      "UpdateRequest\032&.txnService.TransactionGe" +
-      "nericResponse\022a\n\021transactionDelete\022$.txn" +
-      "Service.TransactionDeleteRequest\032&.txnSe" +
-      "rvice.TransactionGenericResponse\022b\n\021tran" +
-      "sactionCommit\022%.txnService.TransactionGe" +
-      "nericRequest\032&.txnService.TransactionGen" +
-      "ericResponseB\035\n\033com.couchbase.grpc.proto" +
-      "colb\006proto3"
+      "ryRef\030\001 \001(\t\"X\n\031TransactionGenericRequest" +
+      "\022\026\n\016transactionRef\030\001 \001(\t\022\017\n\007isEmpty\030\002 \001(" +
+      "\010\022\022\n\nisFinished\030\003 \001(\010\"V\n\030TransactionInse" +
+      "rtRequest\022\026\n\016transactionRef\030\001 \001(\t\022\r\n\005doc" +
+      "Id\030\002 \001(\t\022\023\n\013contentJson\030\003 \001(\t\"V\n\030Transac" +
+      "tionUpdateRequest\022\026\n\016transactionRef\030\001 \001(" +
+      "\t\022\r\n\005docId\030\002 \001(\t\022\023\n\013contentJson\030\003 \001(\t\"A\n" +
+      "\030TransactionDeleteRequest\022\026\n\016transaction" +
+      "Ref\030\001 \001(\t\022\r\n\005docId\030\002 \001(\t\"T\n!Transactions" +
+      "FactoryCreateResponse\022\017\n\007success\030\001 \001(\010\022\036" +
+      "\n\026transactionsFactoryRef\030\002 \001(\t\"D\n\031Transa" +
+      "ctionCreateResponse\022\017\n\007success\030\001 \001(\010\022\026\n\016" +
+      "transactionRef\030\002 \001(\t\"x\n\032TransactionGener" +
+      "icResponse\022\017\n\007success\030\001 \001(\010\022\034\n\024atrCollec" +
+      "tionPresent\030\002 \001(\010\022\024\n\014atrIdPresent\030\003 \001(\010\022" +
+      "\025\n\rattemptStates\030\004 \001(\t\"\334\001\n\tconn_info\022\025\n\r" +
+      "handle_bucket\030\003 \001(\t\022\017\n\007payload\030\004 \001(\t\022\027\n\017" +
+      "handle_hostname\030\005 \001(\t\022\023\n\013handle_port\030\006 \001" +
+      "(\005\022\027\n\017handle_password\030\007 \001(\t\022\027\n\017handle_us" +
+      "ername\030\010 \001(\t\022\022\n\nhandle_ssl\030\t \001(\010\022\036\n\026hand" +
+      "le_autofailover_ms\030\n \001(\005\022\023\n\013handle_cert\030" +
+      "\013 \001(\t\"\215\001\n\007txn_req\022\023\n\013txn_timeout\030\001 \001(\005\022\026" +
+      "\n\016txn_durability\030\002 \001(\005\022\017\n\007numDocs\030\003 \001(\005\022" +
+      "\017\n\007command\030\004 \001(\t\022\014\n\004mock\030\005 \001(\010\022\016\n\006docNum" +
+      "\030\006 \001(\005\022\025\n\rmockOperation\030\007 \001(\t\">\n\013APIResp" +
+      "onse\022\030\n\020APISuccessStatus\030\001 \001(\010\022\025\n\rAPISta" +
+      "tusInfo\030\002 \001(\t\"\007\n\005Empty*\035\n\004Hook\022\025\n\021BEFORE" +
+      "_ATR_COMMIT\020\000*D\n\rHookCondition\022\n\n\006ALWAYS" +
+      "\020\000\022\016\n\nON_ATTEMPT\020\001\022\027\n\023ON_ATTEMPT_LT_OR_E" +
+      "Q\020\002*K\n\020HookErrorToRaise\022\024\n\020FAIL_NO_ROLLB" +
+      "ACK\020\000\022\021\n\rFAIL_ROLLBACK\020\001\022\016\n\nFAIL_RETRY\020\002" +
+      "*i\n\rAttemptStates\022\017\n\013NOT_STARTED\020\000\022\013\n\007PE" +
+      "NDING\020\001\022\013\n\007ABORTED\020\002\022\r\n\tCOMMITTED\020\003\022\r\n\tC" +
+      "OMPLETED\020\004\022\017\n\013ROLLED_BACK\020\005*a\n\nDurabilit" +
+      "y\022\010\n\004NONE\020\000\022\014\n\010MAJORITY\020\001\022\"\n\036MAJORITY_AN" +
+      "D_PERSIST_TO_ACTIVE\020\002\022\027\n\023PERSIST_TO_MAJO" +
+      "RITY\020\0032\377\007\n\033ResumableTransactionService\022=" +
+      "\n\013create_conn\022\025.txnService.conn_info\032\027.t" +
+      "xnService.APIResponse\022x\n\031transactionsFac" +
+      "toryCreate\022,.txnService.TransactionsFact" +
+      "oryCreateRequest\032-.txnService.Transactio" +
+      "nsFactoryCreateResponse\022o\n\030transactionsF" +
+      "actoryClose\022+.txnService.TransactionsFac" +
+      "toryCloseRequest\032&.txnService.Transactio" +
+      "nGenericResponse\022`\n\021transactionCreate\022$." +
+      "txnService.TransactionCreateRequest\032%.tx" +
+      "nService.TransactionCreateResponse\022a\n\020tr" +
+      "ansactionEmpty\022%.txnService.TransactionG" +
+      "enericRequest\032&.txnService.TransactionGe" +
+      "nericResponse\022a\n\021transactionInsert\022$.txn" +
+      "Service.TransactionInsertRequest\032&.txnSe" +
+      "rvice.TransactionGenericResponse\022a\n\021tran" +
+      "sactionUpdate\022$.txnService.TransactionUp" +
+      "dateRequest\032&.txnService.TransactionGene" +
+      "ricResponse\022a\n\021transactionDelete\022$.txnSe" +
+      "rvice.TransactionDeleteRequest\032&.txnServ" +
+      "ice.TransactionGenericResponse\022b\n\021transa" +
+      "ctionCommit\022%.txnService.TransactionGene" +
+      "ricRequest\032&.txnService.TransactionGener" +
+      "icResponse\022d\n\023transactionRollback\022%.txnS" +
+      "ervice.TransactionGenericRequest\032&.txnSe" +
+      "rvice.TransactionGenericResponseB\035\n\033com." +
+      "couchbase.grpc.protocolb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -11534,7 +12071,7 @@ public final class TxnClient {
     internal_static_txnService_TransactionGenericRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_txnService_TransactionGenericRequest_descriptor,
-        new java.lang.String[] { "TransactionRef", });
+        new java.lang.String[] { "TransactionRef", "IsEmpty", "IsFinished", });
     internal_static_txnService_TransactionInsertRequest_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_txnService_TransactionInsertRequest_fieldAccessorTable = new
@@ -11570,7 +12107,7 @@ public final class TxnClient {
     internal_static_txnService_TransactionGenericResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_txnService_TransactionGenericResponse_descriptor,
-        new java.lang.String[] { "Success", });
+        new java.lang.String[] { "Success", "AtrCollectionPresent", "AtrIdPresent", "AttemptStates", });
     internal_static_txnService_conn_info_descriptor =
       getDescriptor().getMessageTypes().get(10);
     internal_static_txnService_conn_info_fieldAccessorTable = new

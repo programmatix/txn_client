@@ -158,6 +158,38 @@ public final class ResumableTransactionServiceGrpc {
      return getTransactionCreateMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest,
+      com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> getTransactionEmptyMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "transactionEmpty",
+      requestType = com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest.class,
+      responseType = com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest,
+      com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> getTransactionEmptyMethod() {
+    io.grpc.MethodDescriptor<com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest, com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> getTransactionEmptyMethod;
+    if ((getTransactionEmptyMethod = ResumableTransactionServiceGrpc.getTransactionEmptyMethod) == null) {
+      synchronized (ResumableTransactionServiceGrpc.class) {
+        if ((getTransactionEmptyMethod = ResumableTransactionServiceGrpc.getTransactionEmptyMethod) == null) {
+          ResumableTransactionServiceGrpc.getTransactionEmptyMethod = getTransactionEmptyMethod = 
+              io.grpc.MethodDescriptor.<com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest, com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "txnService.ResumableTransactionService", "transactionEmpty"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new ResumableTransactionServiceMethodDescriptorSupplier("transactionEmpty"))
+                  .build();
+          }
+        }
+     }
+     return getTransactionEmptyMethod;
+  }
+
   private static volatile io.grpc.MethodDescriptor<com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest,
       com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> getTransactionInsertMethod;
 
@@ -286,6 +318,38 @@ public final class ResumableTransactionServiceGrpc {
      return getTransactionCommitMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest,
+      com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> getTransactionRollbackMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "transactionRollback",
+      requestType = com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest.class,
+      responseType = com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest,
+      com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> getTransactionRollbackMethod() {
+    io.grpc.MethodDescriptor<com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest, com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> getTransactionRollbackMethod;
+    if ((getTransactionRollbackMethod = ResumableTransactionServiceGrpc.getTransactionRollbackMethod) == null) {
+      synchronized (ResumableTransactionServiceGrpc.class) {
+        if ((getTransactionRollbackMethod = ResumableTransactionServiceGrpc.getTransactionRollbackMethod) == null) {
+          ResumableTransactionServiceGrpc.getTransactionRollbackMethod = getTransactionRollbackMethod = 
+              io.grpc.MethodDescriptor.<com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest, com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "txnService.ResumableTransactionService", "transactionRollback"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new ResumableTransactionServiceMethodDescriptorSupplier("transactionRollback"))
+                  .build();
+          }
+        }
+     }
+     return getTransactionRollbackMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -358,6 +422,13 @@ public final class ResumableTransactionServiceGrpc {
      * Perform individual operations on a previously created transaction
      * </pre>
      */
+    public void transactionEmpty(com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest request,
+        io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getTransactionEmptyMethod(), responseObserver);
+    }
+
+    /**
+     */
     public void transactionInsert(com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest request,
         io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getTransactionInsertMethod(), responseObserver);
@@ -382,6 +453,13 @@ public final class ResumableTransactionServiceGrpc {
     public void transactionCommit(com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest request,
         io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getTransactionCommitMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void transactionRollback(com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest request,
+        io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getTransactionRollbackMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -415,6 +493,13 @@ public final class ResumableTransactionServiceGrpc {
                 com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse>(
                   this, METHODID_TRANSACTION_CREATE)))
           .addMethod(
+            getTransactionEmptyMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest,
+                com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse>(
+                  this, METHODID_TRANSACTION_EMPTY)))
+          .addMethod(
             getTransactionInsertMethod(),
             asyncUnaryCall(
               new MethodHandlers<
@@ -442,6 +527,13 @@ public final class ResumableTransactionServiceGrpc {
                 com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest,
                 com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse>(
                   this, METHODID_TRANSACTION_COMMIT)))
+          .addMethod(
+            getTransactionRollbackMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest,
+                com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse>(
+                  this, METHODID_TRANSACTION_ROLLBACK)))
           .build();
     }
   }
@@ -513,6 +605,14 @@ public final class ResumableTransactionServiceGrpc {
      * Perform individual operations on a previously created transaction
      * </pre>
      */
+    public void transactionEmpty(com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest request,
+        io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getTransactionEmptyMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
     public void transactionInsert(com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest request,
         io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> responseObserver) {
       asyncUnaryCall(
@@ -541,6 +641,14 @@ public final class ResumableTransactionServiceGrpc {
         io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getTransactionCommitMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void transactionRollback(com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest request,
+        io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getTransactionRollbackMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -607,6 +715,13 @@ public final class ResumableTransactionServiceGrpc {
      * Perform individual operations on a previously created transaction
      * </pre>
      */
+    public com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse transactionEmpty(com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getTransactionEmptyMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
     public com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse transactionInsert(com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest request) {
       return blockingUnaryCall(
           getChannel(), getTransactionInsertMethod(), getCallOptions(), request);
@@ -631,6 +746,13 @@ public final class ResumableTransactionServiceGrpc {
     public com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse transactionCommit(com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest request) {
       return blockingUnaryCall(
           getChannel(), getTransactionCommitMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse transactionRollback(com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getTransactionRollbackMethod(), getCallOptions(), request);
     }
   }
 
@@ -701,6 +823,14 @@ public final class ResumableTransactionServiceGrpc {
      * Perform individual operations on a previously created transaction
      * </pre>
      */
+    public com.google.common.util.concurrent.ListenableFuture<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> transactionEmpty(
+        com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getTransactionEmptyMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
     public com.google.common.util.concurrent.ListenableFuture<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> transactionInsert(
         com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest request) {
       return futureUnaryCall(
@@ -730,16 +860,26 @@ public final class ResumableTransactionServiceGrpc {
       return futureUnaryCall(
           getChannel().newCall(getTransactionCommitMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse> transactionRollback(
+        com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getTransactionRollbackMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_CREATE_CONN = 0;
   private static final int METHODID_TRANSACTIONS_FACTORY_CREATE = 1;
   private static final int METHODID_TRANSACTIONS_FACTORY_CLOSE = 2;
   private static final int METHODID_TRANSACTION_CREATE = 3;
-  private static final int METHODID_TRANSACTION_INSERT = 4;
-  private static final int METHODID_TRANSACTION_UPDATE = 5;
-  private static final int METHODID_TRANSACTION_DELETE = 6;
-  private static final int METHODID_TRANSACTION_COMMIT = 7;
+  private static final int METHODID_TRANSACTION_EMPTY = 4;
+  private static final int METHODID_TRANSACTION_INSERT = 5;
+  private static final int METHODID_TRANSACTION_UPDATE = 6;
+  private static final int METHODID_TRANSACTION_DELETE = 7;
+  private static final int METHODID_TRANSACTION_COMMIT = 8;
+  private static final int METHODID_TRANSACTION_ROLLBACK = 9;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -774,6 +914,10 @@ public final class ResumableTransactionServiceGrpc {
           serviceImpl.transactionCreate((com.couchbase.grpc.protocol.TxnClient.TransactionCreateRequest) request,
               (io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.TransactionCreateResponse>) responseObserver);
           break;
+        case METHODID_TRANSACTION_EMPTY:
+          serviceImpl.transactionEmpty((com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest) request,
+              (io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse>) responseObserver);
+          break;
         case METHODID_TRANSACTION_INSERT:
           serviceImpl.transactionInsert((com.couchbase.grpc.protocol.TxnClient.TransactionInsertRequest) request,
               (io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse>) responseObserver);
@@ -788,6 +932,10 @@ public final class ResumableTransactionServiceGrpc {
           break;
         case METHODID_TRANSACTION_COMMIT:
           serviceImpl.transactionCommit((com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest) request,
+              (io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse>) responseObserver);
+          break;
+        case METHODID_TRANSACTION_ROLLBACK:
+          serviceImpl.transactionRollback((com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest) request,
               (io.grpc.stub.StreamObserver<com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse>) responseObserver);
           break;
         default:
@@ -855,10 +1003,12 @@ public final class ResumableTransactionServiceGrpc {
               .addMethod(getTransactionsFactoryCreateMethod())
               .addMethod(getTransactionsFactoryCloseMethod())
               .addMethod(getTransactionCreateMethod())
+              .addMethod(getTransactionEmptyMethod())
               .addMethod(getTransactionInsertMethod())
               .addMethod(getTransactionUpdateMethod())
               .addMethod(getTransactionDeleteMethod())
               .addMethod(getTransactionCommitMethod())
+              .addMethod(getTransactionRollbackMethod())
               .build();
         }
       }

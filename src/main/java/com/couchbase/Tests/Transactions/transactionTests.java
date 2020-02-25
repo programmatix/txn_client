@@ -2,10 +2,7 @@ package com.couchbase.Tests.Transactions;
 
 import com.couchbase.Couchbase.Cluster.ClusterConfigure;
 import com.couchbase.Logging.LogUtil;
-import com.couchbase.Tests.Transactions.BasicTests.simpleDelete;
-import com.couchbase.Tests.Transactions.BasicTests.simpleInsert;
-import com.couchbase.Tests.Transactions.BasicTests.simpleUpdate;
-import com.couchbase.Tests.Transactions.BasicTests.simplecommit;
+import com.couchbase.Tests.Transactions.BasicTests.*;
 import com.couchbase.Tests.Transactions.Hooks.failsbeforeCommit;
 import com.couchbase.Tests.Transactions.Utils.txnUtils;
 import com.couchbase.clientService;
@@ -30,8 +27,11 @@ public class transactionTests {
    protected boolean txncommit[] = {true,false};
     protected Logger logger = LogUtil.getLogger(transactionTests.class);
 
+
    List<transactionTests> txn_tests = new ArrayList<>();
-   Map<String,transactionTests> basicTests = new HashMap<>();
+    Map<String,transactionTests> majorTests = new HashMap<>();
+
+    Map<String,transactionTests> basicTests = new HashMap<>();
     Map<String,transactionTests> hookTests = new HashMap<>();
 
     Map<String,Map<String,transactionTests>> allTests = new HashMap<>();
@@ -56,13 +56,12 @@ public class transactionTests {
    public void execute(){
         configureTests();
        for(transactionTests test : txn_tests){
-           logger.info("Running test:"+test.testname);
            test.runTests();
            logger.info("Success for Completed test:"+test.testname);
        }
    }
 
-   protected static TxnClient.TransactionsFactoryCreateRequest.Builder createDefaultTransactionsFactory() {
+   protected static TxnClient.TransactionsFactoryCreateRequest.Builder createDefaultTransactionsFactory(String durability) {
          return TxnClient.TransactionsFactoryCreateRequest.newBuilder()
 
                  // Disable these threads so can run multiple Transactions (and hence hooks)
@@ -70,7 +69,7 @@ public class transactionTests {
                  .setCleanupLostAttempts(false)
 
                  // This is default durability for txns library
-                 .setDurability(TxnClient.Durability.MAJORITY)
+                 .setDurability(TxnClient.Durability.valueOf(durability))
 
                  // Plenty of time for manual debugging
                  .setExpirationSeconds(120);
@@ -88,10 +87,11 @@ public class transactionTests {
          {
              txn_tests.add(reqTests.get(testname.toLowerCase()));
          }
-
      }
 
      private void loadalltests(){
+         majorTests.put("alltests",new alltests(conn_info,txnstub,hostname,"alltests",clusterConfigure));
+
          basicTests.put("simplecommit",new simplecommit(conn_info,txnstub,hostname,"simplecommit",clusterConfigure));
          basicTests.put("simpleinsert",new simpleInsert(conn_info,txnstub,hostname,"simpleInsert",clusterConfigure));
          basicTests.put("simpleupdate",new simpleUpdate(conn_info,txnstub,hostname,"simpleUpdate",clusterConfigure));
@@ -101,5 +101,6 @@ public class transactionTests {
 
          allTests.put("basic",basicTests);
          allTests.put("hook",hookTests);
+         allTests.put("major",majorTests);
      }
 }

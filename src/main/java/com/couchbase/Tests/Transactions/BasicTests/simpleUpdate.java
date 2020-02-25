@@ -45,7 +45,7 @@ public class simpleUpdate extends transactionTests {
         createData();
 
         TxnClient.TransactionsFactoryCreateResponse factory =
-                txnstub.transactionsFactoryCreate(createDefaultTransactionsFactory()
+                txnstub.transactionsFactoryCreate(createDefaultTransactionsFactory("MAJORITY")
                         .build());
         assertTrue(factory.getSuccess());
 
@@ -70,7 +70,6 @@ public class simpleUpdate extends transactionTests {
                         .setDocId(docId)
                         .setContentJson(updateContent.toString())
                         .build());
-        logger.info("Verify for updateContent : "+updateContent);
         txnUtils.verifyDocuments(docKeys,null,true,hostname);
 
         if(txncommit){

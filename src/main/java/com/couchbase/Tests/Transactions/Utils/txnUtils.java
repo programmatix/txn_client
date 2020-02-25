@@ -2,14 +2,9 @@ package com.couchbase.Tests.Transactions.Utils;
 
 import com.couchbase.Constants.Strings;
 import com.couchbase.Logging.LogUtil;
-import com.couchbase.Tests.Transactions.BasicTests.simpleInsert;
-import com.couchbase.Tests.Transactions.BasicTests.simplecommit;
-import com.couchbase.Tests.Transactions.Hooks.failsbeforeCommit;
-import com.couchbase.Tests.Transactions.transactionTests;
 import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.Collection;
 import com.couchbase.client.java.json.JsonObject;
-import com.couchbase.grpc.protocol.TxnClient;
 import org.slf4j.Logger;
 
 import java.util.List;
@@ -29,13 +24,13 @@ public class txnUtils {
                     body = defaultCollection.get(key).contentAs(JsonObject.class);
                 }catch(Exception e){
                     if(!docExists){
-                        logger.info("Inside docExists false");
+                        logger.debug("Inside docExists false");
                         assertTrue(e.getClass().getName().contains("DocumentNotFoundException"));
                     }
                 }
 
                 if(docExists){
-                    logger.info("Inside docExists true");
+                   logger.debug("Inside docExists true");
                     if(docContent==null){
                         assertEquals(0, body.size());
                     }else{
@@ -49,6 +44,4 @@ public class txnUtils {
             logger.error("Exception during verification: "+e);
         }
     }
-
-
 }

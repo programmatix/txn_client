@@ -7,7 +7,6 @@ import com.couchbase.Tests.Transactions.transactionTests;
 import com.couchbase.client.java.json.JsonObject;
 import com.couchbase.grpc.protocol.ResumableTransactionServiceGrpc;
 import com.couchbase.grpc.protocol.TxnClient;
-import com.couchbase.grpc.protocol.txnGrpc;
 
 import java.util.*;
 
@@ -42,7 +41,7 @@ public class simpleInsert extends transactionTests {
         createData();
 
         TxnClient.TransactionsFactoryCreateResponse factory =
-                txnstub.transactionsFactoryCreate(createDefaultTransactionsFactory()
+                txnstub.transactionsFactoryCreate(createDefaultTransactionsFactory("MAJORITY")
                         .build());
         assertTrue(factory.getSuccess());
 

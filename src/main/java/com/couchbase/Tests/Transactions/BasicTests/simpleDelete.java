@@ -7,7 +7,6 @@ import com.couchbase.Tests.Transactions.transactionTests;
 import com.couchbase.client.java.json.JsonObject;
 import com.couchbase.grpc.protocol.ResumableTransactionServiceGrpc;
 import com.couchbase.grpc.protocol.TxnClient;
-import com.couchbase.grpc.protocol.txnGrpc;
 
 import java.util.*;
 
@@ -16,7 +15,6 @@ import static org.junit.Assert.assertTrue;
 public class simpleDelete extends transactionTests {
     String docId ;
     JsonObject docContent = null;
-    JsonObject updateContent = null;
     List<String> docKeys;
 
     public simpleDelete(TxnClient.conn_info  conn_info, ResumableTransactionServiceGrpc.ResumableTransactionServiceBlockingStub txnstub, String hostname, String testname, ClusterConfigure clusterConfigure){
@@ -28,7 +26,6 @@ public class simpleDelete extends transactionTests {
         docKeys = new ArrayList<>();
         docKeys.add(docId);
         docContent = JsonObject.create().put(Strings.CONTENT_NAME, Strings.DEFAULT_CONTENT_VALUE);
-        updateContent = JsonObject.create().put(Strings.CONTENT_NAME, Strings.UPDATED_CONTENT_VALUE);
 
     }
 
@@ -43,13 +40,15 @@ public class simpleDelete extends transactionTests {
     }
 
     public void executeTests(boolean txncommit){
-        logger.info("Running SimpleDelete with commit : "+txncommit);
 
         createData();
+        logger.info("Running SimpleDelete with commit : "+txncommit);
 
         TxnClient.TransactionsFactoryCreateResponse factory =
-                txnstub.transactionsFactoryCreate(createDefaultTransactionsFactory()
+                txnstub.transactionsFactoryCreate(createDefaultTransactionsFactory("MAJORITY")
                         .build());
+        logger.info("TransactionsFactoryCreateResponse");
+
         assertTrue(factory.getSuccess());
 
         TxnClient.TransactionCreateResponse create =
