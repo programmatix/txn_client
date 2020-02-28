@@ -1,3 +1,4 @@
+// TODO share this between client and server
 syntax = "proto3";
 option java_package = "com.couchbase.grpc.protocol";
 package txnService;
@@ -22,6 +23,7 @@ service ResumableTransactionService {
     rpc transactionDelete (TransactionDeleteRequest) returns (TransactionGenericResponse);
     rpc transactionCommit (TransactionGenericRequest) returns (TransactionGenericResponse);
     rpc transactionRollback (TransactionGenericRequest) returns (TransactionGenericResponse);
+    rpc transactionClose (TransactionGenericRequest) returns (TransactionResultObject);
 }
 
 enum Hook {
@@ -91,8 +93,6 @@ message TransactionCreateRequest {
 
 message TransactionGenericRequest {
     string transactionRef = 1;
-    bool isEmpty=2;
-    bool isFinished=3;
 }
 
 message TransactionInsertRequest {
@@ -125,9 +125,16 @@ message TransactionCreateResponse {
 
 message TransactionGenericResponse {
     bool success = 1;
-    bool atrCollectionPresent=2;
-    bool atrIdPresent=3;
-    string attemptStates =4;
+}
+
+message TransactionResultObject{
+    int32 mutationTokensSize=1;
+    int32 txnAttemptsSize=2;
+    string attemptFinalState=3;
+    bool atrCollectionPresent=4;
+    bool atrIdPresent=5;
+    string exceptionName =6;
+    repeated string log=7;
 }
 
 message conn_info {
@@ -142,15 +149,6 @@ message conn_info {
     string handle_cert=11;
 }
 
-message txn_req{
-    int32 txn_timeout = 1;
-    int32 txn_durability = 2;
-    int32 numDocs = 3;
-    string command=4;
-    bool mock=5;
-    int32 docNum=6;
-    string mockOperation=7;
-}
 
 message APIResponse{
     bool APISuccessStatus = 1;

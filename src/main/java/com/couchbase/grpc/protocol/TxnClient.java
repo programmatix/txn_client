@@ -3457,16 +3457,6 @@ public final class TxnClient {
      */
     com.google.protobuf.ByteString
         getTransactionRefBytes();
-
-    /**
-     * <code>bool isEmpty = 2;</code>
-     */
-    boolean getIsEmpty();
-
-    /**
-     * <code>bool isFinished = 3;</code>
-     */
-    boolean getIsFinished();
   }
   /**
    * Protobuf type {@code txnService.TransactionGenericRequest}
@@ -3482,8 +3472,6 @@ public final class TxnClient {
     }
     private TransactionGenericRequest() {
       transactionRef_ = "";
-      isEmpty_ = false;
-      isFinished_ = false;
     }
 
     @java.lang.Override
@@ -3514,16 +3502,6 @@ public final class TxnClient {
               java.lang.String s = input.readStringRequireUtf8();
 
               transactionRef_ = s;
-              break;
-            }
-            case 16: {
-
-              isEmpty_ = input.readBool();
-              break;
-            }
-            case 24: {
-
-              isFinished_ = input.readBool();
               break;
             }
             default: {
@@ -3592,24 +3570,6 @@ public final class TxnClient {
       }
     }
 
-    public static final int ISEMPTY_FIELD_NUMBER = 2;
-    private boolean isEmpty_;
-    /**
-     * <code>bool isEmpty = 2;</code>
-     */
-    public boolean getIsEmpty() {
-      return isEmpty_;
-    }
-
-    public static final int ISFINISHED_FIELD_NUMBER = 3;
-    private boolean isFinished_;
-    /**
-     * <code>bool isFinished = 3;</code>
-     */
-    public boolean getIsFinished() {
-      return isFinished_;
-    }
-
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -3627,12 +3587,6 @@ public final class TxnClient {
       if (!getTransactionRefBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, transactionRef_);
       }
-      if (isEmpty_ != false) {
-        output.writeBool(2, isEmpty_);
-      }
-      if (isFinished_ != false) {
-        output.writeBool(3, isFinished_);
-      }
       unknownFields.writeTo(output);
     }
 
@@ -3644,14 +3598,6 @@ public final class TxnClient {
       size = 0;
       if (!getTransactionRefBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, transactionRef_);
-      }
-      if (isEmpty_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(2, isEmpty_);
-      }
-      if (isFinished_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(3, isFinished_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -3671,10 +3617,6 @@ public final class TxnClient {
       boolean result = true;
       result = result && getTransactionRef()
           .equals(other.getTransactionRef());
-      result = result && (getIsEmpty()
-          == other.getIsEmpty());
-      result = result && (getIsFinished()
-          == other.getIsFinished());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -3688,12 +3630,6 @@ public final class TxnClient {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TRANSACTIONREF_FIELD_NUMBER;
       hash = (53 * hash) + getTransactionRef().hashCode();
-      hash = (37 * hash) + ISEMPTY_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getIsEmpty());
-      hash = (37 * hash) + ISFINISHED_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getIsFinished());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3829,10 +3765,6 @@ public final class TxnClient {
         super.clear();
         transactionRef_ = "";
 
-        isEmpty_ = false;
-
-        isFinished_ = false;
-
         return this;
       }
 
@@ -3860,8 +3792,6 @@ public final class TxnClient {
       public com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest buildPartial() {
         com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest result = new com.couchbase.grpc.protocol.TxnClient.TransactionGenericRequest(this);
         result.transactionRef_ = transactionRef_;
-        result.isEmpty_ = isEmpty_;
-        result.isFinished_ = isFinished_;
         onBuilt();
         return result;
       }
@@ -3913,12 +3843,6 @@ public final class TxnClient {
         if (!other.getTransactionRef().isEmpty()) {
           transactionRef_ = other.transactionRef_;
           onChanged();
-        }
-        if (other.getIsEmpty() != false) {
-          setIsEmpty(other.getIsEmpty());
-        }
-        if (other.getIsFinished() != false) {
-          setIsFinished(other.getIsFinished());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -4014,58 +3938,6 @@ public final class TxnClient {
   checkByteStringIsUtf8(value);
         
         transactionRef_ = value;
-        onChanged();
-        return this;
-      }
-
-      private boolean isEmpty_ ;
-      /**
-       * <code>bool isEmpty = 2;</code>
-       */
-      public boolean getIsEmpty() {
-        return isEmpty_;
-      }
-      /**
-       * <code>bool isEmpty = 2;</code>
-       */
-      public Builder setIsEmpty(boolean value) {
-        
-        isEmpty_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool isEmpty = 2;</code>
-       */
-      public Builder clearIsEmpty() {
-        
-        isEmpty_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean isFinished_ ;
-      /**
-       * <code>bool isFinished = 3;</code>
-       */
-      public boolean getIsFinished() {
-        return isFinished_;
-      }
-      /**
-       * <code>bool isFinished = 3;</code>
-       */
-      public Builder setIsFinished(boolean value) {
-        
-        isFinished_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool isFinished = 3;</code>
-       */
-      public Builder clearIsFinished() {
-        
-        isFinished_ = false;
         onChanged();
         return this;
       }
@@ -7693,26 +7565,6 @@ public final class TxnClient {
      * <code>bool success = 1;</code>
      */
     boolean getSuccess();
-
-    /**
-     * <code>bool atrCollectionPresent = 2;</code>
-     */
-    boolean getAtrCollectionPresent();
-
-    /**
-     * <code>bool atrIdPresent = 3;</code>
-     */
-    boolean getAtrIdPresent();
-
-    /**
-     * <code>string attemptStates = 4;</code>
-     */
-    java.lang.String getAttemptStates();
-    /**
-     * <code>string attemptStates = 4;</code>
-     */
-    com.google.protobuf.ByteString
-        getAttemptStatesBytes();
   }
   /**
    * Protobuf type {@code txnService.TransactionGenericResponse}
@@ -7728,9 +7580,6 @@ public final class TxnClient {
     }
     private TransactionGenericResponse() {
       success_ = false;
-      atrCollectionPresent_ = false;
-      atrIdPresent_ = false;
-      attemptStates_ = "";
     }
 
     @java.lang.Override
@@ -7760,22 +7609,6 @@ public final class TxnClient {
             case 8: {
 
               success_ = input.readBool();
-              break;
-            }
-            case 16: {
-
-              atrCollectionPresent_ = input.readBool();
-              break;
-            }
-            case 24: {
-
-              atrIdPresent_ = input.readBool();
-              break;
-            }
-            case 34: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              attemptStates_ = s;
               break;
             }
             default: {
@@ -7819,58 +7652,6 @@ public final class TxnClient {
       return success_;
     }
 
-    public static final int ATRCOLLECTIONPRESENT_FIELD_NUMBER = 2;
-    private boolean atrCollectionPresent_;
-    /**
-     * <code>bool atrCollectionPresent = 2;</code>
-     */
-    public boolean getAtrCollectionPresent() {
-      return atrCollectionPresent_;
-    }
-
-    public static final int ATRIDPRESENT_FIELD_NUMBER = 3;
-    private boolean atrIdPresent_;
-    /**
-     * <code>bool atrIdPresent = 3;</code>
-     */
-    public boolean getAtrIdPresent() {
-      return atrIdPresent_;
-    }
-
-    public static final int ATTEMPTSTATES_FIELD_NUMBER = 4;
-    private volatile java.lang.Object attemptStates_;
-    /**
-     * <code>string attemptStates = 4;</code>
-     */
-    public java.lang.String getAttemptStates() {
-      java.lang.Object ref = attemptStates_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        attemptStates_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string attemptStates = 4;</code>
-     */
-    public com.google.protobuf.ByteString
-        getAttemptStatesBytes() {
-      java.lang.Object ref = attemptStates_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        attemptStates_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -7888,15 +7669,6 @@ public final class TxnClient {
       if (success_ != false) {
         output.writeBool(1, success_);
       }
-      if (atrCollectionPresent_ != false) {
-        output.writeBool(2, atrCollectionPresent_);
-      }
-      if (atrIdPresent_ != false) {
-        output.writeBool(3, atrIdPresent_);
-      }
-      if (!getAttemptStatesBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, attemptStates_);
-      }
       unknownFields.writeTo(output);
     }
 
@@ -7909,17 +7681,6 @@ public final class TxnClient {
       if (success_ != false) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(1, success_);
-      }
-      if (atrCollectionPresent_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(2, atrCollectionPresent_);
-      }
-      if (atrIdPresent_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(3, atrIdPresent_);
-      }
-      if (!getAttemptStatesBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, attemptStates_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -7939,12 +7700,6 @@ public final class TxnClient {
       boolean result = true;
       result = result && (getSuccess()
           == other.getSuccess());
-      result = result && (getAtrCollectionPresent()
-          == other.getAtrCollectionPresent());
-      result = result && (getAtrIdPresent()
-          == other.getAtrIdPresent());
-      result = result && getAttemptStates()
-          .equals(other.getAttemptStates());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -7959,14 +7714,6 @@ public final class TxnClient {
       hash = (37 * hash) + SUCCESS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getSuccess());
-      hash = (37 * hash) + ATRCOLLECTIONPRESENT_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getAtrCollectionPresent());
-      hash = (37 * hash) + ATRIDPRESENT_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getAtrIdPresent());
-      hash = (37 * hash) + ATTEMPTSTATES_FIELD_NUMBER;
-      hash = (53 * hash) + getAttemptStates().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -8102,12 +7849,6 @@ public final class TxnClient {
         super.clear();
         success_ = false;
 
-        atrCollectionPresent_ = false;
-
-        atrIdPresent_ = false;
-
-        attemptStates_ = "";
-
         return this;
       }
 
@@ -8135,9 +7876,6 @@ public final class TxnClient {
       public com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse buildPartial() {
         com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse result = new com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse(this);
         result.success_ = success_;
-        result.atrCollectionPresent_ = atrCollectionPresent_;
-        result.atrIdPresent_ = atrIdPresent_;
-        result.attemptStates_ = attemptStates_;
         onBuilt();
         return result;
       }
@@ -8188,16 +7926,6 @@ public final class TxnClient {
         if (other == com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse.getDefaultInstance()) return this;
         if (other.getSuccess() != false) {
           setSuccess(other.getSuccess());
-        }
-        if (other.getAtrCollectionPresent() != false) {
-          setAtrCollectionPresent(other.getAtrCollectionPresent());
-        }
-        if (other.getAtrIdPresent() != false) {
-          setAtrIdPresent(other.getAtrIdPresent());
-        }
-        if (!other.getAttemptStates().isEmpty()) {
-          attemptStates_ = other.attemptStates_;
-          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -8253,127 +7981,6 @@ public final class TxnClient {
         onChanged();
         return this;
       }
-
-      private boolean atrCollectionPresent_ ;
-      /**
-       * <code>bool atrCollectionPresent = 2;</code>
-       */
-      public boolean getAtrCollectionPresent() {
-        return atrCollectionPresent_;
-      }
-      /**
-       * <code>bool atrCollectionPresent = 2;</code>
-       */
-      public Builder setAtrCollectionPresent(boolean value) {
-        
-        atrCollectionPresent_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool atrCollectionPresent = 2;</code>
-       */
-      public Builder clearAtrCollectionPresent() {
-        
-        atrCollectionPresent_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean atrIdPresent_ ;
-      /**
-       * <code>bool atrIdPresent = 3;</code>
-       */
-      public boolean getAtrIdPresent() {
-        return atrIdPresent_;
-      }
-      /**
-       * <code>bool atrIdPresent = 3;</code>
-       */
-      public Builder setAtrIdPresent(boolean value) {
-        
-        atrIdPresent_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool atrIdPresent = 3;</code>
-       */
-      public Builder clearAtrIdPresent() {
-        
-        atrIdPresent_ = false;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object attemptStates_ = "";
-      /**
-       * <code>string attemptStates = 4;</code>
-       */
-      public java.lang.String getAttemptStates() {
-        java.lang.Object ref = attemptStates_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          attemptStates_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string attemptStates = 4;</code>
-       */
-      public com.google.protobuf.ByteString
-          getAttemptStatesBytes() {
-        java.lang.Object ref = attemptStates_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          attemptStates_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string attemptStates = 4;</code>
-       */
-      public Builder setAttemptStates(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        attemptStates_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string attemptStates = 4;</code>
-       */
-      public Builder clearAttemptStates() {
-        
-        attemptStates_ = getDefaultInstance().getAttemptStates();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string attemptStates = 4;</code>
-       */
-      public Builder setAttemptStatesBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        attemptStates_ = value;
-        onChanged();
-        return this;
-      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -8422,6 +8029,1141 @@ public final class TxnClient {
 
     @java.lang.Override
     public com.couchbase.grpc.protocol.TxnClient.TransactionGenericResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface TransactionResultObjectOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:txnService.TransactionResultObject)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 mutationTokensSize = 1;</code>
+     */
+    int getMutationTokensSize();
+
+    /**
+     * <code>int32 txnAttemptsSize = 2;</code>
+     */
+    int getTxnAttemptsSize();
+
+    /**
+     * <code>string attemptFinalState = 3;</code>
+     */
+    java.lang.String getAttemptFinalState();
+    /**
+     * <code>string attemptFinalState = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getAttemptFinalStateBytes();
+
+    /**
+     * <code>bool atrCollectionPresent = 4;</code>
+     */
+    boolean getAtrCollectionPresent();
+
+    /**
+     * <code>bool atrIdPresent = 5;</code>
+     */
+    boolean getAtrIdPresent();
+
+    /**
+     * <code>string exceptionName = 6;</code>
+     */
+    java.lang.String getExceptionName();
+    /**
+     * <code>string exceptionName = 6;</code>
+     */
+    com.google.protobuf.ByteString
+        getExceptionNameBytes();
+
+    /**
+     * <code>repeated string log = 7;</code>
+     */
+    java.util.List<java.lang.String>
+        getLogList();
+    /**
+     * <code>repeated string log = 7;</code>
+     */
+    int getLogCount();
+    /**
+     * <code>repeated string log = 7;</code>
+     */
+    java.lang.String getLog(int index);
+    /**
+     * <code>repeated string log = 7;</code>
+     */
+    com.google.protobuf.ByteString
+        getLogBytes(int index);
+  }
+  /**
+   * Protobuf type {@code txnService.TransactionResultObject}
+   */
+  public  static final class TransactionResultObject extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:txnService.TransactionResultObject)
+      TransactionResultObjectOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use TransactionResultObject.newBuilder() to construct.
+    private TransactionResultObject(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private TransactionResultObject() {
+      mutationTokensSize_ = 0;
+      txnAttemptsSize_ = 0;
+      attemptFinalState_ = "";
+      atrCollectionPresent_ = false;
+      atrIdPresent_ = false;
+      exceptionName_ = "";
+      log_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private TransactionResultObject(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              mutationTokensSize_ = input.readInt32();
+              break;
+            }
+            case 16: {
+
+              txnAttemptsSize_ = input.readInt32();
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              attemptFinalState_ = s;
+              break;
+            }
+            case 32: {
+
+              atrCollectionPresent_ = input.readBool();
+              break;
+            }
+            case 40: {
+
+              atrIdPresent_ = input.readBool();
+              break;
+            }
+            case 50: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              exceptionName_ = s;
+              break;
+            }
+            case 58: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+                log_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000040;
+              }
+              log_.add(s);
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+          log_ = log_.getUnmodifiableView();
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionResultObject_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionResultObject_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.couchbase.grpc.protocol.TxnClient.TransactionResultObject.class, com.couchbase.grpc.protocol.TxnClient.TransactionResultObject.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int MUTATIONTOKENSSIZE_FIELD_NUMBER = 1;
+    private int mutationTokensSize_;
+    /**
+     * <code>int32 mutationTokensSize = 1;</code>
+     */
+    public int getMutationTokensSize() {
+      return mutationTokensSize_;
+    }
+
+    public static final int TXNATTEMPTSSIZE_FIELD_NUMBER = 2;
+    private int txnAttemptsSize_;
+    /**
+     * <code>int32 txnAttemptsSize = 2;</code>
+     */
+    public int getTxnAttemptsSize() {
+      return txnAttemptsSize_;
+    }
+
+    public static final int ATTEMPTFINALSTATE_FIELD_NUMBER = 3;
+    private volatile java.lang.Object attemptFinalState_;
+    /**
+     * <code>string attemptFinalState = 3;</code>
+     */
+    public java.lang.String getAttemptFinalState() {
+      java.lang.Object ref = attemptFinalState_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        attemptFinalState_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string attemptFinalState = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAttemptFinalStateBytes() {
+      java.lang.Object ref = attemptFinalState_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        attemptFinalState_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ATRCOLLECTIONPRESENT_FIELD_NUMBER = 4;
+    private boolean atrCollectionPresent_;
+    /**
+     * <code>bool atrCollectionPresent = 4;</code>
+     */
+    public boolean getAtrCollectionPresent() {
+      return atrCollectionPresent_;
+    }
+
+    public static final int ATRIDPRESENT_FIELD_NUMBER = 5;
+    private boolean atrIdPresent_;
+    /**
+     * <code>bool atrIdPresent = 5;</code>
+     */
+    public boolean getAtrIdPresent() {
+      return atrIdPresent_;
+    }
+
+    public static final int EXCEPTIONNAME_FIELD_NUMBER = 6;
+    private volatile java.lang.Object exceptionName_;
+    /**
+     * <code>string exceptionName = 6;</code>
+     */
+    public java.lang.String getExceptionName() {
+      java.lang.Object ref = exceptionName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        exceptionName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string exceptionName = 6;</code>
+     */
+    public com.google.protobuf.ByteString
+        getExceptionNameBytes() {
+      java.lang.Object ref = exceptionName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        exceptionName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int LOG_FIELD_NUMBER = 7;
+    private com.google.protobuf.LazyStringList log_;
+    /**
+     * <code>repeated string log = 7;</code>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getLogList() {
+      return log_;
+    }
+    /**
+     * <code>repeated string log = 7;</code>
+     */
+    public int getLogCount() {
+      return log_.size();
+    }
+    /**
+     * <code>repeated string log = 7;</code>
+     */
+    public java.lang.String getLog(int index) {
+      return log_.get(index);
+    }
+    /**
+     * <code>repeated string log = 7;</code>
+     */
+    public com.google.protobuf.ByteString
+        getLogBytes(int index) {
+      return log_.getByteString(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (mutationTokensSize_ != 0) {
+        output.writeInt32(1, mutationTokensSize_);
+      }
+      if (txnAttemptsSize_ != 0) {
+        output.writeInt32(2, txnAttemptsSize_);
+      }
+      if (!getAttemptFinalStateBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, attemptFinalState_);
+      }
+      if (atrCollectionPresent_ != false) {
+        output.writeBool(4, atrCollectionPresent_);
+      }
+      if (atrIdPresent_ != false) {
+        output.writeBool(5, atrIdPresent_);
+      }
+      if (!getExceptionNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, exceptionName_);
+      }
+      for (int i = 0; i < log_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, log_.getRaw(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (mutationTokensSize_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, mutationTokensSize_);
+      }
+      if (txnAttemptsSize_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, txnAttemptsSize_);
+      }
+      if (!getAttemptFinalStateBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, attemptFinalState_);
+      }
+      if (atrCollectionPresent_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, atrCollectionPresent_);
+      }
+      if (atrIdPresent_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(5, atrIdPresent_);
+      }
+      if (!getExceptionNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, exceptionName_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < log_.size(); i++) {
+          dataSize += computeStringSizeNoTag(log_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getLogList().size();
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.couchbase.grpc.protocol.TxnClient.TransactionResultObject)) {
+        return super.equals(obj);
+      }
+      com.couchbase.grpc.protocol.TxnClient.TransactionResultObject other = (com.couchbase.grpc.protocol.TxnClient.TransactionResultObject) obj;
+
+      boolean result = true;
+      result = result && (getMutationTokensSize()
+          == other.getMutationTokensSize());
+      result = result && (getTxnAttemptsSize()
+          == other.getTxnAttemptsSize());
+      result = result && getAttemptFinalState()
+          .equals(other.getAttemptFinalState());
+      result = result && (getAtrCollectionPresent()
+          == other.getAtrCollectionPresent());
+      result = result && (getAtrIdPresent()
+          == other.getAtrIdPresent());
+      result = result && getExceptionName()
+          .equals(other.getExceptionName());
+      result = result && getLogList()
+          .equals(other.getLogList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + MUTATIONTOKENSSIZE_FIELD_NUMBER;
+      hash = (53 * hash) + getMutationTokensSize();
+      hash = (37 * hash) + TXNATTEMPTSSIZE_FIELD_NUMBER;
+      hash = (53 * hash) + getTxnAttemptsSize();
+      hash = (37 * hash) + ATTEMPTFINALSTATE_FIELD_NUMBER;
+      hash = (53 * hash) + getAttemptFinalState().hashCode();
+      hash = (37 * hash) + ATRCOLLECTIONPRESENT_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getAtrCollectionPresent());
+      hash = (37 * hash) + ATRIDPRESENT_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getAtrIdPresent());
+      hash = (37 * hash) + EXCEPTIONNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getExceptionName().hashCode();
+      if (getLogCount() > 0) {
+        hash = (37 * hash) + LOG_FIELD_NUMBER;
+        hash = (53 * hash) + getLogList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionResultObject parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionResultObject parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionResultObject parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionResultObject parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionResultObject parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionResultObject parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionResultObject parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionResultObject parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionResultObject parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionResultObject parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionResultObject parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionResultObject parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.couchbase.grpc.protocol.TxnClient.TransactionResultObject prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code txnService.TransactionResultObject}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:txnService.TransactionResultObject)
+        com.couchbase.grpc.protocol.TxnClient.TransactionResultObjectOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionResultObject_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionResultObject_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.couchbase.grpc.protocol.TxnClient.TransactionResultObject.class, com.couchbase.grpc.protocol.TxnClient.TransactionResultObject.Builder.class);
+      }
+
+      // Construct using com.couchbase.grpc.protocol.TxnClient.TransactionResultObject.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        mutationTokensSize_ = 0;
+
+        txnAttemptsSize_ = 0;
+
+        attemptFinalState_ = "";
+
+        atrCollectionPresent_ = false;
+
+        atrIdPresent_ = false;
+
+        exceptionName_ = "";
+
+        log_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000040);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_TransactionResultObject_descriptor;
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionResultObject getDefaultInstanceForType() {
+        return com.couchbase.grpc.protocol.TxnClient.TransactionResultObject.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionResultObject build() {
+        com.couchbase.grpc.protocol.TxnClient.TransactionResultObject result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.couchbase.grpc.protocol.TxnClient.TransactionResultObject buildPartial() {
+        com.couchbase.grpc.protocol.TxnClient.TransactionResultObject result = new com.couchbase.grpc.protocol.TxnClient.TransactionResultObject(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.mutationTokensSize_ = mutationTokensSize_;
+        result.txnAttemptsSize_ = txnAttemptsSize_;
+        result.attemptFinalState_ = attemptFinalState_;
+        result.atrCollectionPresent_ = atrCollectionPresent_;
+        result.atrIdPresent_ = atrIdPresent_;
+        result.exceptionName_ = exceptionName_;
+        if (((bitField0_ & 0x00000040) == 0x00000040)) {
+          log_ = log_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000040);
+        }
+        result.log_ = log_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.couchbase.grpc.protocol.TxnClient.TransactionResultObject) {
+          return mergeFrom((com.couchbase.grpc.protocol.TxnClient.TransactionResultObject)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.couchbase.grpc.protocol.TxnClient.TransactionResultObject other) {
+        if (other == com.couchbase.grpc.protocol.TxnClient.TransactionResultObject.getDefaultInstance()) return this;
+        if (other.getMutationTokensSize() != 0) {
+          setMutationTokensSize(other.getMutationTokensSize());
+        }
+        if (other.getTxnAttemptsSize() != 0) {
+          setTxnAttemptsSize(other.getTxnAttemptsSize());
+        }
+        if (!other.getAttemptFinalState().isEmpty()) {
+          attemptFinalState_ = other.attemptFinalState_;
+          onChanged();
+        }
+        if (other.getAtrCollectionPresent() != false) {
+          setAtrCollectionPresent(other.getAtrCollectionPresent());
+        }
+        if (other.getAtrIdPresent() != false) {
+          setAtrIdPresent(other.getAtrIdPresent());
+        }
+        if (!other.getExceptionName().isEmpty()) {
+          exceptionName_ = other.exceptionName_;
+          onChanged();
+        }
+        if (!other.log_.isEmpty()) {
+          if (log_.isEmpty()) {
+            log_ = other.log_;
+            bitField0_ = (bitField0_ & ~0x00000040);
+          } else {
+            ensureLogIsMutable();
+            log_.addAll(other.log_);
+          }
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.couchbase.grpc.protocol.TxnClient.TransactionResultObject parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.couchbase.grpc.protocol.TxnClient.TransactionResultObject) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private int mutationTokensSize_ ;
+      /**
+       * <code>int32 mutationTokensSize = 1;</code>
+       */
+      public int getMutationTokensSize() {
+        return mutationTokensSize_;
+      }
+      /**
+       * <code>int32 mutationTokensSize = 1;</code>
+       */
+      public Builder setMutationTokensSize(int value) {
+        
+        mutationTokensSize_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 mutationTokensSize = 1;</code>
+       */
+      public Builder clearMutationTokensSize() {
+        
+        mutationTokensSize_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int txnAttemptsSize_ ;
+      /**
+       * <code>int32 txnAttemptsSize = 2;</code>
+       */
+      public int getTxnAttemptsSize() {
+        return txnAttemptsSize_;
+      }
+      /**
+       * <code>int32 txnAttemptsSize = 2;</code>
+       */
+      public Builder setTxnAttemptsSize(int value) {
+        
+        txnAttemptsSize_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 txnAttemptsSize = 2;</code>
+       */
+      public Builder clearTxnAttemptsSize() {
+        
+        txnAttemptsSize_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object attemptFinalState_ = "";
+      /**
+       * <code>string attemptFinalState = 3;</code>
+       */
+      public java.lang.String getAttemptFinalState() {
+        java.lang.Object ref = attemptFinalState_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          attemptFinalState_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string attemptFinalState = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getAttemptFinalStateBytes() {
+        java.lang.Object ref = attemptFinalState_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          attemptFinalState_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string attemptFinalState = 3;</code>
+       */
+      public Builder setAttemptFinalState(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        attemptFinalState_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string attemptFinalState = 3;</code>
+       */
+      public Builder clearAttemptFinalState() {
+        
+        attemptFinalState_ = getDefaultInstance().getAttemptFinalState();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string attemptFinalState = 3;</code>
+       */
+      public Builder setAttemptFinalStateBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        attemptFinalState_ = value;
+        onChanged();
+        return this;
+      }
+
+      private boolean atrCollectionPresent_ ;
+      /**
+       * <code>bool atrCollectionPresent = 4;</code>
+       */
+      public boolean getAtrCollectionPresent() {
+        return atrCollectionPresent_;
+      }
+      /**
+       * <code>bool atrCollectionPresent = 4;</code>
+       */
+      public Builder setAtrCollectionPresent(boolean value) {
+        
+        atrCollectionPresent_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool atrCollectionPresent = 4;</code>
+       */
+      public Builder clearAtrCollectionPresent() {
+        
+        atrCollectionPresent_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean atrIdPresent_ ;
+      /**
+       * <code>bool atrIdPresent = 5;</code>
+       */
+      public boolean getAtrIdPresent() {
+        return atrIdPresent_;
+      }
+      /**
+       * <code>bool atrIdPresent = 5;</code>
+       */
+      public Builder setAtrIdPresent(boolean value) {
+        
+        atrIdPresent_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool atrIdPresent = 5;</code>
+       */
+      public Builder clearAtrIdPresent() {
+        
+        atrIdPresent_ = false;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object exceptionName_ = "";
+      /**
+       * <code>string exceptionName = 6;</code>
+       */
+      public java.lang.String getExceptionName() {
+        java.lang.Object ref = exceptionName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          exceptionName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string exceptionName = 6;</code>
+       */
+      public com.google.protobuf.ByteString
+          getExceptionNameBytes() {
+        java.lang.Object ref = exceptionName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          exceptionName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string exceptionName = 6;</code>
+       */
+      public Builder setExceptionName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        exceptionName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string exceptionName = 6;</code>
+       */
+      public Builder clearExceptionName() {
+        
+        exceptionName_ = getDefaultInstance().getExceptionName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string exceptionName = 6;</code>
+       */
+      public Builder setExceptionNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        exceptionName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList log_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureLogIsMutable() {
+        if (!((bitField0_ & 0x00000040) == 0x00000040)) {
+          log_ = new com.google.protobuf.LazyStringArrayList(log_);
+          bitField0_ |= 0x00000040;
+         }
+      }
+      /**
+       * <code>repeated string log = 7;</code>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getLogList() {
+        return log_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string log = 7;</code>
+       */
+      public int getLogCount() {
+        return log_.size();
+      }
+      /**
+       * <code>repeated string log = 7;</code>
+       */
+      public java.lang.String getLog(int index) {
+        return log_.get(index);
+      }
+      /**
+       * <code>repeated string log = 7;</code>
+       */
+      public com.google.protobuf.ByteString
+          getLogBytes(int index) {
+        return log_.getByteString(index);
+      }
+      /**
+       * <code>repeated string log = 7;</code>
+       */
+      public Builder setLog(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureLogIsMutable();
+        log_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string log = 7;</code>
+       */
+      public Builder addLog(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureLogIsMutable();
+        log_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string log = 7;</code>
+       */
+      public Builder addAllLog(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureLogIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, log_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string log = 7;</code>
+       */
+      public Builder clearLog() {
+        log_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000040);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string log = 7;</code>
+       */
+      public Builder addLogBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureLogIsMutable();
+        log_.add(value);
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:txnService.TransactionResultObject)
+    }
+
+    // @@protoc_insertion_point(class_scope:txnService.TransactionResultObject)
+    private static final com.couchbase.grpc.protocol.TxnClient.TransactionResultObject DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.couchbase.grpc.protocol.TxnClient.TransactionResultObject();
+    }
+
+    public static com.couchbase.grpc.protocol.TxnClient.TransactionResultObject getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<TransactionResultObject>
+        PARSER = new com.google.protobuf.AbstractParser<TransactionResultObject>() {
+      @java.lang.Override
+      public TransactionResultObject parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TransactionResultObject(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<TransactionResultObject> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TransactionResultObject> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.couchbase.grpc.protocol.TxnClient.TransactionResultObject getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -9852,1009 +10594,6 @@ public final class TxnClient {
 
   }
 
-  public interface txn_reqOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:txnService.txn_req)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 txn_timeout = 1;</code>
-     */
-    int getTxnTimeout();
-
-    /**
-     * <code>int32 txn_durability = 2;</code>
-     */
-    int getTxnDurability();
-
-    /**
-     * <code>int32 numDocs = 3;</code>
-     */
-    int getNumDocs();
-
-    /**
-     * <code>string command = 4;</code>
-     */
-    java.lang.String getCommand();
-    /**
-     * <code>string command = 4;</code>
-     */
-    com.google.protobuf.ByteString
-        getCommandBytes();
-
-    /**
-     * <code>bool mock = 5;</code>
-     */
-    boolean getMock();
-
-    /**
-     * <code>int32 docNum = 6;</code>
-     */
-    int getDocNum();
-
-    /**
-     * <code>string mockOperation = 7;</code>
-     */
-    java.lang.String getMockOperation();
-    /**
-     * <code>string mockOperation = 7;</code>
-     */
-    com.google.protobuf.ByteString
-        getMockOperationBytes();
-  }
-  /**
-   * Protobuf type {@code txnService.txn_req}
-   */
-  public  static final class txn_req extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:txnService.txn_req)
-      txn_reqOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use txn_req.newBuilder() to construct.
-    private txn_req(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private txn_req() {
-      txnTimeout_ = 0;
-      txnDurability_ = 0;
-      numDocs_ = 0;
-      command_ = "";
-      mock_ = false;
-      docNum_ = 0;
-      mockOperation_ = "";
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private txn_req(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8: {
-
-              txnTimeout_ = input.readInt32();
-              break;
-            }
-            case 16: {
-
-              txnDurability_ = input.readInt32();
-              break;
-            }
-            case 24: {
-
-              numDocs_ = input.readInt32();
-              break;
-            }
-            case 34: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              command_ = s;
-              break;
-            }
-            case 40: {
-
-              mock_ = input.readBool();
-              break;
-            }
-            case 48: {
-
-              docNum_ = input.readInt32();
-              break;
-            }
-            case 58: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              mockOperation_ = s;
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_txn_req_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_txn_req_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.couchbase.grpc.protocol.TxnClient.txn_req.class, com.couchbase.grpc.protocol.TxnClient.txn_req.Builder.class);
-    }
-
-    public static final int TXN_TIMEOUT_FIELD_NUMBER = 1;
-    private int txnTimeout_;
-    /**
-     * <code>int32 txn_timeout = 1;</code>
-     */
-    public int getTxnTimeout() {
-      return txnTimeout_;
-    }
-
-    public static final int TXN_DURABILITY_FIELD_NUMBER = 2;
-    private int txnDurability_;
-    /**
-     * <code>int32 txn_durability = 2;</code>
-     */
-    public int getTxnDurability() {
-      return txnDurability_;
-    }
-
-    public static final int NUMDOCS_FIELD_NUMBER = 3;
-    private int numDocs_;
-    /**
-     * <code>int32 numDocs = 3;</code>
-     */
-    public int getNumDocs() {
-      return numDocs_;
-    }
-
-    public static final int COMMAND_FIELD_NUMBER = 4;
-    private volatile java.lang.Object command_;
-    /**
-     * <code>string command = 4;</code>
-     */
-    public java.lang.String getCommand() {
-      java.lang.Object ref = command_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        command_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string command = 4;</code>
-     */
-    public com.google.protobuf.ByteString
-        getCommandBytes() {
-      java.lang.Object ref = command_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        command_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int MOCK_FIELD_NUMBER = 5;
-    private boolean mock_;
-    /**
-     * <code>bool mock = 5;</code>
-     */
-    public boolean getMock() {
-      return mock_;
-    }
-
-    public static final int DOCNUM_FIELD_NUMBER = 6;
-    private int docNum_;
-    /**
-     * <code>int32 docNum = 6;</code>
-     */
-    public int getDocNum() {
-      return docNum_;
-    }
-
-    public static final int MOCKOPERATION_FIELD_NUMBER = 7;
-    private volatile java.lang.Object mockOperation_;
-    /**
-     * <code>string mockOperation = 7;</code>
-     */
-    public java.lang.String getMockOperation() {
-      java.lang.Object ref = mockOperation_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        mockOperation_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string mockOperation = 7;</code>
-     */
-    public com.google.protobuf.ByteString
-        getMockOperationBytes() {
-      java.lang.Object ref = mockOperation_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        mockOperation_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (txnTimeout_ != 0) {
-        output.writeInt32(1, txnTimeout_);
-      }
-      if (txnDurability_ != 0) {
-        output.writeInt32(2, txnDurability_);
-      }
-      if (numDocs_ != 0) {
-        output.writeInt32(3, numDocs_);
-      }
-      if (!getCommandBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, command_);
-      }
-      if (mock_ != false) {
-        output.writeBool(5, mock_);
-      }
-      if (docNum_ != 0) {
-        output.writeInt32(6, docNum_);
-      }
-      if (!getMockOperationBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, mockOperation_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (txnTimeout_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, txnTimeout_);
-      }
-      if (txnDurability_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, txnDurability_);
-      }
-      if (numDocs_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, numDocs_);
-      }
-      if (!getCommandBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, command_);
-      }
-      if (mock_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(5, mock_);
-      }
-      if (docNum_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(6, docNum_);
-      }
-      if (!getMockOperationBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, mockOperation_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof com.couchbase.grpc.protocol.TxnClient.txn_req)) {
-        return super.equals(obj);
-      }
-      com.couchbase.grpc.protocol.TxnClient.txn_req other = (com.couchbase.grpc.protocol.TxnClient.txn_req) obj;
-
-      boolean result = true;
-      result = result && (getTxnTimeout()
-          == other.getTxnTimeout());
-      result = result && (getTxnDurability()
-          == other.getTxnDurability());
-      result = result && (getNumDocs()
-          == other.getNumDocs());
-      result = result && getCommand()
-          .equals(other.getCommand());
-      result = result && (getMock()
-          == other.getMock());
-      result = result && (getDocNum()
-          == other.getDocNum());
-      result = result && getMockOperation()
-          .equals(other.getMockOperation());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TXN_TIMEOUT_FIELD_NUMBER;
-      hash = (53 * hash) + getTxnTimeout();
-      hash = (37 * hash) + TXN_DURABILITY_FIELD_NUMBER;
-      hash = (53 * hash) + getTxnDurability();
-      hash = (37 * hash) + NUMDOCS_FIELD_NUMBER;
-      hash = (53 * hash) + getNumDocs();
-      hash = (37 * hash) + COMMAND_FIELD_NUMBER;
-      hash = (53 * hash) + getCommand().hashCode();
-      hash = (37 * hash) + MOCK_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getMock());
-      hash = (37 * hash) + DOCNUM_FIELD_NUMBER;
-      hash = (53 * hash) + getDocNum();
-      hash = (37 * hash) + MOCKOPERATION_FIELD_NUMBER;
-      hash = (53 * hash) + getMockOperation().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static com.couchbase.grpc.protocol.TxnClient.txn_req parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.couchbase.grpc.protocol.TxnClient.txn_req parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.couchbase.grpc.protocol.TxnClient.txn_req parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.couchbase.grpc.protocol.TxnClient.txn_req parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.couchbase.grpc.protocol.TxnClient.txn_req parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.couchbase.grpc.protocol.TxnClient.txn_req parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.couchbase.grpc.protocol.TxnClient.txn_req parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.couchbase.grpc.protocol.TxnClient.txn_req parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.couchbase.grpc.protocol.TxnClient.txn_req parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static com.couchbase.grpc.protocol.TxnClient.txn_req parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.couchbase.grpc.protocol.TxnClient.txn_req parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.couchbase.grpc.protocol.TxnClient.txn_req parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(com.couchbase.grpc.protocol.TxnClient.txn_req prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code txnService.txn_req}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:txnService.txn_req)
-        com.couchbase.grpc.protocol.TxnClient.txn_reqOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_txn_req_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_txn_req_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.couchbase.grpc.protocol.TxnClient.txn_req.class, com.couchbase.grpc.protocol.TxnClient.txn_req.Builder.class);
-      }
-
-      // Construct using com.couchbase.grpc.protocol.TxnClient.txn_req.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        txnTimeout_ = 0;
-
-        txnDurability_ = 0;
-
-        numDocs_ = 0;
-
-        command_ = "";
-
-        mock_ = false;
-
-        docNum_ = 0;
-
-        mockOperation_ = "";
-
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.couchbase.grpc.protocol.TxnClient.internal_static_txnService_txn_req_descriptor;
-      }
-
-      @java.lang.Override
-      public com.couchbase.grpc.protocol.TxnClient.txn_req getDefaultInstanceForType() {
-        return com.couchbase.grpc.protocol.TxnClient.txn_req.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.couchbase.grpc.protocol.TxnClient.txn_req build() {
-        com.couchbase.grpc.protocol.TxnClient.txn_req result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.couchbase.grpc.protocol.TxnClient.txn_req buildPartial() {
-        com.couchbase.grpc.protocol.TxnClient.txn_req result = new com.couchbase.grpc.protocol.TxnClient.txn_req(this);
-        result.txnTimeout_ = txnTimeout_;
-        result.txnDurability_ = txnDurability_;
-        result.numDocs_ = numDocs_;
-        result.command_ = command_;
-        result.mock_ = mock_;
-        result.docNum_ = docNum_;
-        result.mockOperation_ = mockOperation_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.couchbase.grpc.protocol.TxnClient.txn_req) {
-          return mergeFrom((com.couchbase.grpc.protocol.TxnClient.txn_req)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.couchbase.grpc.protocol.TxnClient.txn_req other) {
-        if (other == com.couchbase.grpc.protocol.TxnClient.txn_req.getDefaultInstance()) return this;
-        if (other.getTxnTimeout() != 0) {
-          setTxnTimeout(other.getTxnTimeout());
-        }
-        if (other.getTxnDurability() != 0) {
-          setTxnDurability(other.getTxnDurability());
-        }
-        if (other.getNumDocs() != 0) {
-          setNumDocs(other.getNumDocs());
-        }
-        if (!other.getCommand().isEmpty()) {
-          command_ = other.command_;
-          onChanged();
-        }
-        if (other.getMock() != false) {
-          setMock(other.getMock());
-        }
-        if (other.getDocNum() != 0) {
-          setDocNum(other.getDocNum());
-        }
-        if (!other.getMockOperation().isEmpty()) {
-          mockOperation_ = other.mockOperation_;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.couchbase.grpc.protocol.TxnClient.txn_req parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.couchbase.grpc.protocol.TxnClient.txn_req) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private int txnTimeout_ ;
-      /**
-       * <code>int32 txn_timeout = 1;</code>
-       */
-      public int getTxnTimeout() {
-        return txnTimeout_;
-      }
-      /**
-       * <code>int32 txn_timeout = 1;</code>
-       */
-      public Builder setTxnTimeout(int value) {
-        
-        txnTimeout_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 txn_timeout = 1;</code>
-       */
-      public Builder clearTxnTimeout() {
-        
-        txnTimeout_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int txnDurability_ ;
-      /**
-       * <code>int32 txn_durability = 2;</code>
-       */
-      public int getTxnDurability() {
-        return txnDurability_;
-      }
-      /**
-       * <code>int32 txn_durability = 2;</code>
-       */
-      public Builder setTxnDurability(int value) {
-        
-        txnDurability_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 txn_durability = 2;</code>
-       */
-      public Builder clearTxnDurability() {
-        
-        txnDurability_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int numDocs_ ;
-      /**
-       * <code>int32 numDocs = 3;</code>
-       */
-      public int getNumDocs() {
-        return numDocs_;
-      }
-      /**
-       * <code>int32 numDocs = 3;</code>
-       */
-      public Builder setNumDocs(int value) {
-        
-        numDocs_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 numDocs = 3;</code>
-       */
-      public Builder clearNumDocs() {
-        
-        numDocs_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object command_ = "";
-      /**
-       * <code>string command = 4;</code>
-       */
-      public java.lang.String getCommand() {
-        java.lang.Object ref = command_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          command_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string command = 4;</code>
-       */
-      public com.google.protobuf.ByteString
-          getCommandBytes() {
-        java.lang.Object ref = command_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          command_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string command = 4;</code>
-       */
-      public Builder setCommand(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        command_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string command = 4;</code>
-       */
-      public Builder clearCommand() {
-        
-        command_ = getDefaultInstance().getCommand();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string command = 4;</code>
-       */
-      public Builder setCommandBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        command_ = value;
-        onChanged();
-        return this;
-      }
-
-      private boolean mock_ ;
-      /**
-       * <code>bool mock = 5;</code>
-       */
-      public boolean getMock() {
-        return mock_;
-      }
-      /**
-       * <code>bool mock = 5;</code>
-       */
-      public Builder setMock(boolean value) {
-        
-        mock_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool mock = 5;</code>
-       */
-      public Builder clearMock() {
-        
-        mock_ = false;
-        onChanged();
-        return this;
-      }
-
-      private int docNum_ ;
-      /**
-       * <code>int32 docNum = 6;</code>
-       */
-      public int getDocNum() {
-        return docNum_;
-      }
-      /**
-       * <code>int32 docNum = 6;</code>
-       */
-      public Builder setDocNum(int value) {
-        
-        docNum_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 docNum = 6;</code>
-       */
-      public Builder clearDocNum() {
-        
-        docNum_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object mockOperation_ = "";
-      /**
-       * <code>string mockOperation = 7;</code>
-       */
-      public java.lang.String getMockOperation() {
-        java.lang.Object ref = mockOperation_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          mockOperation_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string mockOperation = 7;</code>
-       */
-      public com.google.protobuf.ByteString
-          getMockOperationBytes() {
-        java.lang.Object ref = mockOperation_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          mockOperation_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string mockOperation = 7;</code>
-       */
-      public Builder setMockOperation(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        mockOperation_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string mockOperation = 7;</code>
-       */
-      public Builder clearMockOperation() {
-        
-        mockOperation_ = getDefaultInstance().getMockOperation();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string mockOperation = 7;</code>
-       */
-      public Builder setMockOperationBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        mockOperation_ = value;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:txnService.txn_req)
-    }
-
-    // @@protoc_insertion_point(class_scope:txnService.txn_req)
-    private static final com.couchbase.grpc.protocol.TxnClient.txn_req DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new com.couchbase.grpc.protocol.TxnClient.txn_req();
-    }
-
-    public static com.couchbase.grpc.protocol.TxnClient.txn_req getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<txn_req>
-        PARSER = new com.google.protobuf.AbstractParser<txn_req>() {
-      @java.lang.Override
-      public txn_req parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new txn_req(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<txn_req> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<txn_req> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.couchbase.grpc.protocol.TxnClient.txn_req getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
   public interface APIResponseOrBuilder extends
       // @@protoc_insertion_point(interface_extends:txnService.APIResponse)
       com.google.protobuf.MessageOrBuilder {
@@ -11932,15 +11671,15 @@ public final class TxnClient {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_txnService_TransactionGenericResponse_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_txnService_TransactionResultObject_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_txnService_TransactionResultObject_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_txnService_conn_info_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_txnService_conn_info_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_txnService_txn_req_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_txnService_txn_req_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_txnService_APIResponse_descriptor;
   private static final 
@@ -11972,69 +11711,70 @@ public final class TxnClient {
       " \001(\010\"A\n\037TransactionsFactoryCloseRequest\022" +
       "\036\n\026transactionsFactoryRef\030\001 \001(\t\":\n\030Trans" +
       "actionCreateRequest\022\036\n\026transactionsFacto" +
-      "ryRef\030\001 \001(\t\"X\n\031TransactionGenericRequest" +
-      "\022\026\n\016transactionRef\030\001 \001(\t\022\017\n\007isEmpty\030\002 \001(" +
-      "\010\022\022\n\nisFinished\030\003 \001(\010\"V\n\030TransactionInse" +
-      "rtRequest\022\026\n\016transactionRef\030\001 \001(\t\022\r\n\005doc" +
-      "Id\030\002 \001(\t\022\023\n\013contentJson\030\003 \001(\t\"V\n\030Transac" +
-      "tionUpdateRequest\022\026\n\016transactionRef\030\001 \001(" +
-      "\t\022\r\n\005docId\030\002 \001(\t\022\023\n\013contentJson\030\003 \001(\t\"A\n" +
-      "\030TransactionDeleteRequest\022\026\n\016transaction" +
-      "Ref\030\001 \001(\t\022\r\n\005docId\030\002 \001(\t\"T\n!Transactions" +
-      "FactoryCreateResponse\022\017\n\007success\030\001 \001(\010\022\036" +
-      "\n\026transactionsFactoryRef\030\002 \001(\t\"D\n\031Transa" +
-      "ctionCreateResponse\022\017\n\007success\030\001 \001(\010\022\026\n\016" +
-      "transactionRef\030\002 \001(\t\"x\n\032TransactionGener" +
-      "icResponse\022\017\n\007success\030\001 \001(\010\022\034\n\024atrCollec" +
-      "tionPresent\030\002 \001(\010\022\024\n\014atrIdPresent\030\003 \001(\010\022" +
-      "\025\n\rattemptStates\030\004 \001(\t\"\334\001\n\tconn_info\022\025\n\r" +
-      "handle_bucket\030\003 \001(\t\022\017\n\007payload\030\004 \001(\t\022\027\n\017" +
-      "handle_hostname\030\005 \001(\t\022\023\n\013handle_port\030\006 \001" +
-      "(\005\022\027\n\017handle_password\030\007 \001(\t\022\027\n\017handle_us" +
-      "ername\030\010 \001(\t\022\022\n\nhandle_ssl\030\t \001(\010\022\036\n\026hand" +
-      "le_autofailover_ms\030\n \001(\005\022\023\n\013handle_cert\030" +
-      "\013 \001(\t\"\215\001\n\007txn_req\022\023\n\013txn_timeout\030\001 \001(\005\022\026" +
-      "\n\016txn_durability\030\002 \001(\005\022\017\n\007numDocs\030\003 \001(\005\022" +
-      "\017\n\007command\030\004 \001(\t\022\014\n\004mock\030\005 \001(\010\022\016\n\006docNum" +
-      "\030\006 \001(\005\022\025\n\rmockOperation\030\007 \001(\t\">\n\013APIResp" +
-      "onse\022\030\n\020APISuccessStatus\030\001 \001(\010\022\025\n\rAPISta" +
-      "tusInfo\030\002 \001(\t\"\007\n\005Empty*\035\n\004Hook\022\025\n\021BEFORE" +
-      "_ATR_COMMIT\020\000*D\n\rHookCondition\022\n\n\006ALWAYS" +
-      "\020\000\022\016\n\nON_ATTEMPT\020\001\022\027\n\023ON_ATTEMPT_LT_OR_E" +
-      "Q\020\002*K\n\020HookErrorToRaise\022\024\n\020FAIL_NO_ROLLB" +
-      "ACK\020\000\022\021\n\rFAIL_ROLLBACK\020\001\022\016\n\nFAIL_RETRY\020\002" +
-      "*i\n\rAttemptStates\022\017\n\013NOT_STARTED\020\000\022\013\n\007PE" +
-      "NDING\020\001\022\013\n\007ABORTED\020\002\022\r\n\tCOMMITTED\020\003\022\r\n\tC" +
-      "OMPLETED\020\004\022\017\n\013ROLLED_BACK\020\005*a\n\nDurabilit" +
-      "y\022\010\n\004NONE\020\000\022\014\n\010MAJORITY\020\001\022\"\n\036MAJORITY_AN" +
-      "D_PERSIST_TO_ACTIVE\020\002\022\027\n\023PERSIST_TO_MAJO" +
-      "RITY\020\0032\377\007\n\033ResumableTransactionService\022=" +
-      "\n\013create_conn\022\025.txnService.conn_info\032\027.t" +
-      "xnService.APIResponse\022x\n\031transactionsFac" +
-      "toryCreate\022,.txnService.TransactionsFact" +
-      "oryCreateRequest\032-.txnService.Transactio" +
-      "nsFactoryCreateResponse\022o\n\030transactionsF" +
-      "actoryClose\022+.txnService.TransactionsFac" +
-      "toryCloseRequest\032&.txnService.Transactio" +
-      "nGenericResponse\022`\n\021transactionCreate\022$." +
-      "txnService.TransactionCreateRequest\032%.tx" +
-      "nService.TransactionCreateResponse\022a\n\020tr" +
-      "ansactionEmpty\022%.txnService.TransactionG" +
-      "enericRequest\032&.txnService.TransactionGe" +
-      "nericResponse\022a\n\021transactionInsert\022$.txn" +
-      "Service.TransactionInsertRequest\032&.txnSe" +
-      "rvice.TransactionGenericResponse\022a\n\021tran" +
-      "sactionUpdate\022$.txnService.TransactionUp" +
-      "dateRequest\032&.txnService.TransactionGene" +
-      "ricResponse\022a\n\021transactionDelete\022$.txnSe" +
-      "rvice.TransactionDeleteRequest\032&.txnServ" +
-      "ice.TransactionGenericResponse\022b\n\021transa" +
-      "ctionCommit\022%.txnService.TransactionGene" +
-      "ricRequest\032&.txnService.TransactionGener" +
-      "icResponse\022d\n\023transactionRollback\022%.txnS" +
-      "ervice.TransactionGenericRequest\032&.txnSe" +
-      "rvice.TransactionGenericResponseB\035\n\033com." +
-      "couchbase.grpc.protocolb\006proto3"
+      "ryRef\030\001 \001(\t\"3\n\031TransactionGenericRequest" +
+      "\022\026\n\016transactionRef\030\001 \001(\t\"V\n\030TransactionI" +
+      "nsertRequest\022\026\n\016transactionRef\030\001 \001(\t\022\r\n\005" +
+      "docId\030\002 \001(\t\022\023\n\013contentJson\030\003 \001(\t\"V\n\030Tran" +
+      "sactionUpdateRequest\022\026\n\016transactionRef\030\001" +
+      " \001(\t\022\r\n\005docId\030\002 \001(\t\022\023\n\013contentJson\030\003 \001(\t" +
+      "\"A\n\030TransactionDeleteRequest\022\026\n\016transact" +
+      "ionRef\030\001 \001(\t\022\r\n\005docId\030\002 \001(\t\"T\n!Transacti" +
+      "onsFactoryCreateResponse\022\017\n\007success\030\001 \001(" +
+      "\010\022\036\n\026transactionsFactoryRef\030\002 \001(\t\"D\n\031Tra" +
+      "nsactionCreateResponse\022\017\n\007success\030\001 \001(\010\022" +
+      "\026\n\016transactionRef\030\002 \001(\t\"-\n\032TransactionGe" +
+      "nericResponse\022\017\n\007success\030\001 \001(\010\"\301\001\n\027Trans" +
+      "actionResultObject\022\032\n\022mutationTokensSize" +
+      "\030\001 \001(\005\022\027\n\017txnAttemptsSize\030\002 \001(\005\022\031\n\021attem" +
+      "ptFinalState\030\003 \001(\t\022\034\n\024atrCollectionPrese" +
+      "nt\030\004 \001(\010\022\024\n\014atrIdPresent\030\005 \001(\010\022\025\n\rexcept" +
+      "ionName\030\006 \001(\t\022\013\n\003log\030\007 \003(\t\"\334\001\n\tconn_info" +
+      "\022\025\n\rhandle_bucket\030\003 \001(\t\022\017\n\007payload\030\004 \001(\t" +
+      "\022\027\n\017handle_hostname\030\005 \001(\t\022\023\n\013handle_port" +
+      "\030\006 \001(\005\022\027\n\017handle_password\030\007 \001(\t\022\027\n\017handl" +
+      "e_username\030\010 \001(\t\022\022\n\nhandle_ssl\030\t \001(\010\022\036\n\026" +
+      "handle_autofailover_ms\030\n \001(\005\022\023\n\013handle_c" +
+      "ert\030\013 \001(\t\">\n\013APIResponse\022\030\n\020APISuccessSt" +
+      "atus\030\001 \001(\010\022\025\n\rAPIStatusInfo\030\002 \001(\t\"\007\n\005Emp" +
+      "ty*\035\n\004Hook\022\025\n\021BEFORE_ATR_COMMIT\020\000*D\n\rHoo" +
+      "kCondition\022\n\n\006ALWAYS\020\000\022\016\n\nON_ATTEMPT\020\001\022\027" +
+      "\n\023ON_ATTEMPT_LT_OR_EQ\020\002*K\n\020HookErrorToRa" +
+      "ise\022\024\n\020FAIL_NO_ROLLBACK\020\000\022\021\n\rFAIL_ROLLBA" +
+      "CK\020\001\022\016\n\nFAIL_RETRY\020\002*i\n\rAttemptStates\022\017\n" +
+      "\013NOT_STARTED\020\000\022\013\n\007PENDING\020\001\022\013\n\007ABORTED\020\002" +
+      "\022\r\n\tCOMMITTED\020\003\022\r\n\tCOMPLETED\020\004\022\017\n\013ROLLED" +
+      "_BACK\020\005*a\n\nDurability\022\010\n\004NONE\020\000\022\014\n\010MAJOR" +
+      "ITY\020\001\022\"\n\036MAJORITY_AND_PERSIST_TO_ACTIVE\020" +
+      "\002\022\027\n\023PERSIST_TO_MAJORITY\020\0032\337\010\n\033Resumable" +
+      "TransactionService\022=\n\013create_conn\022\025.txnS" +
+      "ervice.conn_info\032\027.txnService.APIRespons" +
+      "e\022x\n\031transactionsFactoryCreate\022,.txnServ" +
+      "ice.TransactionsFactoryCreateRequest\032-.t" +
+      "xnService.TransactionsFactoryCreateRespo" +
+      "nse\022o\n\030transactionsFactoryClose\022+.txnSer" +
+      "vice.TransactionsFactoryCloseRequest\032&.t" +
+      "xnService.TransactionGenericResponse\022`\n\021" +
+      "transactionCreate\022$.txnService.Transacti" +
+      "onCreateRequest\032%.txnService.Transaction" +
+      "CreateResponse\022a\n\020transactionEmpty\022%.txn" +
+      "Service.TransactionGenericRequest\032&.txnS" +
+      "ervice.TransactionGenericResponse\022a\n\021tra" +
+      "nsactionInsert\022$.txnService.TransactionI" +
+      "nsertRequest\032&.txnService.TransactionGen" +
+      "ericResponse\022a\n\021transactionUpdate\022$.txnS" +
+      "ervice.TransactionUpdateRequest\032&.txnSer" +
+      "vice.TransactionGenericResponse\022a\n\021trans" +
+      "actionDelete\022$.txnService.TransactionDel" +
+      "eteRequest\032&.txnService.TransactionGener" +
+      "icResponse\022b\n\021transactionCommit\022%.txnSer" +
+      "vice.TransactionGenericRequest\032&.txnServ" +
+      "ice.TransactionGenericResponse\022d\n\023transa" +
+      "ctionRollback\022%.txnService.TransactionGe" +
+      "nericRequest\032&.txnService.TransactionGen" +
+      "ericResponse\022^\n\020transactionClose\022%.txnSe" +
+      "rvice.TransactionGenericRequest\032#.txnSer" +
+      "vice.TransactionResultObjectB\035\n\033com.couc" +
+      "hbase.grpc.protocolb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -12071,7 +11811,7 @@ public final class TxnClient {
     internal_static_txnService_TransactionGenericRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_txnService_TransactionGenericRequest_descriptor,
-        new java.lang.String[] { "TransactionRef", "IsEmpty", "IsFinished", });
+        new java.lang.String[] { "TransactionRef", });
     internal_static_txnService_TransactionInsertRequest_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_txnService_TransactionInsertRequest_fieldAccessorTable = new
@@ -12107,19 +11847,19 @@ public final class TxnClient {
     internal_static_txnService_TransactionGenericResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_txnService_TransactionGenericResponse_descriptor,
-        new java.lang.String[] { "Success", "AtrCollectionPresent", "AtrIdPresent", "AttemptStates", });
-    internal_static_txnService_conn_info_descriptor =
+        new java.lang.String[] { "Success", });
+    internal_static_txnService_TransactionResultObject_descriptor =
       getDescriptor().getMessageTypes().get(10);
+    internal_static_txnService_TransactionResultObject_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_txnService_TransactionResultObject_descriptor,
+        new java.lang.String[] { "MutationTokensSize", "TxnAttemptsSize", "AttemptFinalState", "AtrCollectionPresent", "AtrIdPresent", "ExceptionName", "Log", });
+    internal_static_txnService_conn_info_descriptor =
+      getDescriptor().getMessageTypes().get(11);
     internal_static_txnService_conn_info_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_txnService_conn_info_descriptor,
         new java.lang.String[] { "HandleBucket", "Payload", "HandleHostname", "HandlePort", "HandlePassword", "HandleUsername", "HandleSsl", "HandleAutofailoverMs", "HandleCert", });
-    internal_static_txnService_txn_req_descriptor =
-      getDescriptor().getMessageTypes().get(11);
-    internal_static_txnService_txn_req_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_txnService_txn_req_descriptor,
-        new java.lang.String[] { "TxnTimeout", "TxnDurability", "NumDocs", "Command", "Mock", "DocNum", "MockOperation", });
     internal_static_txnService_APIResponse_descriptor =
       getDescriptor().getMessageTypes().get(12);
     internal_static_txnService_APIResponse_fieldAccessorTable = new
