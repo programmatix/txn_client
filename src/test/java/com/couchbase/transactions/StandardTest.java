@@ -259,150 +259,132 @@ public class StandardTest {
 
     @Test
     public void commitEmptyTransaction() {
-        try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
-            try {
-                TxnClient.TransactionsFactoryCreateResponse factory =
-                        stub.transactionsFactoryCreate(createTransactionsFactory(120,"MAJORITY",false,false)
-                                .build());
-                assertTrue(factory.getSuccess());
-                TransactionConfig transactionConfig  = storetxnconfig(120,"MAJORITY",false,false);
+        TxnClient.TransactionsFactoryCreateResponse factory =
+            stub.transactionsFactoryCreate(createTransactionsFactory(120, "MAJORITY", false, false)
+                .build());
+        assertTrue(factory.getSuccess());
+        TransactionConfig transactionConfig = storetxnconfig(120, "MAJORITY", false, false);
 
-                TxnClient.TransactionCreateResponse create =
-                        stub.transactionCreate(TxnClient.TransactionCreateRequest.newBuilder()
-                                .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
-                                .build());
-                assertTrue(create.getSuccess());
+        TxnClient.TransactionCreateResponse create =
+            stub.transactionCreate(TxnClient.TransactionCreateRequest.newBuilder()
+                .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
+                .build());
+        assertTrue(create.getSuccess());
 
-                String transactionRef = create.getTransactionRef();
+        String transactionRef = create.getTransactionRef();
 
-                TxnClient.TransactionGenericResponse commit =
-                        stub.transactionCommit(TxnClient.TransactionGenericRequest.newBuilder()
-                                .setTransactionRef(transactionRef)
-                                .build());
-                assertTrue(commit.getSuccess());
+        TxnClient.TransactionGenericResponse commit =
+            stub.transactionCommit(TxnClient.TransactionGenericRequest.newBuilder()
+                .setTransactionRef(transactionRef)
+                .build());
+        assertTrue(commit.getSuccess());
 
-                TxnClient.TransactionResultObject txnclose =
-                        stub.transactionClose(TxnClient.TransactionGenericRequest.newBuilder()
-                                .setTransactionRef(transactionRef)
-                                .build());
+        TxnClient.TransactionResultObject txnclose =
+            stub.transactionClose(TxnClient.TransactionGenericRequest.newBuilder()
+                .setTransactionRef(transactionRef)
+                .build());
 
-                executeVerification(txnclose,transactionConfig,"COMPLETED");
+        executeVerification(txnclose, transactionConfig, "COMPLETED");
 
-                assertTrue(stub.transactionsFactoryClose(TxnClient.TransactionsFactoryCloseRequest.newBuilder()
-                        .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
-                        .build()).getSuccess());
+        assertTrue(stub.transactionsFactoryClose(TxnClient.TransactionsFactoryCloseRequest.newBuilder()
+            .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
+            .build()).getSuccess());
 
-            }catch(Exception e){
-                logger.error("Exception during createEmptyTransaction: "+ e);
-            }
-        }
     }
 
     @Test
     public void rollbackEmptyTransaction() {
-        try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
-            try {
-                TxnClient.TransactionsFactoryCreateResponse factory =
-                        stub.transactionsFactoryCreate(createTransactionsFactory(120,"MAJORITY",false,false)
-                                .build());
-                assertTrue(factory.getSuccess());
-                TransactionConfig transactionConfig  = storetxnconfig(120,"MAJORITY",false,false);
+        TxnClient.TransactionsFactoryCreateResponse factory =
+            stub.transactionsFactoryCreate(createTransactionsFactory(120, "MAJORITY", false, false)
+                .build());
+        assertTrue(factory.getSuccess());
+        TransactionConfig transactionConfig = storetxnconfig(120, "MAJORITY", false, false);
 
-                TxnClient.TransactionCreateResponse create =
-                        stub.transactionCreate(TxnClient.TransactionCreateRequest.newBuilder()
-                                .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
-                                .build());
-                assertTrue(create.getSuccess());
+        TxnClient.TransactionCreateResponse create =
+            stub.transactionCreate(TxnClient.TransactionCreateRequest.newBuilder()
+                .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
+                .build());
+        assertTrue(create.getSuccess());
 
-                String transactionRef = create.getTransactionRef();
-                TxnClient.TransactionGenericResponse rollback =
-                        stub.transactionRollback(TxnClient.TransactionGenericRequest.newBuilder()
-                                .setTransactionRef(transactionRef)
-                                .build());
-                assertTrue(rollback.getSuccess());
+        String transactionRef = create.getTransactionRef();
+        TxnClient.TransactionGenericResponse rollback =
+            stub.transactionRollback(TxnClient.TransactionGenericRequest.newBuilder()
+                .setTransactionRef(transactionRef)
+                .build());
+        assertTrue(rollback.getSuccess());
 
-                TxnClient.TransactionResultObject txnclose =
-                        stub.transactionClose(TxnClient.TransactionGenericRequest.newBuilder()
-                                .setTransactionRef(transactionRef)
-                                .build());
+        TxnClient.TransactionResultObject txnclose =
+            stub.transactionClose(TxnClient.TransactionGenericRequest.newBuilder()
+                .setTransactionRef(transactionRef)
+                .build());
 
-                executeVerification(txnclose,transactionConfig,"ROLLED_BACK");
+        executeVerification(txnclose, transactionConfig, "ROLLED_BACK");
 
-                assertTrue(stub.transactionsFactoryClose(TxnClient.TransactionsFactoryCloseRequest.newBuilder()
-                        .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
-                        .build()).getSuccess());
-
-            }catch(Exception e){
-                logger.error("Exception during createEmptyTransaction: "+ e);
-            }
-        }
+        assertTrue(stub.transactionsFactoryClose(TxnClient.TransactionsFactoryCloseRequest.newBuilder()
+            .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
+            .build()).getSuccess());
     }
 
     @Test
     public void rollbackCommittedEmptyTransaction() {
-        try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
-            TxnClient.TransactionsFactoryCreateResponse factory =
-                    stub.transactionsFactoryCreate(createTransactionsFactory(120,"MAJORITY",false,false)
-                            .build());
-            assertTrue(factory.getSuccess());
+        TxnClient.TransactionsFactoryCreateResponse factory =
+            stub.transactionsFactoryCreate(createTransactionsFactory(120, "MAJORITY", false, false)
+                .build());
+        assertTrue(factory.getSuccess());
 
-            TxnClient.TransactionCreateResponse create =
-                    stub.transactionCreate(TxnClient.TransactionCreateRequest.newBuilder()
-                            .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
-                            .build());
-            assertTrue(create.getSuccess());
+        TxnClient.TransactionCreateResponse create =
+            stub.transactionCreate(TxnClient.TransactionCreateRequest.newBuilder()
+                .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
+                .build());
+        assertTrue(create.getSuccess());
 
-            String transactionRef = create.getTransactionRef();
-            String docId = UUID.randomUUID().toString();
-            JsonObject docContent = JsonObject.create().put(Strings.CONTENT_NAME, Strings.DEFAULT_CONTENT_VALUE);
+        String transactionRef = create.getTransactionRef();
+        String docId = UUID.randomUUID().toString();
+        JsonObject docContent = JsonObject.create().put(Strings.CONTENT_NAME, Strings.DEFAULT_CONTENT_VALUE);
 
-            TxnClient.TransactionGenericResponse insert =
-                    stub.transactionInsert(TxnClient.TransactionInsertRequest.newBuilder()
-                            .setTransactionRef(transactionRef)
-                            .setDocId(docId)
-                            .setContentJson(docContent.toString())
-                            .build());
+        TxnClient.TransactionGenericResponse insert =
+            stub.transactionInsert(TxnClient.TransactionInsertRequest.newBuilder()
+                .setTransactionRef(transactionRef)
+                .setDocId(docId)
+                .setContentJson(docContent.toString())
+                .build());
 
-            assertTrue(insert.getSuccess());
+        assertTrue(insert.getSuccess());
 
-            GetResult get = cluster.bucket("default").defaultCollection().get(docId);
-            assertEquals(0, get.contentAsObject().size());
+        GetResult get = cluster.bucket("default").defaultCollection().get(docId);
+        assertEquals(0, get.contentAsObject().size());
 
-            TxnClient.TransactionGenericResponse commit =
-                    stub.transactionCommit(TxnClient.TransactionGenericRequest.newBuilder()
-                            .setTransactionRef(transactionRef)
-                            .build());
+        TxnClient.TransactionGenericResponse commit =
+            stub.transactionCommit(TxnClient.TransactionGenericRequest.newBuilder()
+                .setTransactionRef(transactionRef)
+                .build());
 
-            assertTrue(commit.getSuccess());
+        assertTrue(commit.getSuccess());
 
-            TxnClient.TransactionGenericResponse rollback =
-                    stub.transactionRollback(TxnClient.TransactionGenericRequest.newBuilder()
-                            .setTransactionRef(transactionRef)
-                            .build());
-            assertFalse(rollback.getSuccess());
+        TxnClient.TransactionGenericResponse rollback =
+            stub.transactionRollback(TxnClient.TransactionGenericRequest.newBuilder()
+                .setTransactionRef(transactionRef)
+                .build());
+        assertFalse(rollback.getSuccess());
 
-            TxnClient.TransactionResultObject txnclose =
-                    stub.transactionClose(TxnClient.TransactionGenericRequest.newBuilder()
-                            .setTransactionRef(transactionRef)
-                            .build());
+        TxnClient.TransactionResultObject txnclose =
+            stub.transactionClose(TxnClient.TransactionGenericRequest.newBuilder()
+                .setTransactionRef(transactionRef)
+                .build());
 
-           assertEquals(txnclose.getExceptionName(),"com.couchbase.transactions.error.attempts.AttemptException");
-            LogRedaction.setRedactionLevel(RedactionLevel.PARTIAL);
-            txnclose.getLogList().forEach(l -> {
-                logger.info("Checking logreadaction: "+l);
-                if (l.contains(docId)) {
-                    //TODO below assertion not working . Need to check if this should be actually working
-                   // assertTrue(l.contains("<ud>" + docId + "</ud>"));
-                }
-            });
+        assertEquals(txnclose.getExceptionName(), "com.couchbase.transactions.error.attempts.AttemptException");
+        LogRedaction.setRedactionLevel(RedactionLevel.PARTIAL);
+        txnclose.getLogList().forEach(l -> {
+            logger.info("Checking logreadaction: " + l);
+            if (l.contains(docId)) {
+                //TODO below assertion not working . Need to check if this should be actually working
+                // assertTrue(l.contains("<ud>" + docId + "</ud>"));
+            }
+        });
 
-            assertTrue(stub.transactionsFactoryClose(TxnClient.TransactionsFactoryCloseRequest.newBuilder()
+        assertTrue(stub.transactionsFactoryClose(TxnClient.TransactionsFactoryCloseRequest.newBuilder()
             .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
             .build()).getSuccess());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 
