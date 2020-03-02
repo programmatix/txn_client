@@ -64,7 +64,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 //TODO Use Scope. For now ignoring this parameter
-    // Enable creating and configuring a cluster
+// Enable creating and configuring a cluster
 
 public class StandardTest {
     private static Cluster cluster;
@@ -103,7 +103,7 @@ public class StandardTest {
         long now = System.currentTimeMillis();
         bucketManager = cluster.buckets();
 
-       // bucketManager.flushBucket("default");
+        // bucketManager.flushBucket("default");
 
         LogUtil.setLevelFromSpec("all:Info");
         logger = LogUtil.getLogger(StandardTest.class);
@@ -122,15 +122,15 @@ public class StandardTest {
 
         cluster = Cluster.connect(CLUSTER_HOSTNAME, Strings.ADMIN_USER, Strings.PASSWORD);
         collection = cluster.bucket("default").defaultCollection();
-        TxnClient.conn_info  conn_create_req =
-                TxnClient.conn_info.newBuilder()
-                        .setHandleHostname(CLUSTER_HOSTNAME)
-                        .setHandleBucket("default")
-                        .setHandlePort(8091)
-                        .setHandleUsername(Strings.ADMIN_USER)
-                        .setHandlePassword(Strings.PASSWORD)
-                        .setHandleAutofailoverMs(5)
-                        .build();
+        TxnClient.conn_info conn_create_req =
+            TxnClient.conn_info.newBuilder()
+                .setHandleHostname(CLUSTER_HOSTNAME)
+                .setHandleBucket("default")
+                .setHandlePort(8091)
+                .setHandleUsername(Strings.ADMIN_USER)
+                .setHandlePassword(Strings.PASSWORD)
+                .setHandleAutofailoverMs(5)
+                .build();
         TxnClient.APIResponse response = stub.createConn(conn_create_req);
     }
 
@@ -156,22 +156,25 @@ public class StandardTest {
     }
 
 
-    private static TxnClient.TransactionsFactoryCreateRequest.Builder createTransactionsFactory(int expiry, String durability, boolean CleanupClientAttempts,boolean CleanupLostAttempts ) {
+    private static TxnClient.TransactionsFactoryCreateRequest.Builder createTransactionsFactory(int expiry,
+                                                                                                String durability,
+                                                                                                boolean CleanupClientAttempts, boolean CleanupLostAttempts) {
         return TxnClient.TransactionsFactoryCreateRequest.newBuilder()
 
-                // Disable these threads so can run multiple Transactions (and hence hooks)
-                .setCleanupClientAttempts(CleanupClientAttempts)
-                .setCleanupLostAttempts(CleanupLostAttempts)
+            // Disable these threads so can run multiple Transactions (and hence hooks)
+            .setCleanupClientAttempts(CleanupClientAttempts)
+            .setCleanupLostAttempts(CleanupLostAttempts)
 
-                // This is default durability for txns library
-              //  .setDurability(TxnClient.Durability.MAJORITY)
-                .setDurability(TxnClient.Durability.valueOf(durability))
+            // This is default durability for txns library
+            //  .setDurability(TxnClient.Durability.MAJORITY)
+            .setDurability(TxnClient.Durability.valueOf(durability))
 
-                // Plenty of time for manual debugging
-                .setExpirationSeconds(expiry);
+            // Plenty of time for manual debugging
+            .setExpirationSeconds(expiry);
     }
 
-    private TransactionConfig storetxnconfig(int expiry, String durability, boolean CleanupClientAttempts,boolean CleanupLostAttempts){
+    private TransactionConfig storetxnconfig(int expiry, String durability, boolean CleanupClientAttempts,
+                                             boolean CleanupLostAttempts) {
         TransactionDurabilityLevel durabilityLevel = TransactionDurabilityLevel.MAJORITY;
         switch (durability) {
             case "NONE":
@@ -187,74 +190,68 @@ public class StandardTest {
                 durabilityLevel = TransactionDurabilityLevel.PERSIST_TO_MAJORITY;
                 break;
         }
-       return TransactionConfigBuilder.create()
-                .durabilityLevel(durabilityLevel)
-                .cleanupLostAttempts(CleanupLostAttempts)
-                .cleanupClientAttempts(CleanupClientAttempts)
-                .expirationTime(Duration.ofSeconds(expiry))
-                .build();
+        return TransactionConfigBuilder.create()
+            .durabilityLevel(durabilityLevel)
+            .cleanupLostAttempts(CleanupLostAttempts)
+            .cleanupClientAttempts(CleanupClientAttempts)
+            .expirationTime(Duration.ofSeconds(expiry))
+            .build();
     }
 
 
-    private void executeVerification(TxnClient.TransactionResultObject txnclose,TransactionConfig transactionConfig, String attemptstate){
+    private void executeVerification(TxnClient.TransactionResultObject txnclose, TransactionConfig transactionConfig,
+                                     String attemptstate) {
         logger.info("Running assertions");
         assertEquals(0, TestUtils.numAtrs(collection, transactionConfig, span));
 
-        logger.info("txnclose.getTxnAttemptsSize():"+txnclose.getTxnAttemptsSize());
+        logger.info("txnclose.getTxnAttemptsSize():" + txnclose.getTxnAttemptsSize());
         assertEquals(1, txnclose.getTxnAttemptsSize());
 
-        logger.info("txnclose.getAttemptFinalState():"+txnclose.getAttemptFinalState());
+        logger.info("txnclose.getAttemptFinalState():" + txnclose.getAttemptFinalState());
         assertEquals(attemptstate, txnclose.getAttemptFinalState());
 
-        logger.info("txnclose.getAtrCollectionPresent():"+txnclose.getAtrCollectionPresent());
+        logger.info("txnclose.getAtrCollectionPresent():" + txnclose.getAtrCollectionPresent());
         assertFalse(txnclose.getAtrCollectionPresent());
 
-        logger.info("txnclose.getAtrIdPresent():"+txnclose.getAtrIdPresent());
+        logger.info("txnclose.getAtrIdPresent():" + txnclose.getAtrIdPresent());
         assertFalse(txnclose.getAtrIdPresent());
 
-        logger.info("txnclose.getMutationTokensSize():"+txnclose.getMutationTokensSize());
+        logger.info("txnclose.getMutationTokensSize():" + txnclose.getMutationTokensSize());
         assertEquals(0, txnclose.getMutationTokensSize());
     }
 
     @Test
     public void createEmptyTransaction() {
-        try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
-            try {
-                TxnClient.TransactionsFactoryCreateResponse factory =
-                        stub.transactionsFactoryCreate(createTransactionsFactory(120,"MAJORITY",false,false)
-                                .build());
-                assertTrue(factory.getSuccess());
-                TransactionConfig transactionConfig  = storetxnconfig(120,"MAJORITY",false,false);
+        TxnClient.TransactionsFactoryCreateResponse factory =
+            stub.transactionsFactoryCreate(createTransactionsFactory(120, "MAJORITY", false, false)
+                .build());
+        assertTrue(factory.getSuccess());
+        TransactionConfig transactionConfig = storetxnconfig(120, "MAJORITY", false, false);
 
-                TxnClient.TransactionCreateResponse create =
-                        stub.transactionCreate(TxnClient.TransactionCreateRequest.newBuilder()
-                                .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
-                                .build());
-                assertTrue(create.getSuccess());
+        TxnClient.TransactionCreateResponse create =
+            stub.transactionCreate(TxnClient.TransactionCreateRequest.newBuilder()
+                .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
+                .build());
+        assertTrue(create.getSuccess());
 
-                String transactionRef = create.getTransactionRef();
-                TxnClient.TransactionGenericResponse empty =
-                        stub.transactionEmpty(TxnClient.TransactionGenericRequest.newBuilder()
-                                .setTransactionRef(transactionRef)
-                                .build());
-                assertTrue(empty.getSuccess());
+        String transactionRef = create.getTransactionRef();
+        TxnClient.TransactionGenericResponse empty =
+            stub.transactionEmpty(TxnClient.TransactionGenericRequest.newBuilder()
+                .setTransactionRef(transactionRef)
+                .build());
+        assertTrue(empty.getSuccess());
 
-                TxnClient.TransactionResultObject txnclose =
-                        stub.transactionClose(TxnClient.TransactionGenericRequest.newBuilder()
-                                .setTransactionRef(transactionRef)
-                                .build());
+        TxnClient.TransactionResultObject txnclose =
+            stub.transactionClose(TxnClient.TransactionGenericRequest.newBuilder()
+                .setTransactionRef(transactionRef)
+                .build());
 
-                executeVerification(txnclose,transactionConfig,"COMPLETED");
+        executeVerification(txnclose, transactionConfig, "COMPLETED");
 
 
-                assertTrue(stub.transactionsFactoryClose(TxnClient.TransactionsFactoryCloseRequest.newBuilder()
-                        .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
-                        .build()).getSuccess());
-
-            }catch(Exception e){
-                logger.error("Exception during createEmptyTransaction: "+ e);
-            }
-        }
+        assertTrue(stub.transactionsFactoryClose(TxnClient.TransactionsFactoryCloseRequest.newBuilder()
+            .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
+            .build()).getSuccess());
     }
 
     @Test
@@ -400,12 +397,13 @@ public class StandardTest {
 
                     assertFalse(collection.get(docId).contentAs(JsonObject.class).containsKey("val"));
                     Optional<TransactionGetResult> fetched = DocumentGetter.getAsync(collection.reactive(),
-                            transactions.config(), docId, null, TestUtils.from(scope), cluster.environment().transcoder()).block();
+                        transactions.config(), docId, null, TestUtils.from(scope),
+                        cluster.environment().transcoder()).block();
                     assertFalse(fetched.isPresent());
 
                     TransactionGetResult docRaw = DocumentGetter.justGetDoc(collection.reactive(),
-                            transactions.config(),
-                            docId, TestUtils.from(scope), cluster.environment().transcoder()).block().get();
+                        transactions.config(),
+                        docId, TestUtils.from(scope), cluster.environment().transcoder()).block().get();
                     assertFalse(docRaw.links().casPreTxn().isPresent());
                     assertFalse(docRaw.links().revidPreTxn().isPresent());
                     assertFalse(docRaw.links().exptimePreTxn().isPresent());
@@ -420,9 +418,10 @@ public class StandardTest {
                     ctx.commit();
                 }, TestUtils.defaultPerConfig(scope));
                 assertTrue(1 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
-                TestUtils.assertCompletedIn1Attempt(transactions.config(), result, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertCompletedIn1Attempt(transactions.config(), result, collection, scope.span(),
+                    cluster.environment().transcoder());
                 TestUtils.assertAtrEntryDocs(collection, result, Arrays.asList(docId), null, null,
-                        transactions.config(), span);
+                    transactions.config(), span);
                 assertEquals(1, result.mutationTokens().size());
                 checkLogRedactionIfEnabled(result, docId);
             }
@@ -437,7 +436,8 @@ public class StandardTest {
             transactions.close();
 
             assertThrows(IllegalStateException.class, () -> {
-                TransactionResult result = transactions.run((ctx) -> {});
+                TransactionResult result = transactions.run((ctx) -> {
+                });
             });
 
             // Double-close is fine
@@ -539,9 +539,10 @@ public class StandardTest {
                 TransactionResult r = result.block();
 
                 assertTrue(1 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
-                TestUtils.assertCompletedIn1Attempt(transactions.config(), r, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertCompletedIn1Attempt(transactions.config(), r, collection, scope.span(),
+                    cluster.environment().transcoder());
                 TestUtils.assertAtrEntryDocs(collection, r, Arrays.asList(docId), null, null, transactions.config(),
-                        scope.span());
+                    scope.span());
                 assertEquals(1, r.mutationTokens().size());
                 checkLogRedactionIfEnabled(r, docId);
             }
@@ -563,7 +564,7 @@ public class StandardTest {
 
                 assertEquals(1, TestUtils.numAtrs(collection, transactions.config(), span));
                 TransactionGetResult doc = DocumentGetter.justGetDoc(collection.reactive(), transactions.config(),
-                        docId, TestUtils.from(scope), cluster.environment().transcoder()).block().get();
+                    docId, TestUtils.from(scope), cluster.environment().transcoder()).block().get();
                 assertFalse(doc.links().atrId().isPresent());
                 assertFalse(doc.links().stagedAttemptId().isPresent());
                 assertFalse(doc.links().stagedContent().isPresent());
@@ -588,9 +589,10 @@ public class StandardTest {
                     ctx.rollback();
                 }, TestUtils.defaultPerConfig(scope));
                 assertThrows(DocumentNotFoundException.class, () -> collection.get(docId));
-                TestUtils.assertRolledBackIn1Attempt(transactions.config(), result, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertRolledBackIn1Attempt(transactions.config(), result, collection, scope.span(),
+                    cluster.environment().transcoder());
                 TestUtils.assertAtrEntryDocs(collection, result, Arrays.asList(docId), null, null,
-                        transactions.config(), span);
+                    transactions.config(), span);
                 assertEquals(1, result.mutationTokens().size());
                 checkLogRedactionIfEnabled(result, docId);
             }
@@ -612,7 +614,8 @@ public class StandardTest {
 
                 TransactionResult r = result.block();
                 assertThrows(DocumentNotFoundException.class, () -> collection.get(docId));
-                TestUtils.assertRolledBackIn1Attempt(transactions.config(), r, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertRolledBackIn1Attempt(transactions.config(), r, collection, scope.span(),
+                    cluster.environment().transcoder());
                 checkLogRedactionIfEnabled(r, docId);
             }
         }
@@ -635,9 +638,10 @@ public class StandardTest {
                 }, TestUtils.defaultPerConfig(scope));
                 assertTrue(1 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
                 assertTrue(2 == collection.get(docId2).contentAs(JsonObject.class).getInt("val"));
-                TestUtils.assertCompletedIn1Attempt(transactions.config(), result, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertCompletedIn1Attempt(transactions.config(), result, collection, scope.span(),
+                    cluster.environment().transcoder());
                 TestUtils.assertAtrEntryDocs(collection, result, Arrays.asList(docId, docId2), null, null,
-                        transactions.config(), span);
+                    transactions.config(), span);
                 assertEquals(2, result.mutationTokens().size());
                 checkLogRedactionIfEnabled(result, docId);
             }
@@ -658,7 +662,8 @@ public class StandardTest {
                 }, TestUtils.defaultPerConfig(scope));
 
                 TransactionResult r = result.block();
-                TestUtils.assertCompletedIn1Attempt(transactions.config(), r, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertCompletedIn1Attempt(transactions.config(), r, collection, scope.span(),
+                    cluster.environment().transcoder());
                 assertTrue(1 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
                 assertTrue(2 == collection.get(docId2).contentAs(JsonObject.class).getInt("val"));
                 checkLogRedactionIfEnabled(r, docId);
@@ -691,7 +696,8 @@ public class StandardTest {
                         ctx.commit();
                     }, TestUtils.defaultPerConfig(scope));
 
-                    TestUtils.assertCompletedIn1Attempt(transactions.config(), result, collection, scope.span(), cluster.environment().transcoder());
+                    TestUtils.assertCompletedIn1Attempt(transactions.config(), result, collection, scope.span(),
+                        cluster.environment().transcoder());
                     assertEquals(2, (int) collection.get(docId).contentAs(JsonObject.class).getInt("val"));
                     checkLogRedactionIfEnabled(result, docId);
 
@@ -720,10 +726,11 @@ public class StandardTest {
                 }, TestUtils.defaultPerConfig(scope));
 
                 TransactionResult r = result.block();
-                TestUtils.assertCompletedIn1Attempt(transactions.config(), r, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertCompletedIn1Attempt(transactions.config(), r, collection, scope.span(),
+                    cluster.environment().transcoder());
                 assertEquals(2, (int) collection.get(docId).contentAs(JsonObject.class).getInt("val"));
                 TestUtils.assertAtrEntryDocs(collection, r, null, Arrays.asList(docId), null, transactions.config(),
-                        scope.span());
+                    scope.span());
                 checkLogRedactionIfEnabled(r, docId);
             }
         }
@@ -745,10 +752,11 @@ public class StandardTest {
 
                     assertTrue(1 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
                 }, TestUtils.defaultPerConfig(scope));
-                TestUtils.assertCompletedIn1Attempt(transactions.config(), result, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertCompletedIn1Attempt(transactions.config(), result, collection, scope.span(),
+                    cluster.environment().transcoder());
                 assertTrue(2 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
                 TestUtils.assertAtrEntryDocs(collection, result, null, Arrays.asList(docId), null,
-                        transactions.config(), span);
+                    transactions.config(), span);
                 checkLogRedactionIfEnabled(result, docId);
             }
         }
@@ -786,7 +794,8 @@ public class StandardTest {
                 }, TestUtils.defaultPerConfig(scope));
 
                 TransactionResult r = result.block();
-                TestUtils.assertCompletedIn1Attempt(transactions.config(), r, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertCompletedIn1Attempt(transactions.config(), r, collection, scope.span(),
+                    cluster.environment().transcoder());
                 assertTrue(2 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
                 checkLogRedactionIfEnabled(r, docId);
             }
@@ -811,11 +820,13 @@ public class StandardTest {
 
                     ctx.rollback();
                 }, TestUtils.defaultPerConfig(scope));
-                TestUtils.assertRolledBackIn1Attempt(transactions.config(), result, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertRolledBackIn1Attempt(transactions.config(), result, collection, scope.span(),
+                    cluster.environment().transcoder());
                 assertTrue(1 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
-                assertFalse(TestUtils.isDocInTxn(collection, docId, transactions.config(), TestUtils.from(span), cluster.environment().transcoder()));
+                assertFalse(TestUtils.isDocInTxn(collection, docId, transactions.config(), TestUtils.from(span),
+                    cluster.environment().transcoder()));
                 TestUtils.assertAtrEntryDocs(collection, result, null, Arrays.asList(docId), null,
-                        transactions.config(), span);
+                    transactions.config(), span);
                 checkLogRedactionIfEnabled(result, docId);
             }
         }
@@ -833,7 +844,7 @@ public class StandardTest {
                     ctx.rollback();
                 }, TestUtils.defaultPerConfig(scope));
                 ATREntry entry = TestUtils.atrEntryForAttempt(collection, result.attempts().get(0).attemptId(),
-                        transactions.config(), span);
+                    transactions.config(), span);
 
                 assertFalse(entry.timestampCommitMsecs().isPresent());
                 assertFalse(entry.timestampCompleteMsecs().isPresent());
@@ -859,7 +870,7 @@ public class StandardTest {
                     ctx.commit();
                 }, TestUtils.defaultPerConfig(scope));
                 ATREntry entry = TestUtils.atrEntryForAttempt(collection, result.attempts().get(0).attemptId(),
-                        transactions.config(), span);
+                    transactions.config(), span);
 
                 assertTrue(entry.timestampCommitMsecs().isPresent());
                 assertTrue(entry.timestampCompleteMsecs().isPresent());
@@ -890,10 +901,11 @@ public class StandardTest {
                 }, TestUtils.defaultPerConfig(scope));
 
                 TransactionResult r = result.block();
-                TestUtils.assertRolledBackIn1Attempt(transactions.config(), r, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertRolledBackIn1Attempt(transactions.config(), r, collection, scope.span(),
+                    cluster.environment().transcoder());
                 assertTrue(1 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
                 TestUtils.assertAtrEntryDocs(collection, r, null, Arrays.asList(docId), null, transactions.config(),
-                        scope.span());
+                    scope.span());
                 checkLogRedactionIfEnabled(r, docId);
             }
         }
@@ -922,7 +934,8 @@ public class StandardTest {
                 }, TestUtils.defaultPerConfig(scope));
 
                 TransactionResult r = result.block();
-                TestUtils.assertRolledBackIn1Attempt(transactions.config(), r, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertRolledBackIn1Attempt(transactions.config(), r, collection, scope.span(),
+                    cluster.environment().transcoder());
                 assertTrue(1 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
                 assertTrue(2 == collection.get(docId2).contentAs(JsonObject.class).getInt("val"));
                 checkLogRedactionIfEnabled(r, docId);
@@ -956,7 +969,8 @@ public class StandardTest {
                 }, TestUtils.defaultPerConfig(scope));
 
                 TransactionResult r = result.block();
-                TestUtils.assertCompletedIn1Attempt(transactions.config(), r, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertCompletedIn1Attempt(transactions.config(), r, collection, scope.span(),
+                    cluster.environment().transcoder());
                 assertTrue(3 == collection.get("a").contentAs(JsonObject.class).getInt("val"));
                 assertTrue(4 == collection.get("b").contentAs(JsonObject.class).getInt("val"));
             }
@@ -986,11 +1000,12 @@ public class StandardTest {
 
                     ctx.commit();
                 }, TestUtils.defaultPerConfig(scope));
-                TestUtils.assertCompletedIn1Attempt(transactions.config(), result, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertCompletedIn1Attempt(transactions.config(), result, collection, scope.span(),
+                    cluster.environment().transcoder());
                 assertTrue(3 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
                 assertTrue(4 == collection.get(docId2).contentAs(JsonObject.class).getInt("val"));
                 TestUtils.assertAtrEntryDocs(collection, result, null, Arrays.asList(docId, docId2), null,
-                        transactions.config(), span);
+                    transactions.config(), span);
                 assertEquals(2, result.mutationTokens().size());
                 checkLogRedactionIfEnabled(result, docId);
             }
@@ -1022,7 +1037,8 @@ public class StandardTest {
                 }, TestUtils.defaultPerConfig(scope));
 
                 TransactionResult r = result.block();
-                TestUtils.assertCompletedIn1Attempt(transactions.config(), r, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertCompletedIn1Attempt(transactions.config(), r, collection, scope.span(),
+                    cluster.environment().transcoder());
                 assertTrue(3 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
                 assertTrue(4 == collection.get(docId2).contentAs(JsonObject.class).getInt("val"));
                 checkLogRedactionIfEnabled(r, docId);
@@ -1058,7 +1074,8 @@ public class StandardTest {
                 assertTrue(1 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
                 assertTrue(2 == collection.get(docId2).contentAs(JsonObject.class).getInt("val"));
                 TestUtils.assertOneAtrEntry(collection, AttemptStates.ROLLED_BACK, transactions.config(), span);
-                TestUtils.assertRolledBackIn1Attempt(transactions.config(), r, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertRolledBackIn1Attempt(transactions.config(), r, collection, scope.span(),
+                    cluster.environment().transcoder());
                 assertEquals(2, r.mutationTokens().size());
                 checkLogRedactionIfEnabled(r, docId);
             }
@@ -1084,9 +1101,10 @@ public class StandardTest {
                     ctx.commit();
                 }, TestUtils.defaultPerConfig(scope));
                 assertThrows(DocumentNotFoundException.class, () -> collection.get(docId));
-                TestUtils.assertCompletedIn1Attempt(transactions.config(), result, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertCompletedIn1Attempt(transactions.config(), result, collection, scope.span(),
+                    cluster.environment().transcoder());
                 TestUtils.assertAtrEntryDocs(collection, result, null, null, Arrays.asList(docId),
-                        transactions.config(), span);
+                    transactions.config(), span);
                 assertEquals(1, result.mutationTokens().size());
                 checkLogRedactionIfEnabled(result, docId);
             }
@@ -1111,10 +1129,11 @@ public class StandardTest {
 
                     ctx.rollback();
                 }, TestUtils.defaultPerConfig(scope));
-                TestUtils.assertRolledBackIn1Attempt(transactions.config(), result, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertRolledBackIn1Attempt(transactions.config(), result, collection, scope.span(),
+                    cluster.environment().transcoder());
                 assertTrue(collection.get(docId).contentAs(JsonObject.class).containsKey("val"));
                 TestUtils.assertAtrEntryDocs(collection, result, null, null, Arrays.asList(docId),
-                        transactions.config(), span);
+                    transactions.config(), span);
                 assertEquals(1, result.mutationTokens().size());
                 checkLogRedactionIfEnabled(result, docId);
             }
@@ -1126,7 +1145,7 @@ public class StandardTest {
     public void logging() {
         try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope).logDirectly(Event.Severity.ERROR))) {
+                TestUtils.defaultConfig(scope).logDirectly(Event.Severity.ERROR))) {
                 String docId = TestUtils.docId(collection, 0);
                 collection.insert(docId, JsonObject.create().put("val", 1));
 
@@ -1172,7 +1191,8 @@ public class StandardTest {
 
                 assertNotNull(collection.get(docId));
                 assertTrue(collection.get(docId).contentAs(JsonObject.class).containsKey("val"));
-                TestUtils.assertRolledBackIn1Attempt(transactions.config(), r, collection, scope.span(), cluster.environment().transcoder());
+                TestUtils.assertRolledBackIn1Attempt(transactions.config(), r, collection, scope.span(),
+                    cluster.environment().transcoder());
                 checkLogRedactionIfEnabled(r, docId);
             }
         }
@@ -1207,7 +1227,7 @@ public class StandardTest {
     public void oneDeleteCommittedAsync() throws Exception {
         try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope))) {
+                TestUtils.defaultConfig(scope))) {
                 final String docId = TestUtils.docId(collection, 0);
                 AtomicBoolean called = new AtomicBoolean(false);
 
@@ -1218,7 +1238,7 @@ public class StandardTest {
                     called.set(true);
                     return collection.reactive().get(docId).flatMap(v -> {
                         return DocumentGetter.justGetDoc(collection.reactive(), transactions.config(), docId,
-                                TestUtils.from(scope), cluster.environment().transcoder());
+                            TestUtils.from(scope), cluster.environment().transcoder());
                     }).doOnNext(doc -> {
                         assertEquals("<<REMOVE>>", doc.get().links().stagedContent().get());
                     }).thenReturn(0);
@@ -1226,8 +1246,8 @@ public class StandardTest {
 
                 Mono<TransactionResult> result = transactions.reactive((ctx) -> {
                     return ctx.get(collection.reactive(), docId)
-                            .flatMap(doc -> ctx.remove(doc))
-                            .flatMap(ignore -> ctx.commit());
+                        .flatMap(doc -> ctx.remove(doc))
+                        .flatMap(ignore -> ctx.commit());
                 }, TestUtils.defaultPerConfig(scope));
 
                 TransactionResult r = result.block();
@@ -1244,7 +1264,7 @@ public class StandardTest {
         String docId = TestUtils.docId(collection, 0);
 
         collection.mutateIn(docId, Arrays.asList(MutateInSpec.upsert("foo", "bar").xattr()),
-                MutateInOptions.mutateInOptions().storeSemantics(StoreSemantics.INSERT));
+            MutateInOptions.mutateInOptions().storeSemantics(StoreSemantics.INSERT));
 
         LookupInResult result = collection.lookupIn(docId, Arrays.asList(LookupInSpec.get("foo").xattr()));
 
@@ -1339,7 +1359,7 @@ public class StandardTest {
                 collection.insert(docId, initial);
 
                 LookupInResult preTxnResult = collection.lookupIn(docId,
-                        Arrays.asList(LookupInSpec.get("$document").xattr()));
+                    Arrays.asList(LookupInSpec.get("$document").xattr()));
                 JsonObject preTxn = preTxnResult.contentAsObject(0);
 
 
@@ -1350,39 +1370,39 @@ public class StandardTest {
                     ctx.replace(doc, content);
 
                     LookupInResult r = collection
-                            .lookupIn(docId, Arrays.asList(
-                                    LookupInSpec.get(ATR_ID).xattr(),
-                                    LookupInSpec.get(TRANSACTION_ID).xattr(),
-                                    LookupInSpec.get(ATTEMPT_ID).xattr(),
-                                    LookupInSpec.get(STAGED_DATA).xattr(),
-                                    LookupInSpec.get(ATR_BUCKET_NAME).xattr(),
-                                    LookupInSpec.get(ATR_COLL_NAME).xattr(),
-                                    // For {BACKUP_FIELDS}
-                                    LookupInSpec.get(TRANSACTION_RESTORE_PREFIX_ONLY).xattr(),
-                                    LookupInSpec.get(TYPE).xattr(),
-                                    LookupInSpec.get("$document").xattr(),
-                                    LookupInSpec.get("")));
+                        .lookupIn(docId, Arrays.asList(
+                            LookupInSpec.get(ATR_ID).xattr(),
+                            LookupInSpec.get(TRANSACTION_ID).xattr(),
+                            LookupInSpec.get(ATTEMPT_ID).xattr(),
+                            LookupInSpec.get(STAGED_DATA).xattr(),
+                            LookupInSpec.get(ATR_BUCKET_NAME).xattr(),
+                            LookupInSpec.get(ATR_COLL_NAME).xattr(),
+                            // For {BACKUP_FIELDS}
+                            LookupInSpec.get(TRANSACTION_RESTORE_PREFIX_ONLY).xattr(),
+                            LookupInSpec.get(TYPE).xattr(),
+                            LookupInSpec.get("$document").xattr(),
+                            LookupInSpec.get("")));
 
                     LookupInResult r2 = collection
-                            .lookupIn(docId, Arrays.asList(
-                                    LookupInSpec.get("txn.dummy").xattr(),
-                                    LookupInSpec.get("txn").xattr(),
-                                    LookupInSpec.get("$document").xattr(),
-                                    LookupInSpec.get("")));
+                        .lookupIn(docId, Arrays.asList(
+                            LookupInSpec.get("txn.dummy").xattr(),
+                            LookupInSpec.get("txn").xattr(),
+                            LookupInSpec.get("$document").xattr(),
+                            LookupInSpec.get("")));
 
 
                     collection
-                            .lookupIn(docId, Arrays.asList(
-                                    LookupInSpec.get("txn.field1").xattr(),
-                                    LookupInSpec.get("txn.field2").xattr(),
-                                    LookupInSpec.get("$document").xattr(),
-                                    LookupInSpec.get("")));
+                        .lookupIn(docId, Arrays.asList(
+                            LookupInSpec.get("txn.field1").xattr(),
+                            LookupInSpec.get("txn.field2").xattr(),
+                            LookupInSpec.get("$document").xattr(),
+                            LookupInSpec.get("")));
 
                     assertTrue(1 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
 
                     TransactionGetResult docRaw = DocumentGetter.justGetDoc(collection.reactive(),
-                            transactions.config(),
-                            docId, TestUtils.from(scope), cluster.environment().transcoder()).block().get();
+                        transactions.config(),
+                        docId, TestUtils.from(scope), cluster.environment().transcoder()).block().get();
 
                     assertEquals(preTxn.getString("CAS"), docRaw.links().casPreTxn().get());
                     assertEquals(preTxn.getString("revid"), docRaw.links().revidPreTxn().get());
@@ -1404,7 +1424,7 @@ public class StandardTest {
                 collection.insert(docId, initial);
 
                 LookupInResult preTxnResult = collection.lookupIn(docId,
-                        Arrays.asList(LookupInSpec.get("$document").xattr()));
+                    Arrays.asList(LookupInSpec.get("$document").xattr()));
                 JsonObject preTxn = preTxnResult.contentAsObject(0);
 
                 TransactionResult result = transactions.run((ctx) -> {
@@ -1412,8 +1432,8 @@ public class StandardTest {
                     ctx.remove(doc);
 
                     TransactionGetResult docRaw = DocumentGetter.justGetDoc(collection.reactive(),
-                            transactions.config(),
-                            docId, TestUtils.from(scope), cluster.environment().transcoder()).block().get();
+                        transactions.config(),
+                        docId, TestUtils.from(scope), cluster.environment().transcoder()).block().get();
 
                     assertEquals(preTxn.getString("CAS"), docRaw.links().casPreTxn().get());
                     assertEquals(preTxn.getString("revid"), docRaw.links().revidPreTxn().get());
@@ -1436,8 +1456,8 @@ public class StandardTest {
             };
 
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope)
-                            .testFactories(new TestAttemptContextFactory(transactionMock1), null, null))) {
+                TestUtils.defaultConfig(scope)
+                    .testFactories(new TestAttemptContextFactory(transactionMock1), null, null))) {
 
                 // Create lost txn
                 try {
@@ -1445,8 +1465,8 @@ public class StandardTest {
                         ctx.insert(collection, docId, JsonObject.create().put("val", "TXN-1"));
                     });
                     fail();
+                } catch (TransactionFailed err) {
                 }
-                catch (TransactionFailed err) {}
             }
 
             TransactionMock transactionMock2 = new TransactionMock();
@@ -1454,17 +1474,18 @@ public class StandardTest {
             transactionMock2.beforeRemovingDocDuringStagedInsert = (ctx, id) -> {
                 if (count.incrementAndGet() <= 1) {
                     return Mono.error(new TemporaryFailureException(null));
+                } else {
+                    return Mono.just(1);
                 }
-                else return Mono.just(1);
             };
 
             // Fake that the lost txn has been cleaned up by removing the ATR entry
             TestUtils.cleanupBefore(collection);
 
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope)
-                            // .logDirectly(Event.Severity.VERBOSE)
-                            .testFactories(new TestAttemptContextFactory(transactionMock2), null, null))) {
+                TestUtils.defaultConfig(scope)
+                    // .logDirectly(Event.Severity.VERBOSE)
+                    .testFactories(new TestAttemptContextFactory(transactionMock2), null, null))) {
 
                 transactions.run((ctx) -> {
                     ctx.insert(collection, docId, JsonObject.create().put("val", "TXN-1"));
@@ -1487,8 +1508,8 @@ public class StandardTest {
             };
 
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope)
-                            .testFactories(new TestAttemptContextFactory(transactionMock1), null, null))) {
+                TestUtils.defaultConfig(scope)
+                    .testFactories(new TestAttemptContextFactory(transactionMock1), null, null))) {
 
                 // Create lost txn
                 try {
@@ -1496,8 +1517,8 @@ public class StandardTest {
                         ctx.insert(collection, docId, JsonObject.create().put("val", "TXN-1"));
                     });
                     fail();
+                } catch (TransactionFailed err) {
                 }
-                catch (TransactionFailed err) {}
             }
 
             TransactionMock transactionMock2 = new TransactionMock();
@@ -1505,17 +1526,18 @@ public class StandardTest {
             transactionMock2.beforeRemovingDocDuringStagedInsert = (ctx, id) -> {
                 if (count.incrementAndGet() <= 5) {
                     return Mono.error(new TemporaryFailureException(null));
+                } else {
+                    return Mono.just(1);
                 }
-                else return Mono.just(1);
             };
 
             // Fake that the lost txn has been cleaned up by removing the ATR entry
             TestUtils.cleanupBefore(collection);
 
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope)
-                            // .logDirectly(Event.Severity.VERBOSE)
-                            .testFactories(new TestAttemptContextFactory(transactionMock2), null, null))) {
+                TestUtils.defaultConfig(scope)
+                    // .logDirectly(Event.Severity.VERBOSE)
+                    .testFactories(new TestAttemptContextFactory(transactionMock2), null, null))) {
 
                 transactions.run((ctx) -> {
                     ctx.insert(collection, docId, JsonObject.create().put("val", "TXN-1"));
@@ -1538,8 +1560,8 @@ public class StandardTest {
             };
 
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope)
-                            .testFactories(new TestAttemptContextFactory(transactionMock1), null, null))) {
+                TestUtils.defaultConfig(scope)
+                    .testFactories(new TestAttemptContextFactory(transactionMock1), null, null))) {
 
                 // Create lost txn
                 try {
@@ -1547,8 +1569,8 @@ public class StandardTest {
                         ctx.insert(collection, docId, JsonObject.create().put("val", "TXN-1"));
                     });
                     fail();
+                } catch (TransactionFailed err) {
                 }
-                catch (TransactionFailed err) {}
             }
 
             TransactionMock transactionMock2 = new TransactionMock();
@@ -1556,17 +1578,18 @@ public class StandardTest {
             transactionMock2.beforeGetDocInExistsDuringStagedInsert = (ctx, id) -> {
                 if (count.incrementAndGet() <= 1) {
                     return Mono.error(new TemporaryFailureException(null));
+                } else {
+                    return Mono.just(1);
                 }
-                else return Mono.just(1);
             };
 
             // Fake that the lost txn has been cleaned up by removing the ATR entry
             TestUtils.cleanupBefore(collection);
 
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope)
-                            // .logDirectly(Event.Severity.VERBOSE)
-                            .testFactories(new TestAttemptContextFactory(transactionMock2), null, null))) {
+                TestUtils.defaultConfig(scope)
+                    // .logDirectly(Event.Severity.VERBOSE)
+                    .testFactories(new TestAttemptContextFactory(transactionMock2), null, null))) {
 
                 transactions.run((ctx) -> {
                     ctx.insert(collection, docId, JsonObject.create().put("val", "TXN-1"));
@@ -1589,8 +1612,8 @@ public class StandardTest {
             };
 
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope)
-                            .testFactories(new TestAttemptContextFactory(transactionMock1), null, null))) {
+                TestUtils.defaultConfig(scope)
+                    .testFactories(new TestAttemptContextFactory(transactionMock1), null, null))) {
 
                 // Create lost txn
                 try {
@@ -1598,8 +1621,8 @@ public class StandardTest {
                         ctx.insert(collection, docId, JsonObject.create().put("val", "TXN-1"));
                     });
                     fail();
+                } catch (TransactionFailed err) {
                 }
-                catch (TransactionFailed err) {}
             }
 
             TransactionMock transactionMock2 = new TransactionMock();
@@ -1607,17 +1630,18 @@ public class StandardTest {
             transactionMock2.beforeGetDocInExistsDuringStagedInsert = (ctx, id) -> {
                 if (count.incrementAndGet() <= 5) {
                     return Mono.error(new TemporaryFailureException(null));
+                } else {
+                    return Mono.just(1);
                 }
-                else return Mono.just(1);
             };
 
             // Fake that the lost txn has been cleaned up by removing the ATR entry
             TestUtils.cleanupBefore(collection);
 
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope)
-                            // .logDirectly(Event.Severity.VERBOSE)
-                            .testFactories(new TestAttemptContextFactory(transactionMock2), null, null))) {
+                TestUtils.defaultConfig(scope)
+                    // .logDirectly(Event.Severity.VERBOSE)
+                    .testFactories(new TestAttemptContextFactory(transactionMock2), null, null))) {
 
                 transactions.run((ctx) -> {
                     ctx.insert(collection, docId, JsonObject.create().put("val", "TXN-1"));
@@ -1639,8 +1663,8 @@ public class StandardTest {
             };
 
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope)
-                            .testFactories(new TestAttemptContextFactory(transactionMock1), null, null))) {
+                TestUtils.defaultConfig(scope)
+                    .testFactories(new TestAttemptContextFactory(transactionMock1), null, null))) {
 
                 // Create lost txn
                 try {
@@ -1648,8 +1672,8 @@ public class StandardTest {
                         ctx.insert(collection, docId, JsonObject.create().put("val", "TXN-1"));
                     });
                     fail();
+                } catch (TransactionFailed err) {
                 }
-                catch (TransactionFailed err) {}
             }
 
             TransactionMock transactionMock2 = new TransactionMock();
@@ -1657,23 +1681,24 @@ public class StandardTest {
             transactionMock2.beforeCheckATREntryForBlockingDoc = (ctx, id) -> {
                 if (count.incrementAndGet() <= 1) {
                     return Mono.error(new TemporaryFailureException(null));
+                } else {
+                    return Mono.just(1);
                 }
-                else return Mono.just(1);
             };
 
             // Fake that the lost txn has been cleaned up by removing the ATR entry
             TestUtils.cleanupBefore(collection);
 
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope)
-                            // .logDirectly(Event.Severity.VERBOSE)
-                            .testFactories(new TestAttemptContextFactory(transactionMock2), null, null))) {
+                TestUtils.defaultConfig(scope)
+                    // .logDirectly(Event.Severity.VERBOSE)
+                    .testFactories(new TestAttemptContextFactory(transactionMock2), null, null))) {
 
                 TransactionResult result = transactions.run((ctx) -> {
                     ctx.insert(collection, docId, JsonObject.create().put("val", "TXN-1"));
                 });
 
-                assertTrue(1==1);
+                assertTrue(1 == 1);
             }
 
             assertTrue(count.get() > 0);
@@ -1691,8 +1716,8 @@ public class StandardTest {
             };
 
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope)
-                            .testFactories(new TestAttemptContextFactory(transactionMock1), null, null))) {
+                TestUtils.defaultConfig(scope)
+                    .testFactories(new TestAttemptContextFactory(transactionMock1), null, null))) {
 
                 // Create lost txn
                 try {
@@ -1700,8 +1725,8 @@ public class StandardTest {
                         ctx.insert(collection, docId, JsonObject.create().put("val", "TXN-1"));
                     });
                     fail();
+                } catch (TransactionFailed err) {
                 }
-                catch (TransactionFailed err) {}
             }
 
             TransactionMock transactionMock2 = new TransactionMock();
@@ -1709,17 +1734,18 @@ public class StandardTest {
             transactionMock2.beforeCheckATREntryForBlockingDoc = (ctx, id) -> {
                 if (count.incrementAndGet() <= 5) {
                     return Mono.error(new TemporaryFailureException(null));
+                } else {
+                    return Mono.just(1);
                 }
-                else return Mono.just(1);
             };
 
             // Fake that the lost txn has been cleaned up by removing the ATR entry
             TestUtils.cleanupBefore(collection);
 
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope)
-                            // .logDirectly(Event.Severity.VERBOSE)
-                            .testFactories(new TestAttemptContextFactory(transactionMock2), null, null))) {
+                TestUtils.defaultConfig(scope)
+                    // .logDirectly(Event.Severity.VERBOSE)
+                    .testFactories(new TestAttemptContextFactory(transactionMock2), null, null))) {
 
                 TransactionResult result = transactions.run((ctx) -> {
                     ctx.insert(collection, docId, JsonObject.create().put("val", "TXN-1"));
@@ -1741,16 +1767,17 @@ public class StandardTest {
             transactionMock2.beforeDocGet = (ctx, id) -> {
                 if (count.incrementAndGet() <= 5) {
                     return Mono.error(new TemporaryFailureException(null));
+                } else {
+                    return Mono.just(1);
                 }
-                else return Mono.just(1);
             };
 
             collection.upsert(docId, JsonObject.create().put("val", "INITIAL"));
 
             try (Transactions transactions = Transactions.create(cluster,
-                    TestUtils.defaultConfig(scope)
-                            // .logDirectly(Event.Severity.VERBOSE)
-                            .testFactories(new TestAttemptContextFactory(transactionMock2), null, null))) {
+                TestUtils.defaultConfig(scope)
+                    // .logDirectly(Event.Severity.VERBOSE)
+                    .testFactories(new TestAttemptContextFactory(transactionMock2), null, null))) {
 
                 TransactionResult result = transactions.run((ctx) -> {
                     ctx.getOptional(collection, docId);
@@ -1767,7 +1794,7 @@ public class StandardTest {
             try (Transactions transactions = Transactions.create(cluster, TestUtils.defaultConfig(scope))) {
 
                 TransactionResult result = transactions.run((ctx) -> {
-                    for (int i = 0; i < 10; i ++) {
+                    for (int i = 0; i < 10; i++) {
                         String docId = TestUtils.docId(collection, i);
                         JsonObject initial = JsonObject.create().put("val", 1);
                         ctx.insert(collection, docId, initial);
