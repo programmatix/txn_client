@@ -107,7 +107,7 @@ public class TransactionFactoryWrapper implements AutoCloseable {
      */
     public TxnClient.TransactionGenericResponse rollback() {
         TxnClient.TransactionGenericResponse response =
-            stub.transactionCommit(TxnClient.TransactionGenericRequest.newBuilder()
+            stub.transactionRollback(TxnClient.TransactionGenericRequest.newBuilder()
                 .setTransactionRef(transactionRef())
                 .build());
 

@@ -44,6 +44,22 @@ public class DocValidator {
         assertEquals(0, get.contentAsObject().size());
     }
 
+    public static void assertReplacedDocIsStaged(Collection collection,
+                                                 String docId) {
+        // TODO check all metadata is in expected format
+        GetResult get = collection.get(docId);
+    }
+
+    public static void assertReplacedDocIsStagedAndContentEquals(Collection collection,
+                                                 String docId,
+                                                 JsonObject contentInBody,
+                                                 JsonObject  contentStaged) {
+        // TODO check all metadata is in expected format
+        GetResult get = collection.get(docId);
+        JsonObject fetchedContent = get.contentAsObject();
+        assertEquals(fetchedContent, contentInBody);
+    }
+
     public static GetResult assertDocExistsAndNotInTransaction(Collection collection,
                                                           String docId) {
         // TODO check all metadata is in expected format
