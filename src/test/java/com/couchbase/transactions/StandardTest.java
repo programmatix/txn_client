@@ -406,8 +406,8 @@ public class StandardTest {
 
             TxnClient.TransactionResultObject result = wrap.commitAndClose();
 
-            ResultValidator.dumpLogs(result);
             ResultValidator.assertCompletedInSingleAttempt(collection, result);
+            DocValidator.assertDocExistsAndNotInTransactionAndContentEquals(collection, docId, docContent);
         }
     }
 //
@@ -427,239 +427,61 @@ public class StandardTest {
 //            transactions.close();
 //        }
 //    }
-//
-//    //    @Disabled
-//    //    @Test
-//    //    public void loop() {
-//    //        try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
-//    //            try (Transactions transactions = Transactions.create(cluster, TransactionConfigBuilder.create()
-//    //            .replicateTo(ReplicateTo.NONE).build())) {
-//    //                String docId = TestUtils.docId(collection, 0);
-//    //                JsonObject initial = JsonObject.create().put("val", 1);
-//    //
-//    //                while (true) {
-//    //                    try {
-//    //                        TransactionResult result = transactions.run((ctx) -> {
-//    //                            ctx.insert(collection, docId, initial);
-//    //                            ctx.get(collection, docId);
-//    //                            ctx.get(collection, docId);
-//    //                            TransactionGetResult doc = ctx.get(collection, docId).get();
-//    //                            ctx.remove(doc);
-//    //                            ctx.commit();
-//    //                        }, TestUtils.defaultPerConfig(scope));
-//    //                    } catch (TransactionFailed err) {
-//    //                        fail();
-//    //                    }
-//    //                }
-//    //            }
-//    //        }
-//    //    }
-//    //
-//    //    @Disabled
-//    //    @Test
-//    //    public void runJunk() {
-//    //        Transactions transactions = Transactions.create(cluster, TransactionConfigBuilder.create()
-//    //                .replicateTo(ReplicateTo.NONE)
-//    ////                .logDirectly(Event.Severity.INFO)
-//    //                .build());
-//    //
-//    //        collection.upsert("anotherDoc", JsonObject.create().put("foo", "bar")));
-//    //        String docId = TestUtils.docId(collection, 0);
-//    //        collection.upsert(docId, JsonObject.create().put("foo", "bar")));
-//    //
-//    //        for (int i = 0; i < 1000000; i++) {
-//    //            try {
-//    //                transactions.run((ctx) -> {
-//    //                    // Inserting a doc:
-//    ////                    JsonDocument toInsert = testName, JsonObject.create().));
-//    ////                    ctx.insert(collection, toInsert);
-//    //
-//    //                    // Getting documents:
-//    //                    Optional<TransactionGetResult> docOpt = ctx.get(collection, docId);
-//    //                    TransactionGetResult doc = ctx.get(collection, docId);
-//    //
-//    //                    // Replacing a doc:
-//    //                    TransactionGetResult anotherDoc = ctx.get(collection, "anotherDoc");
-//    //                    anotherJsonObject content = doc.contentAs(JsonObject.class);
-//    //content.put("transactions", "are awesome");
-//    //                    ctx.replace(anotherDoc);
-//    //
-//    //                    // Removing a doc:
-//    //                    Optional<TransactionGetResult> yetAnotherDoc = ctx.get(collection, "yetAnotherDoc");
-//    //                    if (yetAnotherDoc.isPresent()) {
-//    //                        ctx.remove(yetAnotherDoc.get());
-//    //                    }
-//    //
-//    //                    ctx.commit();
-//    //                }, TestUtils.defaultPerConfig(null));
-//    //            }
-//    //            catch (TransactionFailed e) {
-//    //                System.err.println("Transaction failed iteration " + i + ": " + e.getMessage());
-//    //                for (LogDefer err: e.result().log().logs()) {
-//    //                    System.err.println("Transaction failure: " + err);
-//    //                }
-//    //                break;
-//    //            }
-//    //        }
-//    //    }
-//    //
-//
+
+    @Test
+    public void oneInsertRolledBack() {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+            String docId = TestUtils.docId(collection, 0);
+            JsonObject docContent = JsonObject.create().put(Strings.CONTENT_NAME, Strings.DEFAULT_CONTENT_VALUE);
+
+            wrap.insert(docId, docContent.toString());
+            TxnClient.TransactionResultObject result = wrap.rollbackAndClose();
+
+            ResultValidator.assertCompletedInSingleAttempt(collection, result);
+        }
+    }
+
+    @Test
+    public void twoInsertsCommitted() {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+            String docId = TestUtils.docId(collection, 0);
+            String docId2 = TestUtils.docId(collection, 1);
+            JsonObject docContent1 = JsonObject.create().put(Strings.CONTENT_NAME, 1);
+            JsonObject docContent2 = JsonObject.create().put(Strings.CONTENT_NAME, 2);
+
+            wrap.insert(docId, docContent1.toString());
+            wrap.insert(docId2, docContent2.toString());
+
+            DocValidator.assertInsertedDocIsStaged(collection, docId);
+            DocValidator.assertInsertedDocIsStaged(collection, docId2);
+
+            TxnClient.TransactionResultObject result = wrap.commitAndClose();
+
+            ResultValidator.assertCompletedInSingleAttempt(collection, result);
+            DocValidator.assertDocExistsAndNotInTransactionAndContentEquals(collection, docId, docContent1);
+            DocValidator.assertDocExistsAndNotInTransactionAndContentEquals(collection, docId2, docContent2);
+        }
+    }
+
 //    @Test
-//    public void oneInsertCommittedAsync() {
-//        try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
-//            try (Transactions transactions = Transactions.create(cluster, TestUtils.defaultConfig(scope))) {
-//                String docId = TestUtils.docId(collection, 0);
-//                JsonObject initial = JsonObject.create().put("val", 1);
+//    public void oneReplaceCommitted() {
+//        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+//            String docId = TestUtils.docId(collection, 0);
+//            JsonObject docContent = JsonObject.create().put(Strings.CONTENT_NAME, 1);
 //
-//                Mono<TransactionResult> result = transactions.reactive((ctx) -> {
-//                    return ctx.insert(collection.reactive(), docId, initial).flatMap(ignore -> {
-//                        return collection.reactive().get(docId);
-//                    }).doOnNext(d -> {
-//                        assertFalse(d.contentAs(JsonObject.class).containsKey("val"));
-//                    }).flatMap(ignore -> ctx.commit());
-//                }, TestUtils.defaultPerConfig(scope));
+//            wrap.insert(docId, docContent1.toString());
 //
-//                TransactionResult r = result.block();
+//            DocValidator.assertInsertedDocIsStaged(collection, docId);
+//            DocValidator.assertInsertedDocIsStaged(collection, docId2);
 //
-//                assertTrue(1 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
-//                TestUtils.assertCompletedIn1Attempt(transactions.config(), r, collection, scope.span(),
-//                    cluster.environment().transcoder());
-//                TestUtils.assertAtrEntryDocs(collection, r, Arrays.asList(docId), null, null, transactions.config(),
-//                    scope.span());
-//                assertEquals(1, r.mutationTokens().size());
-//                checkLogRedactionIfEnabled(r, docId);
-//            }
+//            TxnClient.TransactionResultObject result = wrap.commitAndClose();
+//
+//            ResultValidator.assertCompletedInSingleAttempt(collection, result);
+//            DocValidator.assertDocExistsAndNotInTransactionAndContentEquals(collection, docId, docContent);
 //        }
 //    }
-//
-//
-//    @Test
-//    public void docXattrsEmptyAfterTxn() {
-//        try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
-//            try (Transactions transactions = Transactions.create(cluster, TestUtils.defaultConfig(scope))) {
-//                String docId = TestUtils.docId(collection, 0);
-//                JsonObject initial = JsonObject.create().put("val", 1);
-//
-//                Mono<TransactionResult> result = transactions.reactive((ctx) -> {
-//                    return ctx.insert(collection.reactive(), docId, initial).flatMap(ignore -> ctx.commit());
-//                }, TestUtils.defaultPerConfig(scope));
-//                TransactionResult r = result.block();
-//
-//                assertEquals(1, TestUtils.numAtrs(collection, transactions.config(), span));
-//                TransactionGetResult doc = DocumentGetter.justGetDoc(collection.reactive(), transactions.config(),
-//                    docId, TestUtils.from(scope), cluster.environment().transcoder()).block().get();
-//                assertFalse(doc.links().atrId().isPresent());
-//                assertFalse(doc.links().stagedAttemptId().isPresent());
-//                assertFalse(doc.links().stagedContent().isPresent());
-//                assertFalse(doc.links().isDocumentInTransaction());
-//                checkLogRedactionIfEnabled(r, docId);
-//            }
-//        }
-//    }
-//
-//    @Test
-//    public void oneInsertRolledBack() {
-//        try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
-//            try (Transactions transactions = Transactions.create(cluster, TestUtils.defaultConfig(scope))) {
-//                String docId = TestUtils.docId(collection, 0);
-//                JsonObject initial = JsonObject.create().put("val", 1);
-//
-//                TransactionResult result = transactions.run((ctx) -> {
-//                    ctx.insert(collection, docId, initial);
-//
-//                    assertFalse(collection.get(docId).contentAs(JsonObject.class).containsKey("val"));
-//
-//                    ctx.rollback();
-//                }, TestUtils.defaultPerConfig(scope));
-//                assertThrows(DocumentNotFoundException.class, () -> collection.get(docId));
-//                TestUtils.assertRolledBackIn1Attempt(transactions.config(), result, collection, scope.span(),
-//                    cluster.environment().transcoder());
-//                TestUtils.assertAtrEntryDocs(collection, result, Arrays.asList(docId), null, null,
-//                    transactions.config(), span);
-//                assertEquals(1, result.mutationTokens().size());
-//                checkLogRedactionIfEnabled(result, docId);
-//            }
-//        }
-//    }
-//
-//    @Test
-//    public void oneInsertRolledBackAsync() {
-//        try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
-//            try (Transactions transactions = Transactions.create(cluster, TestUtils.defaultConfig(scope))) {
-//                String docId = TestUtils.docId(collection, 0);
-//                JsonObject initial = JsonObject.create().put("val", 1);
-//
-//                Mono<TransactionResult> result = transactions.reactive((ctx) -> {
-//                    return ctx.insert(collection.reactive(), docId, initial).flatMap(ignore -> {
-//                        return ctx.rollback();
-//                    });
-//                }, TestUtils.defaultPerConfig(scope));
-//
-//                TransactionResult r = result.block();
-//                assertThrows(DocumentNotFoundException.class, () -> collection.get(docId));
-//                TestUtils.assertRolledBackIn1Attempt(transactions.config(), r, collection, scope.span(),
-//                    cluster.environment().transcoder());
-//                checkLogRedactionIfEnabled(r, docId);
-//            }
-//        }
-//    }
-//
-//    @Test
-//    public void twoInsertsCommitted() {
-//        try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
-//            try (Transactions transactions = Transactions.create(cluster, TestUtils.defaultConfig(scope))) {
-//                String docId = TestUtils.docId(collection, 0);
-//                String docId2 = TestUtils.docId(collection, 1);
-//                JsonObject initial = JsonObject.create().put("val", 1);
-//                JsonObject initial2 = JsonObject.create().put("val", 2);
-//
-//                TransactionResult result = transactions.run((ctx) -> {
-//                    ctx.insert(collection, docId, initial);
-//                    ctx.insert(collection, docId2, initial2);
-//
-//                    ctx.commit();
-//                }, TestUtils.defaultPerConfig(scope));
-//                assertTrue(1 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
-//                assertTrue(2 == collection.get(docId2).contentAs(JsonObject.class).getInt("val"));
-//                TestUtils.assertCompletedIn1Attempt(transactions.config(), result, collection, scope.span(),
-//                    cluster.environment().transcoder());
-//                TestUtils.assertAtrEntryDocs(collection, result, Arrays.asList(docId, docId2), null, null,
-//                    transactions.config(), span);
-//                assertEquals(2, result.mutationTokens().size());
-//                checkLogRedactionIfEnabled(result, docId);
-//            }
-//        }
-//    }
-//
-//    @Test
-//    public void twoInsertsCommittedAsync() {
-//        try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
-//            try (Transactions transactions = Transactions.create(cluster, TestUtils.defaultConfig(scope))) {
-//                String docId = TestUtils.docId(collection, 0);
-//                String docId2 = TestUtils.docId(collection, 1);
-//                JsonObject initial = JsonObject.create().put("val", 1);
-//                JsonObject initial2 = JsonObject.create().put("val", 2);
-//
-//                Mono<TransactionResult> result = transactions.reactive((ctx) -> {
-//                    return ctx.insert(collection.reactive(), docId, initial).flatMap(ignore -> ctx.insert(collection.reactive(), docId2, initial2)).flatMap(ignore -> ctx.commit());
-//                }, TestUtils.defaultPerConfig(scope));
-//
-//                TransactionResult r = result.block();
-//                TestUtils.assertCompletedIn1Attempt(transactions.config(), r, collection, scope.span(),
-//                    cluster.environment().transcoder());
-//                assertTrue(1 == collection.get(docId).contentAs(JsonObject.class).getInt("val"));
-//                assertTrue(2 == collection.get(docId2).contentAs(JsonObject.class).getInt("val"));
-//                checkLogRedactionIfEnabled(r, docId);
-//            }
-//        }
-//    }
-//
-//
-//    public static TransactionConfig createConfig() {
-//        return TransactionConfigBuilder.create().build();
-//    }
-//
-//    @Test
+
+    //    @Test
 //    public void oneUpdateCommitted() {
 //        try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
 //            try (Transactions transactions = Transactions.create(cluster, TestUtils.defaultConfig(scope))) {

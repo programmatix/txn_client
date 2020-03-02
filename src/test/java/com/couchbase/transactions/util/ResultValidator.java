@@ -45,15 +45,39 @@ public class ResultValidator {
      * done, expected number of mutation tokens returned...
      */
     public static void assertCompletedInSingleAttempt(Collection collection, TxnClient.TransactionResultObject result) {
+        ATREntry entry = assertSingleAttempt(collection, result, TxnClient.AttemptStates.COMPLETED);
+        ATRValidator.assertCompleted(collection, entry, entry.attemptId());
+    }
+
+    /**
+     * Expects a single attempt have been made, which the app requested be rolled back to ROLLED_BACK state.
+     * Verify everything possible about the transaction: all docs should be in expected state, log redaction should be
+     * done, expected number of mutation tokens returned...
+     */
+    public static void assertRolledBackInSingleAttempt(Collection collection, TxnClient.TransactionResultObject result) {
+        ATREntry entry = assertSingleAttempt(collection, result, TxnClient.AttemptStates.ROLLED_BACK);
+        ATRValidator.assertRolledBack(collection, entry, entry.attemptId());
+    }
+
+    private static ATREntry assertSingleAttempt(Collection collection,
+                                                TxnClient.TransactionResultObject result,
+                                                TxnClient.AttemptStates state) {
         assertEquals(1, result.getAttemptsCount());
         TxnClient.TransactionAttempt attempt = result.getAttempts(0);
-        Assert.assertEquals(TxnClient.AttemptStates.COMPLETED, attempt.getState());
-        ATREntry entry = ATRValidator.assertCompleted(collection, attempt.getAttemptId());
+        Assert.assertEquals(state, attempt.getState());
+        ATREntry entry = ATRValidator.findAtrEntryForAttempt(collection, attempt.getAttemptId());
+        assertMutationTokensCount(result, entry);
+        assertLogRedaction(result, entry);
+        return entry;
+    }
 
+    private static void assertMutationTokensCount(TxnClient.TransactionResultObject result, ATREntry entry) {
         int mutatedDocs =
             entry.insertedIds().get().size() + entry.removedIds().get().size() + entry.replacedIds().get().size();
         ResultValidator.assertMutationTokensCount(result, mutatedDocs);
+    }
 
+    private static void assertLogRedaction(TxnClient.TransactionResultObject result, ATREntry entry) {
         entry.insertedIds().get().forEach(doc -> {
             assertLogRedaction(result.getLogList(), doc.id());
         });

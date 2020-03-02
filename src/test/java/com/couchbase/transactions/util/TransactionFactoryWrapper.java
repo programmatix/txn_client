@@ -73,9 +73,39 @@ public class TransactionFactoryWrapper implements AutoCloseable {
     }
 
     /**
+     * Tell the server to replace a document in this resumable transaction.
+     */
+    public TxnClient.TransactionGenericResponse replace(String docId, String content) {
+        TxnClient.TransactionGenericResponse response =
+            stub.transactionUpdate(TxnClient.TransactionUpdateRequest.newBuilder()
+                .setTransactionRef(transactionRef())
+                .setDocId(docId)
+                .setContentJson(content)
+                .build());
+
+        assertTrue(response.getSuccess());
+
+        return response;
+    }
+
+    /**
      * Tell the server to commit a resumable transaction.
      */
     public TxnClient.TransactionGenericResponse commit() {
+        TxnClient.TransactionGenericResponse response =
+            stub.transactionCommit(TxnClient.TransactionGenericRequest.newBuilder()
+                .setTransactionRef(transactionRef())
+                .build());
+
+        assertTrue(response.getSuccess());
+
+        return response;
+    }
+
+    /**
+     * Tell the server to rollback a resumable transaction.
+     */
+    public TxnClient.TransactionGenericResponse rollback() {
         TxnClient.TransactionGenericResponse response =
             stub.transactionCommit(TxnClient.TransactionGenericRequest.newBuilder()
                 .setTransactionRef(transactionRef())
@@ -95,6 +125,17 @@ public class TransactionFactoryWrapper implements AutoCloseable {
         return stub.transactionClose(TxnClient.TransactionGenericRequest.newBuilder()
                 .setTransactionRef(transactionRef())
                 .build());
+    }
+
+    /**
+     * Tell the server to rollback a resumable transaction, then close it.
+     */
+    public TxnClient.TransactionResultObject rollbackAndClose() {
+        rollback();
+
+        return stub.transactionClose(TxnClient.TransactionGenericRequest.newBuilder()
+            .setTransactionRef(transactionRef())
+            .build());
     }
 
     @Override

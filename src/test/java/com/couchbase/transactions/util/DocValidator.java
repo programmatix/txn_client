@@ -17,6 +17,7 @@ package com.couchbase.transactions.util;
 
 import com.couchbase.client.java.Collection;
 import com.couchbase.client.java.codec.Transcoder;
+import com.couchbase.client.java.json.JsonObject;
 import com.couchbase.client.java.kv.GetResult;
 import com.couchbase.grpc.protocol.TxnClient;
 import com.couchbase.transactions.TransactionGetResult;
@@ -43,11 +44,20 @@ public class DocValidator {
         assertEquals(0, get.contentAsObject().size());
     }
 
-    public static void assertDocIsCommitted(Collection collection,
-                                                 String docId) {
+    public static GetResult assertDocExistsAndNotInTransaction(Collection collection,
+                                                          String docId) {
         // TODO check all metadata is in expected format
         GetResult get = collection.get(docId);
         assertNotEquals(0, get.contentAsObject().size());
+        return get;
+    }
+
+    public static void assertDocExistsAndNotInTransactionAndContentEquals(Collection collection,
+                                                                               String docId,
+                                                                               JsonObject content) {
+        GetResult result = assertDocExistsAndNotInTransaction(collection, docId);
+        JsonObject fetchedContent = result.contentAsObject();
+        assertEquals(fetchedContent, content);
     }
 
     public static boolean isDocInTxn(Collection collection, String id) {
