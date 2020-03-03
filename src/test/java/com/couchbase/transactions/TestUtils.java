@@ -41,6 +41,7 @@ import org.junit.Assert;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.testcontainers.shaded.javax.ws.rs.DELETE;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -65,7 +66,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 
-
+/**
+ * Useful methods for testing.
+ *
+ * Most of these are relevant to the original Java transactions tests.  They are being slowly ported to ATRValidator
+ * and DocValidator.
+ */
 public class TestUtils {
     public static final Duration timeout = Duration.of(2500, ChronoUnit.MILLIS);
 
@@ -165,6 +171,7 @@ public class TestUtils {
                 .flatMapMany(v -> Flux.fromIterable(v.entries()));
     }
 
+    @Deprecated
     public static Flux<ATREntry> allAtrEntries(Collection collection, TransactionConfig config, Span span) {
         return Flux.fromIterable(Transactions.allAtrs(config.numAtrs()))
 
@@ -299,12 +306,14 @@ public class TestUtils {
         assertEquals(state, states.get(0));
     }
 
+    @Deprecated
     public static boolean isDocInTxn(Collection collection, String id, TransactionConfig config, SpanWrapper span, Transcoder transcoder) {
         TransactionGetResult doc = DocumentGetter.getAsync(collection.reactive(), config, id, null,
                 span, transcoder).block().get();
         return doc.links().isDocumentInTransaction();
     }
 
+    @Deprecated
     public static boolean isDocInTxn(Collection collection, String id, TransactionConfig config, Span span, Transcoder transcoder) {
         TransactionGetResult doc = DocumentGetter.getAsync(collection.reactive(), config, id, null,
                 from(span), transcoder).block().get();
@@ -332,7 +341,6 @@ public class TestUtils {
         return transactionMock;
     }
 
-    // Prefer TransactionMock now
     public static Transactions prepareTransactionContextMock(Transactions transactions,
                                                              Consumer<AttemptContextReactive> consumer) {
         Transactions spy = Mockito.spy(transactions);
@@ -351,19 +359,13 @@ public class TestUtils {
         return spy;
     }
 
-    public static void assertInsertedDocIsStaged(TxnClient.TransactionGenericResponse insert, String docId, Collection defaultCollection) {
-        assertTrue(insert.getSuccess());
-        GetResult get = defaultCollection.get(docId);
-        // TXNJ-125: inserted doc will be there, but should be empty
-        assertEquals(0, get.contentAsObject().size());
-    }
-
+    @Deprecated // prefer ATRValidator
     public static void assertCompleted(TransactionConfig config, TransactionResult result, Collection collection,
                                        Span span, Transcoder transcoder) {
         assertCompleted(config, result.attempts().get(result.attempts().size() - 1), collection, span, transcoder);
     }
 
-    //
+    @Deprecated // prefer ATRValidator
     public static void assertRolledBack(TransactionConfig config, TransactionResult result, Collection collection,
                                         Span span, Transcoder transcoder) {
         result.attempts().forEach(attempt -> assertRolledBack(config, attempt, collection, span, transcoder));
@@ -377,6 +379,7 @@ public class TestUtils {
         assertFalse(attempt.atrId().isPresent());
     }
 
+    @Deprecated // prefer ATRValidator
     public static void assertCompletedIn1Attempt(TransactionConfig config, TransactionResult result,
                                                  Collection collection, Span span, Transcoder transcoder) {
         assertEquals(1, result.attempts().size());
@@ -386,6 +389,7 @@ public class TestUtils {
         // ATREntry is checked in assertCompleted
     }
 
+    @Deprecated // prefer ATRValidator
     public static void assertRolledBackIn1Attempt(TransactionConfig config, TransactionResult result,
                                                   Collection collection, Span span, Transcoder transcoder) {
         assertEquals(1, result.attempts().size());
@@ -395,6 +399,7 @@ public class TestUtils {
         // ATREntry is checked in assertRolledBack
     }
 
+    @Deprecated // prefer ATRValidator
     public static void assertCompleted(TransactionConfig config, TransactionAttempt attempt, Collection collection,
                                        Span span, Transcoder transcoder) {
         Optional<ATREntry> entry = ActiveTransactionRecord.findEntryForTransaction(attempt, timeout, config,
@@ -414,6 +419,7 @@ public class TestUtils {
         });
     }
 
+    @Deprecated // prefer ATRValidator
     public static void assertRolledBack(TransactionConfig config, TransactionAttempt attempt, Collection collection,
                                         Span span, Transcoder transcoder) {
         Optional<ATREntry> entry = ActiveTransactionRecord.findEntryForTransaction(attempt, timeout, config,
@@ -756,4 +762,19 @@ public class TestUtils {
                 .forceATRCleanup(attempt.atrCollection().get(), attempt.atrId().get())
                 .block();
     }
+
+    public static TxnClient.TransactionsFactoryCreateRequest.Builder createDefaultTransactionsFactory() {
+        return TxnClient.TransactionsFactoryCreateRequest.newBuilder()
+
+            // Disable these threads so can run multiple Transactions (and hence hooks)
+            .setCleanupClientAttempts(false)
+            .setCleanupLostAttempts(false)
+
+            // This is default durability for txns library
+            .setDurability(TxnClient.Durability.MAJORITY)
+
+            // Plenty of time for manual debugging
+            .setExpirationSeconds(120);
+    }
+
 }

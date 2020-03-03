@@ -5,6 +5,8 @@ import com.couchbase.client.java.json.JsonObject;
 import com.couchbase.client.java.kv.GetResult;
 import com.couchbase.grpc.protocol.ResumableTransactionServiceGrpc;
 import com.couchbase.grpc.protocol.TxnClient;
+import com.couchbase.transactions.TestUtils;
+import com.couchbase.transactions.util.DocValidator;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.junit.jupiter.api.BeforeAll;
@@ -179,23 +181,10 @@ public class TransactionWorkloadTest {
     }
 
     private static TxnClient.TransactionsFactoryCreateRequest.Builder createDefaultTransactionsFactory() {
-        return TxnClient.TransactionsFactoryCreateRequest.newBuilder()
-
-            // Disable these threads so can run multiple Transactions (and hence hooks)
-            .setCleanupClientAttempts(false)
-            .setCleanupLostAttempts(false)
-
-            // This is default durability for txns library
-            .setDurability(TxnClient.Durability.MAJORITY)
-
-            // Plenty of time for manual debugging
-            .setExpirationSeconds(120);
+        return TestUtils.createDefaultTransactionsFactory();
     }
 
     private void assertInsertedDocIsStaged(TxnClient.TransactionGenericResponse insert, String docId) {
-        assertTrue(insert.getSuccess());
-        GetResult get = defaultCollection.get(docId);
-        // TXNJ-125: inserted doc will be there, but should be empty
-        assertEquals(0, get.contentAsObject().size());
+        DocValidator.assertInsertedDocIsStaged(defaultCollection, docId);
     }
 }

@@ -127,14 +127,21 @@ message TransactionGenericResponse {
     bool success = 1;
 }
 
+// TODO this likely isn't going to exist in the C++ client, need a different approach
+message TransactionAttempt {
+    AttemptStates state=1;
+    string attemptId=2;
+}
+
 message TransactionResultObject{
+    // TODO lets just return the mutation tokens
     int32 mutationTokensSize=1;
-    int32 txnAttemptsSize=2;
-    string attemptFinalState=3;
-    bool atrCollectionPresent=4;
-    bool atrIdPresent=5;
-    string exceptionName =6;
-    repeated string log=7;
+    repeated TransactionAttempt attempts=2;
+    string atrCollection=3;
+    string atrId=4;
+    // TODO need a more generic way to represent exceptions
+    string exceptionName =5;
+    repeated string log=6;
 }
 
 message conn_info {
