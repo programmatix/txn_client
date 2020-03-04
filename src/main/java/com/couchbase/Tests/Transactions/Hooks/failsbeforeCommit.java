@@ -41,10 +41,12 @@ public class failsbeforeCommit extends transactionTests {
     public void executeTests(){
         TxnClient.TransactionsFactoryCreateResponse factory =
                 txnstub.transactionsFactoryCreate(createDefaultTransactionsFactory("MAJORITY")
-                        .addHook(TxnClient.Hook.BEFORE_ATR_COMMIT)
-                        .addHookCondition(TxnClient.HookCondition.ALWAYS)
-                        .addHookErrorToRaise(TxnClient.HookErrorToRaise.FAIL_NO_ROLLBACK)
-                        .build());
+                    .addHook(TxnClient.Hook.newBuilder()
+                        .setHookPoint(TxnClient.HookPoint.BEFORE_ATR_COMMIT)
+                        .setHookCondition(TxnClient.HookCondition.ALWAYS)
+                        .setHookAction(TxnClient.HookAction.FAIL_NO_ROLLBACK)
+                        .build())
+                .build());
 
         assertTrue(factory.getSuccess());
 

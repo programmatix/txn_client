@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import static com.couchbase.grpc.protocol.TxnClient.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -54,8 +55,8 @@ public class TransactionWorkloadTest {
 
         cluster = Cluster.connect(CLUSTER_HOSTNAME, Strings.ADMIN_USER, Strings.PASSWORD);
         defaultCollection = cluster.bucket("default").defaultCollection();
-        TxnClient.conn_info  conn_create_req =
-                TxnClient.conn_info.newBuilder()
+        conn_info  conn_create_req =
+                conn_info.newBuilder()
                         .setHandleHostname(CLUSTER_HOSTNAME)
                         .setHandleBucket("default")
                         .setHandlePort(8091)
@@ -63,20 +64,20 @@ public class TransactionWorkloadTest {
                         .setHandlePassword(Strings.PASSWORD)
                         .setHandleAutofailoverMs(5)
                         .build();
-        TxnClient.APIResponse response = stub.createConn(conn_create_req);
+        APIResponse response = stub.createConn(conn_create_req);
 
     }
 
     @Test
     void simpleCommit() {
-        TxnClient.TransactionsFactoryCreateResponse factory =
+        TransactionsFactoryCreateResponse factory =
             stub.transactionsFactoryCreate(createDefaultTransactionsFactory()
                 .build());
 
         assertTrue(factory.getSuccess());
 
-        TxnClient.TransactionCreateResponse create =
-            stub.transactionCreate(TxnClient.TransactionCreateRequest.newBuilder()
+        TransactionCreateResponse create =
+            stub.transactionCreate(TransactionCreateRequest.newBuilder()
                 .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
                 .build());
 
@@ -84,28 +85,28 @@ public class TransactionWorkloadTest {
         String transactionRef = create.getTransactionRef();
 
 
-        TxnClient.TransactionGenericResponse commit =
-            stub.transactionCommit(TxnClient.TransactionGenericRequest.newBuilder()
+        TransactionGenericResponse commit =
+            stub.transactionCommit(TransactionGenericRequest.newBuilder()
                 .setTransactionRef(transactionRef)
                 .build());
 
         assertTrue(commit.getSuccess());
 
-        assertTrue(stub.transactionsFactoryClose(TxnClient.TransactionsFactoryCloseRequest.newBuilder()
+        assertTrue(stub.transactionsFactoryClose(TransactionsFactoryCloseRequest.newBuilder()
             .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
             .build()).getSuccess());
     }
 
     @Test
     void simpleInsert() {
-        TxnClient.TransactionsFactoryCreateResponse factory =
+        TransactionsFactoryCreateResponse factory =
             stub.transactionsFactoryCreate(createDefaultTransactionsFactory()
                 .build());
 
         assertTrue(factory.getSuccess());
 
-        TxnClient.TransactionCreateResponse create =
-            stub.transactionCreate(TxnClient.TransactionCreateRequest.newBuilder()
+        TransactionCreateResponse create =
+            stub.transactionCreate(TransactionCreateRequest.newBuilder()
                 .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
                 .build());
 
@@ -115,8 +116,8 @@ public class TransactionWorkloadTest {
         String docId = UUID.randomUUID().toString();
         JsonObject content = JsonObject.create().put("hello", "world");
 
-        TxnClient.TransactionGenericResponse insert =
-            stub.transactionInsert(TxnClient.TransactionInsertRequest.newBuilder()
+        TransactionGenericResponse insert =
+            stub.transactionInsert(TransactionInsertRequest.newBuilder()
                 .setTransactionRef(transactionRef)
                 .setDocId(docId)
                 .setContentJson(content.toString())
@@ -124,31 +125,33 @@ public class TransactionWorkloadTest {
 
         assertInsertedDocIsStaged(insert, docId);
 
-        TxnClient.TransactionGenericResponse commit =
-            stub.transactionCommit(TxnClient.TransactionGenericRequest.newBuilder()
+        TransactionGenericResponse commit =
+            stub.transactionCommit(TransactionGenericRequest.newBuilder()
                 .setTransactionRef(transactionRef)
                 .build());
 
         assertTrue(commit.getSuccess());
 
-        assertTrue(stub.transactionsFactoryClose(TxnClient.TransactionsFactoryCloseRequest.newBuilder()
+        assertTrue(stub.transactionsFactoryClose(TransactionsFactoryCloseRequest.newBuilder()
             .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
             .build()).getSuccess());
     }
 
     @Test
     void failsBeforeCommit() {
-        TxnClient.TransactionsFactoryCreateResponse factory =
+        TransactionsFactoryCreateResponse factory =
             stub.transactionsFactoryCreate(createDefaultTransactionsFactory()
-                .addHook(TxnClient.Hook.BEFORE_ATR_COMMIT)
-                .addHookCondition(TxnClient.HookCondition.ALWAYS)
-                .addHookErrorToRaise(TxnClient.HookErrorToRaise.FAIL_NO_ROLLBACK)
+                .addHook(Hook.newBuilder()
+                    .setHookPoint(HookPoint.BEFORE_ATR_COMMIT)
+                    .setHookCondition(HookCondition.ALWAYS)
+                    .setHookAction(HookAction.FAIL_NO_ROLLBACK)
+                    .build())
                 .build());
 
         assertTrue(factory.getSuccess());
 
-        TxnClient.TransactionCreateResponse create =
-            stub.transactionCreate(TxnClient.TransactionCreateRequest.newBuilder()
+        TransactionCreateResponse create =
+            stub.transactionCreate(TransactionCreateRequest.newBuilder()
                 .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
                 .build());
 
@@ -158,8 +161,8 @@ public class TransactionWorkloadTest {
         String docId = UUID.randomUUID().toString();
         JsonObject content = JsonObject.create().put("hello", "world");
 
-        TxnClient.TransactionGenericResponse insert =
-            stub.transactionInsert(TxnClient.TransactionInsertRequest.newBuilder()
+        TransactionGenericResponse insert =
+            stub.transactionInsert(TransactionInsertRequest.newBuilder()
                 .setTransactionRef(transactionRef)
                 .setDocId(docId)
                 .setContentJson(content.toString())
@@ -167,24 +170,24 @@ public class TransactionWorkloadTest {
 
         assertInsertedDocIsStaged(insert, docId);
 
-        TxnClient.TransactionGenericResponse commit =
-            stub.transactionCommit(TxnClient.TransactionGenericRequest.newBuilder()
+        TransactionGenericResponse commit =
+            stub.transactionCommit(TransactionGenericRequest.newBuilder()
                 .setTransactionRef(transactionRef)
                 .build());
 
         assertFalse(commit.getSuccess());
         assertInsertedDocIsStaged(insert, docId);
 
-        assertTrue(stub.transactionsFactoryClose(TxnClient.TransactionsFactoryCloseRequest.newBuilder()
+        assertTrue(stub.transactionsFactoryClose(TransactionsFactoryCloseRequest.newBuilder()
             .setTransactionsFactoryRef(factory.getTransactionsFactoryRef())
             .build()).getSuccess());
     }
 
-    private static TxnClient.TransactionsFactoryCreateRequest.Builder createDefaultTransactionsFactory() {
+    private static TransactionsFactoryCreateRequest.Builder createDefaultTransactionsFactory() {
         return TestUtils.createDefaultTransactionsFactory();
     }
 
-    private void assertInsertedDocIsStaged(TxnClient.TransactionGenericResponse insert, String docId) {
+    private void assertInsertedDocIsStaged(TransactionGenericResponse insert, String docId) {
         DocValidator.assertInsertedDocIsStaged(defaultCollection, docId);
     }
 }
