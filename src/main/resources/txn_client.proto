@@ -17,36 +17,74 @@ service ResumableTransactionService {
     rpc transactionCreate (TransactionCreateRequest) returns (TransactionCreateResponse);
 
     // Perform individual operations on a previously created transaction
-    rpc transactionEmpty (TransactionGenericRequest) returns (TransactionGenericResponse);
     rpc transactionInsert (TransactionInsertRequest) returns (TransactionGenericResponse);
     rpc transactionUpdate (TransactionUpdateRequest) returns (TransactionGenericResponse);
     rpc transactionDelete (TransactionDeleteRequest) returns (TransactionGenericResponse);
     rpc transactionCommit (TransactionGenericRequest) returns (TransactionGenericResponse);
     rpc transactionRollback (TransactionGenericRequest) returns (TransactionGenericResponse);
+
+    // Closing a transaction clears up any driver resources for it and returns the end result (success or failure)
     rpc transactionClose (TransactionGenericRequest) returns (TransactionResultObject);
+
+    rpc getTransactionState (TransactionGenericRequest) returns (TransactionState);
 }
 
-enum Hook {
+// Hooks allow injecting actions at specific points of the code.  Useful for error injection.
+message Hook {
+    // At which point in the code should the hook execute
+    HookPoint hookPoint = 1;
+
+    // What conditions activate the hook
+    HookCondition hookCondition = 2;
+    int32 hookConditionParam = 3;
+
+    // What should the hook do
+    HookAction hookAction = 4;
+
+    // Parameterise the hook's action - see HookAction for how these apply
+    string hookActionParam1 = 5;
+    string hookActionParam2 = 6;
+}
+
+enum HookPoint {
     BEFORE_ATR_COMMIT = 0;
+    AFTER_GET_COMPLETE = 1;
 }
 
 enum HookCondition {
     ALWAYS = 0;
-    ON_ATTEMPT = 1;
-    ON_ATTEMPT_LT_OR_EQ = 2;
+
+    // Tracks each call to the hook, and triggers it on a particular run.
+    // Set which run with hookConditionParam.
+    // Call count is 1-based indexing.
+    ON_CALL = 1;
 }
 
-enum HookErrorToRaise {
+enum HookAction {
     // Fail the transaction immediately, make no attempt to roll it back, app gets TransactionFailed exception
     // Txn will be left in PENDING or COMMIT state, wherever it reached
+    // Some real-world examples that would cause this:
+    // This is pretty hard (but not impossible) to see in real world.
+    // Application hard crashing.
     FAIL_NO_ROLLBACK = 0;
 
     // Fail the transaction, attempt to roll it back first, app gets TransactionFailed exception
     // Txn should end up in state ABORTED
+    // Some real-world examples that would cause this:
+    // Almost any exception.  Only a few cause the FAIL_RETRY logic below.
     FAIL_ROLLBACK = 1;
 
     // Fail this attempt of the transaction. The transaction will roll back this attempt and try again.
+    // Some real-world examples that would cause this:
+    // SDK returning TimeoutException as server repeatedly returning a TEMP_FAIL
     FAIL_RETRY = 2;
+
+    // Mutate the doc using a regular KV SET.
+    // hookActionParam1 - the doc's id is sent in hookActionParam1, in format
+    //                    "bucket-name/collection-name/doc-id". e.g.
+    //                    "my-bucket/_default/some-doc-id"
+    // hookActionParam2 - the JSON to write
+    MUTATE_DOC = 3;
 }
 
 enum AttemptStates {
@@ -70,15 +108,9 @@ message TransactionsFactoryCreateRequest {
 
     Durability durability = 1;
     int32 expirationSeconds = 2;
-
-    // Hooks
     repeated Hook hook = 3;
-    repeated HookCondition hookCondition = 4;
-    repeated int32 hookConditionParam = 5;
-    repeated HookErrorToRaise hookErrorToRaise = 6;
-
-    bool cleanupLostAttempts = 7;
-    bool cleanupClientAttempts = 8;
+    bool cleanupLostAttempts = 4;
+    bool cleanupClientAttempts = 5;
 }
 
 // Shuts down a previously created Transactions (factory)
@@ -95,22 +127,34 @@ message TransactionGenericRequest {
     string transactionRef = 1;
 }
 
+// Tracking what result the test expects helps us log more diagnostics when tests
+// aren't working as expected
+enum ExpectedResult {
+    // True if no exception thrown by the operation.
+    SUCCESS = 0;
+
+    // True if any exception at all thrown by this operation.
+    THROWS = 1;
+}
+
 message TransactionInsertRequest {
     string transactionRef = 1;
     string docId = 2;
     string contentJson = 3;
+    ExpectedResult expectedResult = 4;
 }
-
 
 message TransactionUpdateRequest {
     string transactionRef = 1;
     string docId = 2;
     string contentJson = 3;
+    ExpectedResult expectedResult = 4;
 }
 
 message TransactionDeleteRequest {
     string transactionRef = 1;
     string docId = 2;
+    ExpectedResult expectedResult = 3;
 }
 
 message TransactionsFactoryCreateResponse {
@@ -133,6 +177,8 @@ message TransactionAttempt {
     string attemptId=2;
 }
 
+// The result of closing a ResumableTransaction: whether the transaction succeeded, its logs,
+// any exception thrown...
 message TransactionResultObject{
     // TODO lets just return the mutation tokens
     int32 mutationTokensSize=1;
@@ -142,6 +188,11 @@ message TransactionResultObject{
     // TODO need a more generic way to represent exceptions
     string exceptionName =5;
     repeated string log=6;
+}
+
+// The current transient state of the ongoing transaction
+message TransactionState{
+    int32 attemptNumber=1;
 }
 
 message conn_info {
