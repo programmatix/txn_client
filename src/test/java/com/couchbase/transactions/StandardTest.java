@@ -9,139 +9,53 @@ package com.couchbase.transactions;
 
 import com.couchbase.Constants.Strings;
 import com.couchbase.Logging.LogUtil;
-import com.couchbase.client.core.cnc.Event;
 import com.couchbase.client.core.error.DocumentNotFoundException;
-import com.couchbase.client.core.error.TemporaryFailureException;
-import com.couchbase.client.core.logging.LogRedaction;
-import com.couchbase.client.core.logging.RedactionLevel;
 import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.manager.bucket.*;
 import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.Collection;
 import com.couchbase.client.java.json.JsonObject;
-import com.couchbase.client.java.kv.*;
 import com.couchbase.grpc.protocol.ResumableTransactionServiceGrpc;
 import com.couchbase.grpc.protocol.TxnClient;
-import com.couchbase.transactions.components.ATREntry;
-import com.couchbase.transactions.components.ActiveTransactionRecord;
 import com.couchbase.transactions.components.DocumentGetter;
-import com.couchbase.transactions.config.TransactionConfig;
-import com.couchbase.transactions.config.TransactionConfigBuilder;
-import com.couchbase.transactions.error.TransactionFailed;
-import com.couchbase.transactions.error.attempts.AttemptException;
-import com.couchbase.transactions.error.internal.AbortedAsRequestedNoRollbackNoCleanup;
 import com.couchbase.transactions.log.SimpleEventBusLogger;
-import com.couchbase.transactions.support.AttemptStates;
 import com.couchbase.transactions.tracing.TracingUtils;
 import com.couchbase.transactions.tracing.TracingWrapper;
-import com.couchbase.transactions.util.ATRValidator;
 import com.couchbase.transactions.util.DocValidator;
+import com.couchbase.transactions.util.SharedTestState;
+import com.couchbase.transactions.util.TransactionFactoryBuilder;
 import com.couchbase.transactions.util.ResultValidator;
-import com.couchbase.transactions.util.TestAttemptContextFactory;
 import com.couchbase.transactions.util.TransactionFactoryWrapper;
-import com.couchbase.transactions.util.TransactionMock;
-import com.couchbase.transactions.TestUtils;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.opentracing.Scope;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import reactor.core.publisher.Hooks;
 import reactor.core.publisher.Mono;
 
-import java.lang.reflect.InvocationTargetException;
-import java.time.Duration;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.couchbase.Constants.Strings.INITIAL_CONTENT_VALUE;
 import static com.couchbase.Constants.Strings.UPDATED_CONTENT_VALUE;
-import static com.couchbase.transactions.support.TransactionFields.*;
+import static com.couchbase.grpc.protocol.TxnClient.*;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * All unit tests that don't go into a more specialised file.
  */
-
-
-//TODO Use Scope. For now ignoring this parameter
-// Enable creating and configuring a cluster
-
 public class StandardTest {
-    private static Cluster cluster;
-    private static Bucket bucket;
-    private static BucketManager bucketManager;
+    private static SharedTestState shared;
     private static Collection collection;
-    private static Tracer tracer;
-    private static TracingWrapper tracing;
-    private static Span span;
-    private static boolean clusterHasPartialLogRedactionEnabled = true;
-    private static SimpleEventBusLogger LOGGER;
-    private static AtomicInteger droppedErrors = new AtomicInteger(0);
-    private static String TXN_SERVER_HOSTNAME = "localhost";
-    // TODO make this generic
-        private static String CLUSTER_HOSTNAME = "172.23.105.55";
-   // private static String CLUSTER_HOSTNAME = "localhost";
-    private static int PORT = 8050;
-    static Logger logger;
-    private static ResumableTransactionServiceGrpc.ResumableTransactionServiceBlockingStub stub = null;
-
 
     @BeforeAll
     public static void beforeOnce() {
-        tracing = TracingUtils.getTracer();
-        tracer = tracing.tracer();
-        span = tracer.buildSpan("standard").ignoreActiveSpan().start();
-
-        cluster = Cluster.connect(CLUSTER_HOSTNAME, Strings.ADMIN_USER, Strings.PASSWORD);
-        bucket = cluster.bucket("default");
-        collection = bucket.defaultCollection();
-
-        /*
-        Map<String,String> map = new HashMap<String,String>();
-        map.put("flush","true");
-        bucketManager.updateBucket(new BucketSettings("default",map,null,0,false,0,null,null,null,null));
-         */
-
-        long now = System.currentTimeMillis();
-        bucketManager = cluster.buckets();
-
-        // bucketManager.flushBucket("default");
-
-        LogUtil.setLevelFromSpec("all:Info");
-        logger = LogUtil.getLogger(StandardTest.class);
-
-        Hooks.onErrorDropped(v -> {
-            logger.info("onError: " + v.getMessage());
-            droppedErrors.incrementAndGet();
-        });
+        shared = SharedTestState.create();
+        collection = shared.collection();
     }
-
-    @BeforeAll
-    static void beforeAll() {
-        // GRPC is used to connect to the server(s)
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(TXN_SERVER_HOSTNAME, PORT).usePlaintext().build();
-        stub = ResumableTransactionServiceGrpc.newBlockingStub(channel);
-
-        cluster = Cluster.connect(CLUSTER_HOSTNAME, Strings.ADMIN_USER, Strings.PASSWORD);
-        collection = cluster.bucket("default").defaultCollection();
-        TxnClient.conn_info conn_create_req =
-            TxnClient.conn_info.newBuilder()
-                .setHandleHostname(CLUSTER_HOSTNAME)
-                .setHandleBucket("default")
-                .setHandlePort(8091)
-                .setHandleUsername(Strings.ADMIN_USER)
-                .setHandlePassword(Strings.PASSWORD)
-                .setHandleAutofailoverMs(5)
-                .build();
-        TxnClient.APIResponse response = stub.createConn(conn_create_req);
-    }
-
 
     @BeforeEach
     public void beforeEach() {
@@ -152,27 +66,21 @@ public class StandardTest {
 
     @AfterEach
     public void afterEach() {
-        assertEquals(0, droppedErrors.get());
-        droppedErrors.set(0);
+        assertEquals(0, shared.droppedErrors().get());
+        shared.droppedErrors().set(0);
     }
 
     @AfterAll
     public static void afterOnce() {
-        span.finish();
-        tracing.close();
-        cluster.disconnect();
+        shared.close();
     }
-
-
-
-
 
 
     @Test
     public void createEmptyTransaction() {
-        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(shared)) {
             wrap.empty();
-            TxnClient.TransactionResultObject result = wrap.txnClose();
+            TransactionResultObject result = wrap.txnClose();
             ResultValidator.assertEmptyTxn(result, TxnClient.AttemptStates.COMPLETED);
         }
     }
@@ -180,9 +88,9 @@ public class StandardTest {
 
     @Test
     public void commitEmptyTransactionold() {
-        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(shared)) {
             wrap.empty();
-            TxnClient.TransactionResultObject result = wrap.commitAndClose();
+            TransactionResultObject result = wrap.commitAndClose();
             ResultValidator.assertEmptyTxn(result, TxnClient.AttemptStates.COMPLETED);
 
         }
@@ -191,35 +99,34 @@ public class StandardTest {
 
     @Test
     public void rollbackEmptyTransaction() {
-        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(shared)) {
             wrap.empty();
-            TxnClient.TransactionResultObject result = wrap.rollbackAndClose();
+            TransactionResultObject result = wrap.rollbackAndClose();
             ResultValidator.assertEmptyTxn(result, TxnClient.AttemptStates.ROLLED_BACK);
         }
     }
 
 
-
     @Disabled("disabling for now as hangs")
     @Test
     public void rollbackCommittedEmptyTransaction() {
-        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(shared)) {
             String docId = TestUtils.docId(collection, 0);
             JsonObject docContent = JsonObject.create().put(Strings.CONTENT_NAME, Strings.DEFAULT_CONTENT_VALUE);
 
             wrap.insert(docId, docContent.toString());
             wrap.commit();
-            TxnClient.TransactionResultObject result  = wrap.rollbackExpectingFailurendClose();
+            TransactionResultObject result = wrap.rollbackExpectingFailurendClose();
 
             //TODO attach codes rather than exception Names
             assertEquals(result.getExceptionName(), "com.couchbase.transactions.error.attempts.AttemptException");
-            ResultValidator.assertRolledBackInSingleAttempt(collection,result);
+            ResultValidator.assertRolledBackInSingleAttempt(collection, result);
         }
     }
 
     @Test
     public void oneInsertCommitted() {
-        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(shared)) {
             String docId = TestUtils.docId(collection, 0);
             JsonObject docContent = JsonObject.create().put(Strings.CONTENT_NAME, Strings.DEFAULT_CONTENT_VALUE);
 
@@ -227,7 +134,7 @@ public class StandardTest {
 
             DocValidator.assertInsertedDocIsStaged(collection, docId);
 
-            TxnClient.TransactionResultObject result = wrap.commitAndClose();
+            TransactionResultObject result = wrap.commitAndClose();
 
             ResultValidator.assertCompletedInSingleAttempt(collection, result);
             DocValidator.assertDocExistsAndNotInTransactionAndContentEquals(collection, docId, docContent);
@@ -253,12 +160,12 @@ public class StandardTest {
 
     @Test
     public void oneInsertRolledBack() {
-        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(shared)) {
             String docId = TestUtils.docId(collection, 0);
             JsonObject docContent = JsonObject.create().put(Strings.CONTENT_NAME, Strings.DEFAULT_CONTENT_VALUE);
 
             wrap.insert(docId, docContent.toString());
-            TxnClient.TransactionResultObject result = wrap.rollbackAndClose();
+            TransactionResultObject result = wrap.rollbackAndClose();
 
             ResultValidator.assertRolledBackInSingleAttempt(collection, result);
         }
@@ -266,7 +173,7 @@ public class StandardTest {
 
     @Test
     public void twoInsertsCommitted() {
-        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(shared)) {
             String docId = TestUtils.docId(collection, 0);
             String docId2 = TestUtils.docId(collection, 1);
             JsonObject docContent1 = JsonObject.create().put(Strings.CONTENT_NAME, 1);
@@ -278,7 +185,7 @@ public class StandardTest {
             DocValidator.assertInsertedDocIsStaged(collection, docId);
             DocValidator.assertInsertedDocIsStaged(collection, docId2);
 
-            TxnClient.TransactionResultObject result = wrap.commitAndClose();
+            TransactionResultObject result = wrap.commitAndClose();
 
             ResultValidator.assertCompletedInSingleAttempt(collection, result);
             DocValidator.assertDocExistsAndNotInTransactionAndContentEquals(collection, docId, docContent1);
@@ -293,12 +200,12 @@ public class StandardTest {
         JsonObject after = JsonObject.create().put(Strings.CONTENT_NAME, UPDATED_CONTENT_VALUE);
         collection.upsert(docId, initial);
 
-        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(shared)) {
             wrap.replace(docId, after.toString());
 
             DocValidator.assertReplacedDocIsStagedAndContentEquals(collection, docId, initial, after);
 
-            TxnClient.TransactionResultObject result = wrap.commitAndClose();
+            TransactionResultObject result = wrap.commitAndClose();
 
             ResultValidator.assertCompletedInSingleAttempt(collection, result);
             DocValidator.assertDocExistsAndNotInTransactionAndContentEquals(collection, docId, after);
@@ -310,12 +217,12 @@ public class StandardTest {
         String docId = TestUtils.docId(collection, 0);
         JsonObject initial = JsonObject.create().put(Strings.CONTENT_NAME, INITIAL_CONTENT_VALUE);
         collection.insert(docId, initial);
-        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(shared)) {
             wrap.remove(docId);
 
             DocValidator.assertDocExistsdAndContentEquals(collection, docId, initial);
 
-            TxnClient.TransactionResultObject result = wrap.commitAndClose();
+            TransactionResultObject result = wrap.commitAndClose();
 
             assertThrows(DocumentNotFoundException.class, () -> collection.get(docId));
             ResultValidator.assertCompletedInSingleAttempt(collection, result);
@@ -385,10 +292,10 @@ public class StandardTest {
         JsonObject after = JsonObject.create().put(Strings.CONTENT_NAME, UPDATED_CONTENT_VALUE);
         collection.upsert(docId, initial);
 
-        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(shared)) {
             wrap.replace(docId, after.toString());
 
-            TxnClient.TransactionResultObject result = wrap.rollbackAndClose();
+            TransactionResultObject result = wrap.rollbackAndClose();
 
             ResultValidator.assertRolledBackInSingleAttempt(collection, result);
             DocValidator.assertDocExistsAndNotInTransactionAndContentEquals(collection, docId, initial);
@@ -400,12 +307,12 @@ public class StandardTest {
         String docId = TestUtils.docId(collection, 0);
         JsonObject initial = JsonObject.create().put(Strings.CONTENT_NAME, INITIAL_CONTENT_VALUE);
         collection.insert(docId, initial);
-        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(shared)) {
             wrap.remove(docId);
 
             DocValidator.assertDocExistsdAndContentEquals(collection, docId, initial);
 
-            TxnClient.TransactionResultObject result = wrap.rollbackAndClose();
+            TransactionResultObject result = wrap.rollbackAndClose();
 
             DocValidator.assertDocExistsdAndContentEquals(collection, docId, initial);
             ResultValidator.assertRolledBackInSingleAttempt(collection, result);
@@ -514,14 +421,14 @@ public class StandardTest {
         collection.upsert(docId1, initial1);
         collection.upsert(docId2, initial2);
 
-        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(shared)) {
             wrap.replace(docId1, after1.toString());
             wrap.replace(docId2, after2.toString());
 
             DocValidator.assertReplacedDocIsStagedAndContentEquals(collection, docId1, initial1, after1);
             DocValidator.assertReplacedDocIsStagedAndContentEquals(collection, docId2, initial2, after2);
 
-            TxnClient.TransactionResultObject result = wrap.commitAndClose();
+            TransactionResultObject result = wrap.commitAndClose();
 
             ResultValidator.assertCompletedInSingleAttempt(collection, result);
             DocValidator.assertDocExistsAndNotInTransactionAndContentEquals(collection, docId1, after1);
@@ -540,11 +447,11 @@ public class StandardTest {
         collection.upsert(docId1, initial1);
         collection.upsert(docId2, initial2);
 
-        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(stub)) {
+        try (TransactionFactoryWrapper wrap = TransactionFactoryWrapper.create(shared)) {
             wrap.replace(docId1, after1.toString());
             wrap.replace(docId2, after2.toString());
 
-            TxnClient.TransactionResultObject result = wrap.rollbackAndClose();
+            TransactionResultObject result = wrap.rollbackAndClose();
 
             ResultValidator.assertRolledBackInSingleAttempt(collection, result);
             ResultValidator.dumpLogs(result);
@@ -553,38 +460,6 @@ public class StandardTest {
         }
     }
 
-
-
-
-
-//
-//    @Test
-//    public void oneDeleteRolledBack() {
-//        try (Scope scope = tracer.buildSpan(TestUtils.testName()).asChildOf(span).startActive(true)) {
-//            try (Transactions transactions = Transactions.create(cluster, TestUtils.defaultConfig(scope))) {
-//                String docId = TestUtils.docId(collection, 0);
-//                collection.insert(docId, JsonObject.create().put("val", 1));
-//
-//
-//                TransactionResult result = transactions.run((ctx) -> {
-//                    TransactionGetResult doc = ctx.getOptional(collection, docId).get();
-//
-//                    ctx.remove(doc);
-//
-//                    assertTrue(collection.get(docId).contentAs(JsonObject.class).containsKey("val"));
-//
-//                    ctx.rollback();
-//                }, TestUtils.defaultPerConfig(scope));
-//                TestUtils.assertRolledBackIn1Attempt(transactions.config(), result, collection, scope.span(),
-//                    cluster.environment().transcoder());
-//                assertTrue(collection.get(docId).contentAs(JsonObject.class).containsKey("val"));
-//                TestUtils.assertAtrEntryDocs(collection, result, null, null, Arrays.asList(docId),
-//                    transactions.config(), span);
-//                assertEquals(1, result.mutationTokens().size());
-//                checkLogRedactionIfEnabled(result, docId);
-//            }
-//        }
-//    }
 
     //
 //
@@ -1229,18 +1104,13 @@ public class StandardTest {
 //    }
 
 
-
     // TXNJ-33
     @Test
     public void createTwoTransactionsObjects() {
-        try  {
-            TransactionFactoryWrapper wrap1 = TransactionFactoryWrapper.create(stub);
-            TransactionFactoryWrapper wrap2 = TransactionFactoryWrapper.create(stub);
-            wrap1.commitAndClose();
-            wrap2.commitAndClose();
-        }catch (Exception e){
-            logger.error("Error during createTwoTransactionsObjects "+e);
-        }
+        TransactionFactoryWrapper wrap1 = TransactionFactoryWrapper.create(shared);
+        TransactionFactoryWrapper wrap2 = TransactionFactoryWrapper.create(shared);
+        wrap1.commitAndClose();
+        wrap2.commitAndClose();
     }
 
 
