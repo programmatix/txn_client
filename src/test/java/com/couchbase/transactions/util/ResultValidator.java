@@ -29,6 +29,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Utility methods to validate the results of a transaction.
@@ -60,6 +61,17 @@ public class ResultValidator {
     }
 
     /**
+     * Expects more than one attempt to have been made.
+     * Only one (the last) should have reached COMPLETED state.
+     * Verify everything possible about the transaction: all docs should be in expected state, log redaction should be
+     * done, expected number of mutation tokens returned...
+     */
+    public static void assertCompletedInMultipleAttempts(Collection collection, TxnClient.TransactionResultObject result) {
+        ATREntry entry = assertMultipleAttempts(collection, result, TxnClient.AttemptStates.COMPLETED);
+        ATRValidator.assertCompleted(collection, entry, entry.attemptId());
+    }
+
+    /**
      * Expects a single attempt have been made, which the app requested be rolled back to ROLLED_BACK state.
      * Verify everything possible about the transaction: all docs should be in expected state, log redaction should be
      * done, expected number of mutation tokens returned...
@@ -74,6 +86,19 @@ public class ResultValidator {
                                                 TxnClient.AttemptStates state) {
         assertEquals(1, result.getAttemptsCount());
         TxnClient.TransactionAttempt attempt = result.getAttempts(0);
+        return assertAttempt(collection, result, state, attempt);
+    }
+
+    private static ATREntry assertMultipleAttempts(Collection collection,
+                                                TxnClient.TransactionResultObject result,
+                                                TxnClient.AttemptStates state) {
+        assertTrue(result.getAttemptsCount() > 1);
+        TxnClient.TransactionAttempt attempt = result.getAttempts(result.getAttemptsCount() - 1);
+        return assertAttempt(collection, result, state, attempt);
+    }
+
+    private static ATREntry assertAttempt(Collection collection, TxnClient.TransactionResultObject result,
+                                          TxnClient.AttemptStates state, TxnClient.TransactionAttempt attempt) {
         Assert.assertEquals(state, attempt.getState());
         ATREntry entry = ATRValidator.findAtrEntryForAttempt(collection, attempt.getAttemptId());
         assertMutationTokensCount(result, entry);
@@ -115,5 +140,16 @@ public class ResultValidator {
             }
         });
 
+    }
+
+    /**
+     * Asserts transaction is in 'lost' (half-finished) state, and in PENDING.
+     *
+     * See [[LOST_PENDING]] in RFC - since the docs involved in the transaction have not been written to the ATR, there
+     * isn't much to check (or that can be done) with these.
+     */
+    public static void assertLostInPendingState(Collection collection, TxnClient.TransactionResultObject result) {
+        ATREntry entry = assertSingleAttempt(collection, result, TxnClient.AttemptStates.PENDING);
+        // Not much more we can do for PENDING transaction
     }
 }
