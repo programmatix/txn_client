@@ -20,6 +20,7 @@ import com.couchbase.grpc.protocol.ResumableTransactionServiceGrpc;
 import com.couchbase.grpc.protocol.TxnClient;
 import com.couchbase.transactions.TestUtils;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -57,6 +58,21 @@ public class TransactionFactoryWrapper implements AutoCloseable {
     }
 
     /**
+     * Tell the server to create an empty transaction. Empty transaction does not perform any actions but justs commits after its creation
+     */
+    public TxnClient.TransactionGenericResponse empty() {
+        TxnClient.TransactionGenericResponse response =
+                stub.transactionEmpty(TxnClient.TransactionGenericRequest.newBuilder()
+                        .setTransactionRef(transactionRef())
+                        .build());
+        assertTrue(response.getSuccess());
+
+        return response;
+    }
+
+
+
+    /**
      * Tell the server to insert a document in this resumable transaction.
      */
     public TxnClient.TransactionGenericResponse insert(String docId, String content) {
@@ -89,6 +105,23 @@ public class TransactionFactoryWrapper implements AutoCloseable {
     }
 
     /**
+     * Tell the server to delete a document in this resumable transaction.
+     */
+    public TxnClient.TransactionGenericResponse remove(String docId) {
+        TxnClient.TransactionGenericResponse response =
+                stub.transactionDelete(TxnClient.TransactionDeleteRequest.newBuilder()
+                        .setTransactionRef(transactionRef())
+                        .setDocId(docId)
+                        .build());
+
+        assertTrue(response.getSuccess());
+
+        return response;
+    }
+
+
+
+    /**
      * Tell the server to commit a resumable transaction.
      */
     public TxnClient.TransactionGenericResponse commit() {
@@ -117,6 +150,20 @@ public class TransactionFactoryWrapper implements AutoCloseable {
     }
 
     /**
+     * Tell the server to rollback a resumable transaction.
+     */
+    public TxnClient.TransactionGenericResponse rollbackWithFailure() {
+        TxnClient.TransactionGenericResponse response =
+                stub.transactionRollback(TxnClient.TransactionGenericRequest.newBuilder()
+                        .setTransactionRef(transactionRef())
+                        .build());
+
+        assertFalse(response.getSuccess());
+
+        return response;
+    }
+
+    /**
      * Tell the server to commit a resumable transaction, then close it.
      */
     public TxnClient.TransactionResultObject commitAndClose() {
@@ -137,6 +184,29 @@ public class TransactionFactoryWrapper implements AutoCloseable {
             .setTransactionRef(transactionRef())
             .build());
     }
+
+    /**
+     * Tell the server to rollback a resumable transaction, then close it.
+     */
+    public TxnClient.TransactionResultObject rollbackExpectingFailurendClose() {
+        rollbackWithFailure();
+
+        return stub.transactionClose(TxnClient.TransactionGenericRequest.newBuilder()
+                .setTransactionRef(transactionRef())
+                .build());
+    }
+
+
+
+    /**
+     * Tell the server to rollback a resumable transaction, then close it.
+     */
+    public TxnClient.TransactionResultObject txnClose() {
+        return stub.transactionClose(TxnClient.TransactionGenericRequest.newBuilder()
+                .setTransactionRef(transactionRef())
+                .build());
+    }
+
 
     @Override
     public void close() {

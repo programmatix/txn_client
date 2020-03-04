@@ -15,6 +15,7 @@
  */
 package com.couchbase.transactions.util;
 
+import com.couchbase.Constants.Strings;
 import com.couchbase.client.java.Collection;
 import com.couchbase.client.java.codec.Transcoder;
 import com.couchbase.client.java.json.JsonObject;
@@ -55,10 +56,19 @@ public class DocValidator {
                                                  JsonObject contentInBody,
                                                  JsonObject  contentStaged) {
         // TODO check all metadata is in expected format
+        assertDocExistsdAndContentEquals(collection,docId,contentInBody);
+    }
+
+    public static void assertDocExistsdAndContentEquals(Collection collection,
+                                                                 String docId,
+                                                                 JsonObject contentInBody
+                                                                ) {
+        // TODO check all metadata is in expected format
         GetResult get = collection.get(docId);
         JsonObject fetchedContent = get.contentAsObject();
         assertEquals(fetchedContent, contentInBody);
     }
+
 
     public static GetResult assertDocExistsAndNotInTransaction(Collection collection,
                                                           String docId) {

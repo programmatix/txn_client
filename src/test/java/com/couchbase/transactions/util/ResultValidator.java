@@ -19,12 +19,16 @@ import com.couchbase.client.core.logging.LogRedaction;
 import com.couchbase.client.core.logging.RedactionLevel;
 import com.couchbase.client.java.Collection;
 import com.couchbase.grpc.protocol.TxnClient;
+import com.couchbase.transactions.TransactionAttempt;
+import com.couchbase.transactions.TransactionResult;
 import com.couchbase.transactions.components.ATREntry;
+import com.couchbase.transactions.support.AttemptStates;
 import org.junit.Assert;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Utility methods to validate the results of a transaction.
@@ -37,6 +41,12 @@ public class ResultValidator {
             // TODO sort out the logging!
             System.out.println(result.getLog(i));
         }
+    }
+
+    public static void assertEmptyTxn(TxnClient.TransactionResultObject  result, TxnClient.AttemptStates state) {
+        assertEquals(0, result.getMutationTokensSize());
+        TxnClient.TransactionAttempt attempt = result.getAttempts(0);
+        Assert.assertEquals(state, attempt.getState());
     }
 
     /**
