@@ -7,6 +7,7 @@ target/
 *.properties
 *.config
 *.swp
+src/main/java/com/couchbase/grpc/
 src/main/java/com/couchbase/sdkdclient/dummy/
 mvnsh/*
 batch/*
